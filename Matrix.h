@@ -1,0 +1,37 @@
+#ifndef SRC_MATRIX_H_
+#define SRC_MATRIX_H_
+
+#include <vector>
+
+class Matrix
+{
+private:
+	unsigned rowSize;
+	unsigned colSize;
+	std::vector<std::vector<double>> matrix;
+
+public:
+	Matrix(unsigned rows=1, unsigned columns=1, double initialValue=0);
+	Matrix(const Matrix&);
+	~Matrix();
+
+	// Matrix operations
+	Matrix operator+(Matrix&);
+	Matrix operator-(Matrix&);
+	Matrix operator*(Matrix&);
+	//Matrix transpose(); // Not yet implemented
+
+	//// Scalar Operations
+	//Matrix operator+(double); // Not yet implemented
+	//Matrix operator-(double); // Not yet implemented
+	//Matrix operator*(double); // Not yet implemented
+	//Matrix operator/(double); // Not yet implemented
+	 
+	// Other member functions
+	double& operator()(const unsigned&, const unsigned&);
+	unsigned getRows() const;
+	unsigned getColumns() const;
+	void showMatrix() const;
+};
+
+#endif /*SRC_MATRIX_H_*/
