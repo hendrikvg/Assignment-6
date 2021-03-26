@@ -16,9 +16,9 @@ public:
 	~Matrix();
 
 	// Matrix operations
-	Matrix operator+(Matrix&);
-	Matrix operator-(Matrix&);
-	Matrix operator*(Matrix&);
+	Matrix operator+(Matrix);
+	Matrix operator-(Matrix);
+	Matrix operator*(Matrix);
 	//Matrix transpose(); // Not yet implemented
 
 	//// Scalar Operations
@@ -31,7 +31,7 @@ public:
 	double& operator()(const unsigned&, const unsigned&);
 	unsigned getRows() const;
 	unsigned getColumns() const;
-	void showMatrix() const;
+	void print() const;
 };
 
 #endif /*SRC_MATRIX_H_*/

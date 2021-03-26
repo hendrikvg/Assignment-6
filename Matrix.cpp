@@ -34,35 +34,35 @@ Matrix::~Matrix() {
 
 // Matrix operations
 // Addition of two matrices
-Matrix Matrix::operator+(Matrix& B) {
-	Matrix sum(colSize, rowSize);
+Matrix Matrix::operator+(Matrix B) {
+	Matrix sum(rowSize, colSize, 0.0);
 
 	for (unsigned row = 0; row < rowSize; row++)
 	{
 		for (unsigned column = 0; column < colSize; column++)
 		{
-			sum(row, column) = this->matrix[row][column] + B(row, column);
+			sum(row + 1, column + 1) = this->matrix[row][column] + B(row + 1, column + 1);
 		}
 	}
 	return sum;
 }
 
 // Subtraction of two matrices
-Matrix Matrix::operator-(Matrix& B) {
-	Matrix difference(colSize, rowSize);
+Matrix Matrix::operator-(Matrix B) {
+	Matrix difference(rowSize, colSize, 0.0);
 
 	for (unsigned row = 0; row < rowSize; row++)
 	{
 		for (unsigned column = 0; column < colSize; column++)
 		{
-			difference(row, column) = this->matrix[row][column] - B(row, column);
+			difference(row + 1, column + 1) = this->matrix[row][column] - B(row + 1, column + 1);
 		}
 	}
 	return difference;
 }
 
 // Multiplication of two matrices
-Matrix Matrix::operator*(Matrix& B) {
+Matrix Matrix::operator*(Matrix B) {
 	Matrix product(rowSize, B.getColumns(), 0.0);
 	if (colSize == B.getRows())
 	{
@@ -72,7 +72,7 @@ Matrix Matrix::operator*(Matrix& B) {
 			{
 				for (unsigned colA = 0; colA < colSize; colA++)
 				{
-					product(rowA, colB) += matrix[rowA][colA] * B(colA, colB);
+					product(rowA + 1, colB + 1) += matrix[rowA][colA] * B(colA + 1, colB + 1);
 				}
 			}
 		}
@@ -91,7 +91,7 @@ Matrix Matrix::operator*(Matrix& B) {
 // Other member functions
 double& Matrix::operator()(const unsigned& rowNr, const unsigned& colNr)
 {
-	return this->matrix[rowNr][colNr];
+	return this->matrix[rowNr - 1][colNr - 1];
 }
 
 unsigned Matrix::getRows() const
@@ -104,8 +104,9 @@ unsigned Matrix::getColumns() const
 	return this->colSize;
 }
 
-void Matrix::showMatrix() const
+void Matrix::print() const
 {
+	std::cout << "\n";
 	for (unsigned row = 0; row < rowSize; ++row)
 	{
 		for (unsigned column = 0; column < colSize; ++column)
@@ -116,7 +117,7 @@ void Matrix::showMatrix() const
 			}
 			else
 			{
-				std::cout << " " << matrix[row][column] << " ";
+				std::cout << " " << matrix[row][column] << "\t";
 			}
 		}
 	}
