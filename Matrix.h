@@ -32,6 +32,7 @@ public:
 	unsigned getRows() const;
 	unsigned getColumns() const;
 	void print() const;
+	void diag(int);
 };
 
 #endif /*SRC_MATRIX_H_*/

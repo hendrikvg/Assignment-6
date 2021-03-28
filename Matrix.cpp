@@ -123,3 +123,18 @@ void Matrix::print() const
 	}
 	std::cout << "\n";
 }
+
+void Matrix::diag(int input)
+{
+	if (rowSize == colSize)
+	{
+		for (unsigned row = 0; row < rowSize; ++row)
+		{
+			matrix[row][row] = input;
+		}
+	}
+	else
+	{
+		std::cerr << "Cannot set diagonal of matrix as it is not square.";
+	}
+}

@@ -4,6 +4,8 @@
 #include <SDL.h>
 #include <string>
 #include "Matrix.h"
+#include "StateSpace.h"
+#include "Simulator.h"
 
 int main(int /*argc*/, char** /*argv*/) {
     std::cout << "HELLO WORLD\n";
@@ -16,33 +18,37 @@ int main(int /*argc*/, char** /*argv*/) {
     double Fy = 1;
     double g = 9.81;
 
-    Matrix x(9, 1, 0);
-    Matrix xdot(9, 1, 0);
-    Matrix u(2, 1, 0);
+    Matrix x(5, 1, 0);
     
-    Matrix A(9, 9, 0);
+    Matrix A(5, 5, 0);
     A(1, 4) = 1;
     A(2, 5) = 1;
     A(4, 4) = (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2)));
     A(5, 5) = (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2)));
-    A(6, 8) = 1;
-    A(7, 9) = 1;
-    A(8, 8) = (1 / m_c) * (-C_dc * sqrt(pow(x(8, 1), 2) + pow(x(9, 1), 2)));
-    A(9, 9) = (1 / m_c) * (-C_dc * sqrt(pow(x(8, 1), 2) + pow(x(9, 1), 2)));
+    //A(6, 8) = 1;
+    //A(7, 9) = 1;
+    //A(8, 8) = (1 / m_c) * (-C_dc * sqrt(pow(x(8, 1), 2) + pow(x(9, 1), 2)));
+    //A(9, 9) = (1 / m_c) * (-C_dc * sqrt(pow(x(8, 1), 2) + pow(x(9, 1), 2)));
 
-    Matrix B(9, 2, 0);
+    Matrix B(5, 2, 0);
     B(3, 2) = 1;
     B(4, 1) = (1 / m_d) * (-sin(x(3, 1)));
     B(5, 1) = (1 / m_d) * (cos(x(3, 1)));
 
-    Matrix E(9, 1, 0);
-    E(4, 1) = (1 / m_d) * -Fx;
-    E(5, 1) = (1 / m_d) * -Fy - g;
-    E(8, 1) = (1 / m_c) * Fx;
-    E(9, 1) = (1 / m_c) * Fy - g;
+    Matrix C(5, 5, 0);
+    C.diag(1);
 
-    xdot = (A * x) + (B * u) + E;
-    xdot.print();
+    Matrix D(5, 2, 0);
+    
+    Matrix u(2, 1, 0);
+    Matrix x0(5, 1, 0);
+
+    Matrix E(5, 1, 0);
+    E(5, 1) = - g;
+    //E(8, 1) = (1 / m_c) * Fx;
+    //E(9, 1) = (1 / m_c) * Fy - g;
+
+    StateSpace drone(A, B, C, D, E);
 
     //SDL_Window* window = nullptr;
     //SDL_Renderer* renderer = nullptr;
