@@ -10,20 +10,23 @@
 int main(int /*argc*/, char** /*argv*/) {
     std::cout << "HELLO WORLD\n";
 
-    double C_dd = 1;
-    double C_dc = 1;
-    double m_d = 1;
-    double m_c = 1;
-    double Fx = 1;
-    double Fy = 1;
-    double g = 9.81;
+    int nThreads = SDL_GetCPUCount();
 
-    Matrix x(5, 1, 0);
+    double C_dd = 1;
+    //double C_dc = 1;
+    double m_d = 1;
+    //double m_c = 1;
+    //double Fx = 1;
+    //double Fy = 1;
+    double const g = 9.81;
+
+    Matrix x(5, 1, 1);
     
     Matrix A(5, 5, 0);
     A(1, 4) = 1;
     A(2, 5) = 1;
     A(4, 4) = (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2)));
+    A(5, 1) = -g / x(5, 1);
     A(5, 5) = (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2)));
     //A(6, 8) = 1;
     //A(7, 9) = 1;
@@ -40,16 +43,16 @@ int main(int /*argc*/, char** /*argv*/) {
 
     Matrix D(5, 2, 0);
     
-    Matrix u(2, 1, 0);
-    Matrix x0(5, 1, 0);
+    Matrix u(2, 1, 1);
+    Matrix x0(5, 1, 1);
 
-    Matrix E(5, 1, 0);
-    E(5, 1) = - g;
-    //E(8, 1) = (1 / m_c) * Fx;
-    //E(9, 1) = (1 / m_c) * Fy - g;
+    Matrix xdot(5, 1, 0);
 
-    StateSpace drone(A, B, C, D, E);
+    StateSpace drone(A, B, C, D);
+    xdot = drone.getXdot();
+    xdot.print();
 
+    std::cout << nThreads;
     //SDL_Window* window = nullptr;
     //SDL_Renderer* renderer = nullptr;
 

@@ -2,13 +2,14 @@
 #define SRC_MATRIX_H_
 
 #include <vector>
+#include "Entry.h"
 
 class Matrix
 {
 private:
 	unsigned rowSize;
 	unsigned colSize;
-	std::vector<std::vector<double>> matrix;
+	std::vector<std::vector<Entry>> matrix;
 
 public:
 	Matrix(unsigned rows=1, unsigned columns=1, double initialValue=0);

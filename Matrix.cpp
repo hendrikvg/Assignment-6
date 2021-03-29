@@ -7,6 +7,7 @@
 #include <vector>
 
 // Constructor
+
 Matrix::Matrix(unsigned rows, unsigned columns, double initialValue)
 {
 	rowSize = rows;

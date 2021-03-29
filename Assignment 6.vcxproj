@@ -145,12 +145,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Entry.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Simulator.cpp" />
     <ClCompile Include="StateSpace.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Entry.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Simulator.h" />
     <ClInclude Include="StateSpace.h" />
