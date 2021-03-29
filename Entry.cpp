@@ -1,17 +1,15 @@
 #include "Entry.h"
-
-template<typename F>
-Entry<F>::Entry(double)
-{
+template<typename T>
+Entry<T>::Entry(T entryFunc) : entryFunction(entryFunc) {
+    isConstant = false;
 }
 
-template<typename F>
-Entry<F>::Entry(F& lambda)
-{
+template<typename T>
+Entry<T>::Entry(double constant) : constant(constant) {
+    isConstant = true;
 }
 
-template<typename F>
-double Entry<F>::calculate()
-{
-	return value;
+template<typename T>
+double Entry<T>::calculate() {
+    return isConstant ? constant : entryFunction();
 }

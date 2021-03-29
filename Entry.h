@@ -1,20 +1,21 @@
 #ifndef SRC_ENTRY_H_
 #define SRC_ENTRY_H_
 
-template<typename F>
-class Entry
-{
-private:
-	auto value;
+template<typename T>
+class Entry {
 
 public:
-	Entry(double);
-	Entry(F & lambda);
-	~Entry() {};
+    Entry<T>(double constant);
+    Entry<T>(T entryFunc);
 
-	double calculate();
+    double calculate();
 
-	
+private:
+    double constant;
+    T entryFunction;
+
+    bool isConstant;
 };
 
-#endif /*SRC_ENTRY_H_*/
+
+#endif //SRC_ENTRY_H_
