@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Entry.cpp" />
+    <ClCompile Include="EntryMatrix.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Simulator.cpp" />
@@ -153,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entry.h" />
+    <ClInclude Include="EntryMatrix.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Simulator.h" />
     <ClInclude Include="StateSpace.h" />

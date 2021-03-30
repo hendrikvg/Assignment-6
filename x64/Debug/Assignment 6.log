@@ -1,2 +1,49 @@
-﻿  main.cpp
-  Assignment 6.vcxproj -> E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\x64\Debug\Assignment 6.exe
+﻿  StateSpace.cpp
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(4,67): error C2664: 'EntryMatrix::EntryMatrix(const EntryMatrix &)': cannot convert argument 1 from 'Matrix' to 'const EntryMatrix &'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(5,1): message : Reason: cannot convert from 'Matrix' to 'const EntryMatrix'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(4,68): message : No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\EntryMatrix.h(19,2): message : see declaration of 'EntryMatrix::EntryMatrix'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(4,73): error C2664: 'EntryMatrix::EntryMatrix(const EntryMatrix &)': cannot convert argument 1 from 'Matrix' to 'const EntryMatrix &'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(5,1): message : Reason: cannot convert from 'Matrix' to 'const EntryMatrix'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(4,74): message : No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\EntryMatrix.h(19,2): message : see declaration of 'EntryMatrix::EntryMatrix'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(4,79): error C2664: 'EntryMatrix::EntryMatrix(const EntryMatrix &)': cannot convert argument 1 from 'Matrix' to 'const EntryMatrix &'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(5,1): message : Reason: cannot convert from 'Matrix' to 'const EntryMatrix'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(4,80): message : No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\EntryMatrix.h(19,2): message : see declaration of 'EntryMatrix::EntryMatrix'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(4,85): error C2664: 'EntryMatrix::EntryMatrix(const EntryMatrix &)': cannot convert argument 1 from 'Matrix' to 'const EntryMatrix &'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(5,1): message : Reason: cannot convert from 'Matrix' to 'const EntryMatrix'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(4,86): message : No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\EntryMatrix.h(19,2): message : see declaration of 'EntryMatrix::EntryMatrix'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(18,1): error C2512: 'EntryMatrix': no appropriate default constructor available
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\EntryMatrix.h(10,7): message : see declaration of 'EntryMatrix'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(36,1): error C2556: 'Matrix StateSpace::getA(void) const': overloaded function differs only by return type from 'EntryMatrix StateSpace::getA(void) const'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.h(27): message : see declaration of 'StateSpace::getA'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(35,20): error C2371: 'StateSpace::getA': redefinition; different basic types
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.h(27): message : see declaration of 'StateSpace::getA'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(41,1): error C2556: 'Matrix StateSpace::getB(void) const': overloaded function differs only by return type from 'EntryMatrix StateSpace::getB(void) const'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.h(28): message : see declaration of 'StateSpace::getB'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(40,20): error C2371: 'StateSpace::getB': redefinition; different basic types
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.h(28): message : see declaration of 'StateSpace::getB'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(46,1): error C2556: 'Matrix StateSpace::getC(void) const': overloaded function differs only by return type from 'EntryMatrix StateSpace::getC(void) const'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.h(29): message : see declaration of 'StateSpace::getC'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(45,20): error C2371: 'StateSpace::getC': redefinition; different basic types
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.h(29): message : see declaration of 'StateSpace::getC'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(51,1): error C2556: 'Matrix StateSpace::getD(void) const': overloaded function differs only by return type from 'EntryMatrix StateSpace::getD(void) const'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.h(30): message : see declaration of 'StateSpace::getD'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(50,20): error C2371: 'StateSpace::getD': redefinition; different basic types
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.h(30): message : see declaration of 'StateSpace::getD'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(81,1): error C2511: 'void StateSpace::setA(Matrix)': overloaded member function not found in 'StateSpace'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.h(7): message : see declaration of 'StateSpace'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(82,2): error C2671: 'StateSpace::setA': static member functions do not have 'this' pointers
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(86,1): error C2511: 'void StateSpace::setB(Matrix)': overloaded member function not found in 'StateSpace'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.h(7): message : see declaration of 'StateSpace'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(87,2): error C2671: 'StateSpace::setB': static member functions do not have 'this' pointers
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(91,1): error C2511: 'void StateSpace::setC(Matrix)': overloaded member function not found in 'StateSpace'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.h(7): message : see declaration of 'StateSpace'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(92,2): error C2671: 'StateSpace::setC': static member functions do not have 'this' pointers
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(96,1): error C2511: 'void StateSpace::setD(Matrix)': overloaded member function not found in 'StateSpace'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.h(7): message : see declaration of 'StateSpace'
+E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\StateSpace.cpp(97,2): error C2671: 'StateSpace::setD': static member functions do not have 'this' pointers
+  main.cpp
+  Generating Code...

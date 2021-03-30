@@ -1,21 +1,25 @@
-#ifndef SRC_ENTRY_H_
-#define SRC_ENTRY_H_
+#ifndef SRC_ENTRY_H
+#define SRC_ENTRY_H
 
-template<typename T>
+#include <functional>
+
 class Entry {
 
 public:
-    Entry<T>(double constant);
-    Entry<T>(T entryFunc);
-
+    Entry(std::function<double()> entryFunc);
+    Entry(double constant);
     double calculate();
+    double operator-(Entry B);
+    double operator-(double B);
+    double operator+(Entry B);
+    double operator+(double B);
 
 private:
     double constant;
-    T entryFunction;
+    std::function<double()> entryFunction;
 
     bool isConstant;
 };
 
 
-#endif //SRC_ENTRY_H_
+#endif //SRC_ENTRY_H

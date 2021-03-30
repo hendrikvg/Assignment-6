@@ -1,15 +1,16 @@
-#ifndef SRC_STATESPACE_H_
-#define SRC_STATESPACE_H_
+#ifndef SRC_STATESPACE_H
+#define SRC_STATESPACE_H
 
 #include "Matrix.h"
+#include "EntryMatrix.h"
 
 class StateSpace
 {
 protected:
-	Matrix A;
-	Matrix B;
-	Matrix C;
-	Matrix D;
+	EntryMatrix A;
+	EntryMatrix B;
+	EntryMatrix C;
+	EntryMatrix D;
 	Matrix x;
 	Matrix u;
 	Matrix x0;
@@ -17,25 +18,25 @@ protected:
 	Matrix xdot;
 
 public:
-	StateSpace();
+	StateSpace() = default;
 	StateSpace(Matrix A, Matrix B, Matrix C, Matrix D);
 	StateSpace(const StateSpace&); // copy
 	~StateSpace(); // destructor
 
 	// Get & set member functions:
-	Matrix getA() const;
-	Matrix getB() const;
-	Matrix getC() const;
-	Matrix getD() const;
+	EntryMatrix getA() const;
+	EntryMatrix getB() const;
+	EntryMatrix getC() const;
+	EntryMatrix getD() const;
 	Matrix getX() const;
 	Matrix getU() const;
 	Matrix getX0() const;
 	Matrix getY() const;
 	Matrix getXdot() const;
-	void setA(Matrix);
-	void setB(Matrix);
-	void setC(Matrix);
-	void setD(Matrix);
+	void setA(EntryMatrix);
+	void setB(EntryMatrix);
+	void setC(EntryMatrix);
+	void setD(EntryMatrix);
 	void setX(Matrix);
 	void setU(Matrix);
 	void setX0(Matrix);
@@ -47,4 +48,4 @@ public:
 	Matrix calculateY();
 };
 
-#endif /*SRC_STATESPACE_H_*/
+#endif /*SRC_STATESPACE_H*/

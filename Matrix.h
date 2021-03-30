@@ -1,18 +1,20 @@
-#ifndef SRC_MATRIX_H_
-#define SRC_MATRIX_H_
+#ifndef SRC_MATRIX_H
+#define SRC_MATRIX_H
 
+#include <iostream>
+#include <algorithm>
 #include <vector>
-#include "Entry.h"
 
 class Matrix
 {
 private:
 	unsigned rowSize;
 	unsigned colSize;
-	std::vector<std::vector<Entry>> matrix;
+	std::vector<std::vector<double>> matrix;
 
 public:
-	Matrix(unsigned rows=1, unsigned columns=1, double initialValue=0);
+	Matrix() = default;
+	Matrix(unsigned rows, unsigned columns, double initialValue);
 	Matrix(const Matrix&);
 	~Matrix();
 
@@ -27,7 +29,7 @@ public:
 	//Matrix operator-(double); // Not yet implemented
 	//Matrix operator*(double); // Not yet implemented
 	//Matrix operator/(double); // Not yet implemented
-	 
+
 	// Other member functions
 	double& operator()(const unsigned&, const unsigned&);
 	unsigned getRows() const;
@@ -36,4 +38,4 @@ public:
 	void diag(int);
 };
 
-#endif /*SRC_MATRIX_H_*/
+#endif /*SRC_MATRIX_H*/

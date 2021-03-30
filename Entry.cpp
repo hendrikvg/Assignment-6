@@ -1,15 +1,33 @@
 #include "Entry.h"
-template<typename T>
-Entry<T>::Entry(T entryFunc) : entryFunction(entryFunc) {
+
+Entry::Entry(std::function<double()> entryFunc) : entryFunction(entryFunc) {
     isConstant = false;
 }
 
-template<typename T>
-Entry<T>::Entry(double constant) : constant(constant) {
+Entry::Entry(double constant) : constant(constant) {
     isConstant = true;
 }
 
-template<typename T>
-double Entry<T>::calculate() {
+double Entry::calculate() {
     return isConstant ? constant : entryFunction();
+}
+
+double Entry::operator-(Entry B)
+{
+    return calculate() - B.calculate();
+}
+
+double Entry::operator-(double B)
+{
+    return calculate() - B;
+}
+
+double Entry::operator+(Entry B)
+{
+    return calculate() + B.calculate();
+}
+
+double Entry::operator+(double B)
+{
+    return calculate() - B;
 }

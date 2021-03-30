@@ -1,22 +1,15 @@
-/// \file
 /// Matrix.cpp
 
 #include "Matrix.h"
-#include <iostream>
-#include <algorithm>
-#include <vector>
 
 // Constructor
-
-Matrix::Matrix(unsigned rows, unsigned columns, double initialValue)
+Matrix::Matrix(unsigned rows, unsigned columns, double initialValue) : rowSize(rows), colSize(columns)
 {
-	rowSize = rows;
-	colSize = columns;
 	matrix.resize(rowSize);
 	for (unsigned row = 0; row < matrix.size(); row++)
-		{
-			matrix[row].resize(colSize, initialValue);
-		}
+	{
+		matrix[row].resize(colSize, initialValue);
+	}
 }
 
 // Copy Constructor

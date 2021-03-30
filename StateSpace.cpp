@@ -1,18 +1,11 @@
 #include "StateSpace.h"
 
-// Empty Constructor
-StateSpace::StateSpace() {};
-
 // Constructor
-StateSpace::StateSpace(Matrix A, Matrix B, Matrix C, Matrix D)
+StateSpace::StateSpace(Matrix A, Matrix B, Matrix C, Matrix D) : A(A), B(B), C(C), D(D)
 {
-	Matrix x(A.getRows(), 1, 1);
-	Matrix u(B.getColumns(), 1, 0);
-	Matrix y(C.getRows(), 1, 0);
-	this->A = A;
-	this->B = B;
-	this->C = C;
-	this->D = D;
+	Matrix x(A.getRows(), 1, 1.0);
+	Matrix u(B.getColumns(), 1, 0.0);
+	Matrix y(C.getRows(), 1, 0.0);
 	this->x = x;
 	this->u = u;
 	this->x0 = x;
