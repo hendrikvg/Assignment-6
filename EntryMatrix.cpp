@@ -1,14 +1,13 @@
 #include "EntryMatrix.h"
 
 // Constructor
-EntryMatrix::EntryMatrix(unsigned int rows, unsigned int columns, Entry initialValue)
+EntryMatrix::EntryMatrix(unsigned int rows, unsigned int columns, double initialValue) : rowSize(rows), colSize(columns)
 {
-	rowSize = rows;
-	colSize = columns;
+	Entry initialEntryValue(initialValue);
 	matrix.resize(rowSize);
 	for (unsigned row = 0; row < matrix.size(); row++)
 	{
-		matrix[row].resize(colSize, initialValue);
+		matrix[row].resize(colSize, initialEntryValue);
 	}
 }
 

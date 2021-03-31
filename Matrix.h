@@ -27,7 +27,7 @@ public:
 	//// Scalar Operations
 	//Matrix operator+(double); // Not yet implemented
 	//Matrix operator-(double); // Not yet implemented
-	//Matrix operator*(double); // Not yet implemented
+	Matrix operator*(double); // Not yet implemented
 	//Matrix operator/(double); // Not yet implemented
 
 	// Other member functions

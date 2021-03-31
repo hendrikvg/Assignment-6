@@ -8,75 +8,66 @@
 #include "Simulator.h"
 #include "Entry.h"
 #include "EntryMatrix.h"
+#include "ForwardEuler.h"
+#include "Functions.h"
+#include "Input.h"
+
+#include "Test.h"
 
 int main(int /*argc*/, char** /*argv*/) {
     std::cout << "HELLO WORLD\n";
 
     int nThreads = SDL_GetCPUCount();
 
-    double C_dd = 1;
+    double t0 = 0;
+    double dt = 0.01;
+    double tEnd = 10;
+
+    double C_dd = 0.1;
     //double C_dc = 1;
-    double m_d = 1;
+    double m_d = 3;
     //double m_c = 1;
     //double Fx = 1;
     //double Fy = 1;
     double const g = 9.81;
 
-    Entry c0(0.0);
-    Entry c1(1.0);
-    
+    Matrix x(5, 1, 0.0);
+    Matrix u(2, 1, 0.0);
+    u(1, 1) = 1;
 
-    Matrix x(5, 1, 0);
-    Matrix x0(5, 1, 2.0);
+    Input input(u);
 
-    EntryMatrix A(5, 5, c0);
-    A(4, 4) = Entry([&x,m_d,C_dd]() {return (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2))); });
-    A.print();
-    x(4, 1) = 12;
-    A.print();
-
-    Matrix test(5,1,0.0);
-    test = A * x0;
-    test.print();
-    //Matrix Test(5, 1, 0.0);
-    // 
-    //Entry([&x]() { return x(1, 1);});
-
-    //Entry([&x, c1]() { return c1 * x(0, 1); });
-
-    //Matrix A(5, 5, 0);
-    //A(1, 4) = 1;
-    //A(2, 5) = 1;
-    //A(4, 4) = (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2)));
-    //A(5, 1) = -g / x(5, 1);
-    //A(5, 5) = (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2)));
+    EntryMatrix A(5, 5, 0.0);
+    A(1, 4) = 1.0;
+    A(2, 5) = 1.0;
+    A(4, 4) = Entry([&x, m_d, C_dd]() {return (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2))); });
+    A(5, 1) = Entry([&x, g]() {return (x(5, 1) == 0) ? -g : -g / x(5, 1); }); // bool ? this : that (conditional ternary operator)
+    A(5, 5) = Entry([&x, m_d, C_dd]() {return (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2))); });
     ////A(6, 8) = 1;
     ////A(7, 9) = 1;
     ////A(8, 8) = (1 / m_c) * (-C_dc * sqrt(pow(x(8, 1), 2) + pow(x(9, 1), 2)));
     ////A(9, 9) = (1 / m_c) * (-C_dc * sqrt(pow(x(8, 1), 2) + pow(x(9, 1), 2)));
 
-    //Matrix B(5, 2, 0);
-    //B(3, 2) = 1;
-    //B(4, 1) = (1 / m_d) * (-sin(x(3, 1)));
-    //B(5, 1) = (1 / m_d) * (cos(x(3, 1)));
+    EntryMatrix B(5, 2, 0.0);
+    B(3, 2) = 1.0;
+    B(4, 1) = Entry([&x, m_d]() {return (1 / m_d) * (-sin(x(3, 1))); });
+    B(5, 1) = Entry([&x, m_d]() {return (1 / m_d) * (cos(x(3, 1))); });
 
-    //Matrix C(5, 5, 0);
-    //C.diag(1);
+    EntryMatrix C(5, 5, 0.0);
+    C.diag(1);
 
-    //Matrix D(5, 2, 0);
-    //
-    //Matrix u(2, 1, 1);
-    //Matrix x0(5, 1, 1);
+    EntryMatrix D(5, 2, 0);
 
-    //Matrix xdot(5, 1, 0);
+    StateSpace drone(A, B, C, D);
 
-    //StateSpace drone(A, B, C, D);
-    //xdot = drone.getXdot();
-    //xdot.print();
+    x.print();
+    ForwardEuler iets(&drone, t0, dt, tEnd);
+    iets.integrate(x, u, x);
+    x.print();
+
 
     //std::cout << nThreads;
-    // 
-    // 
+ 
     //SDL_Window* window = nullptr;
     //SDL_Renderer* renderer = nullptr;
 

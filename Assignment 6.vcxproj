@@ -147,17 +147,24 @@
   <ItemGroup>
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="EntryMatrix.cpp" />
+    <ClCompile Include="ForwardEuler.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Simulator.cpp" />
     <ClCompile Include="StateSpace.cpp" />
+    <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entry.h" />
     <ClInclude Include="EntryMatrix.h" />
+    <ClInclude Include="ForwardEuler.h" />
+    <ClInclude Include="Functions.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Simulator.h" />
     <ClInclude Include="StateSpace.h" />
+    <ClInclude Include="Test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

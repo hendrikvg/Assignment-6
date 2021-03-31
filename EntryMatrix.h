@@ -15,7 +15,8 @@ private:
 	std::vector<std::vector<Entry>> matrix;
 
 public:
-	EntryMatrix(unsigned int rows, unsigned int columns, Entry initialValue);
+	EntryMatrix() = default;
+	EntryMatrix(unsigned int rows, unsigned int columns, double initialValue);
 	EntryMatrix(const EntryMatrix&);
 	~EntryMatrix();
 

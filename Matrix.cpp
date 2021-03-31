@@ -80,7 +80,18 @@ Matrix Matrix::operator*(Matrix B) {
 }
 
 // Scalar operations
-// Not implemented (yet)
+// Scalar Multiplication
+Matrix Matrix::operator*(double B) {
+	Matrix result(rowSize, colSize, 0.0);
+	for (unsigned row = 0; row < rowSize; row++)
+	{
+		for (unsigned column = 0; column < colSize; column++)
+		{
+			result(row + 1, column + 1) = this->matrix[row][column] * B;
+		}
+	}
+	return result;
+}
 
 // Other member functions
 double& Matrix::operator()(const unsigned& rowNr, const unsigned& colNr)
