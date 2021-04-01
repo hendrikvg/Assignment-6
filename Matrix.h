@@ -34,6 +34,7 @@ public:
 	double& operator()(const unsigned&, const unsigned&);
 	unsigned getRows() const;
 	unsigned getColumns() const;
+	std::vector<double> getVector() const;
 	void print() const;
 	void diag(int);
 };

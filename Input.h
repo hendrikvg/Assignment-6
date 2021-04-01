@@ -9,11 +9,13 @@ class Input
 {
 private:
 	std::vector<std::vector<double>> inputVector;
+	Matrix u;
 
 public:
 	Input(std::vector<std::vector<double>>);     
-	//Input(Matrix);
+	Input(Matrix);
 	Matrix getU(double);
+	Matrix getU();
 };
 
 #endif
