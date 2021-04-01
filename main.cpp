@@ -39,8 +39,9 @@ int main(int /*argc*/, char** /*argv*/) {
     Matrix u(2, 1, 0.0);
     u(1, 1) = 1;
 
-    ReadCSV inCSV; //create object to prepare for csv import
-    Input input(inCSV.importCSV("InputMatrix.csv")); // import csv with input commands for drone and put it in an Input class object.
+    //ReadCSV inCSV; //create object to prepare for csv import
+    //Input input(inCSV.importCSV("InputMatrix.csv")); // import csv with input commands for drone and put it in an Input class object.
+    Input input(u);
 
 
     EntryMatrix A(5, 5, 0.0);
@@ -66,12 +67,10 @@ int main(int /*argc*/, char** /*argv*/) {
 
     StateSpace drone(A, B, C, D);
 
-    //x.print();
-    //ForwardEuler iets(&drone, t0, dt, tEnd);
-    //iets.integrate(x, input, x);
-    //x.print();
-
-    std::cout << x.getVector()[0] << x.getVector()[1] << x.getVector()[2] << x.getVector()[3] << x.getVector()[4];
+    x.print();
+    ForwardEuler simulation(&drone, t0, dt, tEnd);
+    simulation.integrate(x, input);
+    x.print();
 
 
     //std::cout << nThreads;

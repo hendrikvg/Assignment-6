@@ -3,11 +3,12 @@
 
 #include <vector>
 #include "StateSpace.h"
+#include "OutputCSV.h"
 
 class Simulator
 {
 protected:
-	StateSpace *system;
+	StateSpace* system;
 	Matrix x0;
 	double dt;
 	double t0;
@@ -17,6 +18,7 @@ protected:
 public:
 	Simulator() = default;
 	void saveState(double t, Matrix x, Matrix y);
+	void exportStates();
 };
 
 #endif // !SRC_SIMULATOR_H

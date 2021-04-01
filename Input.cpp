@@ -5,9 +5,9 @@ Input::Input(std::vector<std::vector<double>> inputVectorIn) {
 }
 
 
-//Input::Input(Matrix u) : u(u)
-//{
-//}
+Input::Input(Matrix u) : u(u)
+{
+}
 
 Matrix Input::getU(double time)
 {
@@ -59,4 +59,9 @@ Matrix Input::getU(double time)
 		}
 	}
 
+}
+
+Matrix Input::getU()
+{
+	return u;
 }

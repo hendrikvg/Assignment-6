@@ -14,3 +14,11 @@ void Simulator::saveState(double t, Matrix x, Matrix y)
 	}
 	this->states.push_back(state);
 }
+
+void Simulator::exportStates()
+{
+	OutputCSV output;
+	std::cout << "muy";
+	output.writeCSV(this->states, "TEST.csv");
+	std::cout << "bruh momento";
+}
