@@ -11,7 +11,7 @@
 #include "ForwardEuler.h"
 #include "Functions.h"
 #include "Input.h"
-
+#include "ReadCSV.h"
 #include "Test.h"
 
 int main(int /*argc*/, char** /*argv*/) {
@@ -31,11 +31,17 @@ int main(int /*argc*/, char** /*argv*/) {
     //double Fy = 1;
     double const g = 9.81;
 
+
+
     Matrix x(5, 1, 0.0);
+
+
     Matrix u(2, 1, 0.0);
     u(1, 1) = 1;
 
-    Input input(u);
+    ReadCSV inCSV; //create object to prepare for csv import
+    Input input(inCSV.importCSV("InputMatrix.csv")); // import csv with input commands for drone and put it in an Input class object.
+
 
     EntryMatrix A(5, 5, 0.0);
     A(1, 4) = 1.0;
@@ -62,7 +68,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
     x.print();
     ForwardEuler iets(&drone, t0, dt, tEnd);
-    iets.integrate(x, u, x);
+    iets.integrate(x, input, x);
     x.print();
 
 

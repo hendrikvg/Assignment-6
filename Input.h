@@ -2,15 +2,18 @@
 #define SRC_INPUT_H
 
 #include "Matrix.h"
+#include <vector>
+
 
 class Input
 {
 private:
-	Matrix u;
+	std::vector<std::vector<double>> inputVector;
 
 public:
-	Input(Matrix);
-	Matrix getU();
+	Input(std::vector<std::vector<double>>);     
+	//Input(Matrix);
+	Matrix getU(double);
 };
 
-#endif // !SRC_INPUT_H
+#endif
