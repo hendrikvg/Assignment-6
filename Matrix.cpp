@@ -109,6 +109,19 @@ unsigned Matrix::getColumns() const
 	return this->colSize;
 }
 
+std::vector<double> Matrix::getVector() const
+{
+	std::vector<double> vector;
+	for (unsigned row = 0; row < rowSize; row++)
+	{
+		for (unsigned column = 0; column < colSize; column++)
+		{
+			vector.push_back(matrix[row][column]);
+		}
+	}
+	return vector;
+}
+
 void Matrix::print() const
 {
 	std::cout << "\n";

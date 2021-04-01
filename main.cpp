@@ -66,10 +66,12 @@ int main(int /*argc*/, char** /*argv*/) {
 
     StateSpace drone(A, B, C, D);
 
-    x.print();
-    ForwardEuler iets(&drone, t0, dt, tEnd);
-    iets.integrate(x, input, x);
-    x.print();
+    //x.print();
+    //ForwardEuler iets(&drone, t0, dt, tEnd);
+    //iets.integrate(x, input, x);
+    //x.print();
+
+    std::cout << x.getVector()[0] << x.getVector()[1] << x.getVector()[2] << x.getVector()[3] << x.getVector()[4];
 
 
     //std::cout << nThreads;

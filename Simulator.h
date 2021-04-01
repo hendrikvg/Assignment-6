@@ -1,6 +1,7 @@
 #ifndef SRC_SIMULATOR_H
 #define SRC_SIMULATOR_H
 
+#include <vector>
 #include "StateSpace.h"
 
 class Simulator
@@ -12,9 +13,10 @@ protected:
 	double t0;
 	double tEnd;
 	double t;
+	std::vector<std::vector<double>> states;
 public:
 	Simulator() = default;
-	//Simulator(double t0, double tEnd, double dt, Matrix x0);
+	void saveState(double t, Matrix x, Matrix y);
 };
 
 #endif // !SRC_SIMULATOR_H

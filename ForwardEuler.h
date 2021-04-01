@@ -18,7 +18,6 @@ public:
 	ForwardEuler(StateSpace *system, double t0, double td, double tEnd);
 	void integrate(Matrix& x, Input u);
 	void integrate(Matrix& x, Input u, Matrix x0);
-	//void integrate(Matrix& x, Input u, double t);
 
 
 	
