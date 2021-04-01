@@ -151,6 +151,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="ReadCSV.cpp" />
     <ClCompile Include="Simulator.cpp" />
     <ClCompile Include="StateSpace.cpp" />
     <ClCompile Include="Test.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Functions.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="ReadCSV.h" />
     <ClInclude Include="Simulator.h" />
     <ClInclude Include="StateSpace.h" />
     <ClInclude Include="Test.h" />

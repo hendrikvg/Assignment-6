@@ -15,7 +15,7 @@ void ForwardEuler::integrate(Matrix& x, Input u)
     {
         for (t = t0; t < tEnd; t += dt)
         {
-            x = x + system->calculateXdot(x, u.getU()) * dt;
+            x = x + system->calculateXdot(x, u.getU(t)) * dt;
         }
     }
 }
