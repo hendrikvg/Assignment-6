@@ -8,14 +8,17 @@
 class Input
 {
 private:
+	unsigned rowSizeInput;
+	unsigned colSizeInput;
 	std::vector<std::vector<double>> inputVector;
 	Matrix u;
 
 public:
 	Input(std::vector<std::vector<double>>);     
-	Input(Matrix);
 	Matrix getU(double);
-	Matrix getU();
+	//Input(Matrix); // test
+	//Matrix getU(); // test
+	std::vector<std::vector<double>> getInputVector();
 };
 
 #endif

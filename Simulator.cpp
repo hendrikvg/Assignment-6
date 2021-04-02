@@ -18,7 +18,5 @@ void Simulator::saveState(double t, Matrix x, Matrix y)
 void Simulator::exportStates()
 {
 	OutputCSV output;
-	std::cout << "muy";
 	output.writeCSV(this->states, "TEST.csv");
-	std::cout << "bruh momento";
 }

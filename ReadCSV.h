@@ -30,6 +30,8 @@ public:
 
 private:
 	std::vector<std::vector<double>> input;
+	int rowSize;
+	int colSize;
 
 
 	//implementation heavily influenced by blog post: https://www.gormanalysis.com/blog/reading-and-writing-csv-files-with-cpp/ 

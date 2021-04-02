@@ -21,7 +21,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
     double t0 = 0;
     double dt = 0.01;
-    double tEnd = 10;
+    double tEnd = 20;
 
     double C_dd = 0.1;
     //double C_dc = 1;
@@ -29,26 +29,22 @@ int main(int /*argc*/, char** /*argv*/) {
     //double m_c = 1;
     //double Fx = 1;
     //double Fy = 1;
-    double const g = 9.81;
-
-
+    double g = 9.81;
 
     Matrix x(5, 1, 0.0);
 
-
     Matrix u(2, 1, 0.0);
-    u(1, 1) = 1;
+    //u(1, 1) = 1;
 
-    //ReadCSV inCSV; //create object to prepare for csv import
-    //Input input(inCSV.importCSV("InputMatrix.csv")); // import csv with input commands for drone and put it in an Input class object.
-    Input input(u);
-
+    ReadCSV inCSV; //create object to prepare for csv import
+    Input input(inCSV.importCSV("NietOnnodigIngewikkeld.csv")); // import csv with input commands for drone and put it in an Input class object.
+    //Input input(u); // test
 
     EntryMatrix A(5, 5, 0.0);
     A(1, 4) = 1.0;
     A(2, 5) = 1.0;
     A(4, 4) = Entry([&x, m_d, C_dd]() {return (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2))); });
-    A(5, 1) = Entry([&x, g]() {return (x(5, 1) == 0) ? -g : -g / x(5, 1); }); // bool ? this : that (conditional ternary operator)
+    //A(5, 1) = Entry([&x, g]() {return (x(1, 1) == 0.0) ? -g : -g / x(1, 1); }); // bool ? this : that (conditional ternary operator)
     A(5, 5) = Entry([&x, m_d, C_dd]() {return (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2))); });
     ////A(6, 8) = 1;
     ////A(7, 9) = 1;
@@ -63,15 +59,20 @@ int main(int /*argc*/, char** /*argv*/) {
     EntryMatrix C(5, 5, 0.0);
     C.diag(1);
 
-    EntryMatrix D(5, 2, 0);
+    EntryMatrix D(5, 2, 0.0);
 
-    StateSpace drone(A, B, C, D);
+    Matrix E(5, 1, 0.0);
+    E(5, 1) = -g;
+
+    StateSpace drone(A, B, C, D, E);
 
     x.print();
-    ForwardEuler simulation(&drone, t0, dt, tEnd);
-    simulation.integrate(x, input);
+    ForwardEuler droneSimulation(&drone, t0, dt, tEnd);
+    droneSimulation.integrate(x, input);
     x.print();
 
+    //OutputCSV output;
+    //output.writeCSV(input.getInputVector(), "spaghettiCodeMuch.csv");
 
     //std::cout << nThreads;
  

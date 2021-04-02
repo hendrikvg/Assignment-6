@@ -4,14 +4,13 @@
 StateSpace::StateSpace(EntryMatrix A, EntryMatrix B, EntryMatrix C, EntryMatrix D) : 
 	A(A), B(B), C(C), D(D)
 {
-	//Matrix x(A.getRows(), 1, 1.0);
-	//Matrix u(B.getColumns(), 1, 0.0);
-	//Matrix y(C.getRows(), 1, 0.0);
-	//this->x = x;
-	//this->u = u;
-	//this->x0 = x;
-	//this->y = y;
-	//this->xdot = x;
+	Matrix E(A.getRows(), 1, 0.0);
+	this->E = E;
+}
+
+StateSpace::StateSpace(EntryMatrix A, EntryMatrix B, EntryMatrix C, EntryMatrix D, Matrix E) :
+	A(A), B(B), C(C), D(D), E(E)
+{
 }
 
 // Copy Constructor
@@ -21,11 +20,6 @@ StateSpace::StateSpace(const StateSpace& stateSpace)
 	this->B = stateSpace.getB();
 	this->C = stateSpace.getC();
 	this->D = stateSpace.getD();
-	//this->x = stateSpace.getX();
-	//this->u = stateSpace.getU();
-	//this->x0 = stateSpace.getX0();
-	//this->y = stateSpace.getY();
-	//this->xdot = stateSpace.getXdot();
 }
 
 StateSpace::~StateSpace()
@@ -53,30 +47,10 @@ EntryMatrix StateSpace::getD() const
 	return this->D;
 }
 
-//Matrix StateSpace::getX() const
-//{
-//	return this->x;
-//}
-//
-//Matrix StateSpace::getU() const
-//{
-//	return this->u;
-//}
-//
-//Matrix StateSpace::getX0() const
-//{
-//	return this->x0;
-//}
-//
-//Matrix StateSpace::getY() const
-//{
-//	return this->y;
-//}
-//
-//Matrix StateSpace::getXdot() const
-//{
-//	return this->xdot;
-//}
+Matrix StateSpace::getE() const
+{
+	return this->E;
+}
 
 void StateSpace::setA(EntryMatrix A)
 {
@@ -98,34 +72,14 @@ void StateSpace::setD(EntryMatrix D)
 	this->D = D;
 }
 
-//void StateSpace::setX(Matrix x)
-//{
-//	this->x = x;
-//}
-//
-//void StateSpace::setU(Matrix u)
-//{
-//	this->u = u;
-//}
-//
-//void StateSpace::setX0(Matrix x0)
-//{
-//	this->x0 = x0;
-//}
-//
-//void StateSpace::setY(Matrix y)
-//{
-//	this->y = y;
-//}
-//
-//void StateSpace::setXdot(Matrix xdot)
-//{
-//	this->xdot = xdot;
-//}
+void StateSpace::setE(Matrix E)
+{
+	this->E = E;
+}
 
 Matrix StateSpace::calculateXdot(Matrix x, Matrix u)
 {
-	return A * x + B * u;
+	return A * x + B * u + E;
 }
 
 Matrix StateSpace::calculateY(Matrix x, Matrix u)

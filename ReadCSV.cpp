@@ -1,55 +1,49 @@
 #include "ReadCSV.h"
 
-
-
-
-std::vector<std::vector<double>> ReadCSV::importCSVHelper(std::string filename) {
-
-	std::ifstream inputFile(filename); // create input filestream object from the filename document
-	double currentDouble;			// helper variable 
-	std::string currentRow;
+std::vector<std::vector<double>> ReadCSV::importCSVHelper(std::string filename) {		
+	std::ifstream inputFile(filename);	// create input filestream object from the filename document
+	double currentDouble;				// helper variable 
+	std::string currentRow;				
+	std::vector<double> temporaryVector;
 	std::vector<std::vector<double>> inputSignal;
 
-	inputSignal.resize(3);
+	if (inputFile.is_open()) { // File is connected and
 
-	if (inputFile.is_open()) {
+		while (std::getline(inputFile, currentRow)) {		// Reads characters from inputFile and puts them in currentRow as string
+			
+			std::stringstream stringStreamRow(currentRow);	// Create stringstream stringStreamRow and initiate with currentRow
 
-		while (std::getline(inputFile, currentRow)) {
-			int currentColumnIndex = 0;
+			while (stringStreamRow >> currentDouble) {		// While stingStreamRow can be cast to currentDouble, do that and ...
+				
+				temporaryVector.push_back(currentDouble);
 
-			std::stringstream stringStreamRow(currentRow);
-
-			while (stringStreamRow >> currentDouble) {
-
-				inputSignal.at(currentColumnIndex).push_back(currentDouble);
-
-
-				if (stringStreamRow.peek() == ',') stringStreamRow.ignore();
-
-
-				currentColumnIndex++;
+				if (stringStreamRow.peek() == ',')
+				{
+					stringStreamRow.ignore();	// If the next character is 'c', ignore that character
+				}
 			}
+
+			inputSignal.push_back(temporaryVector);
+			temporaryVector.clear();
 
 		}
 
-		inputFile.close();
+		inputFile.close();														// Close file
 	}
 
-	else {
+	else 
+	{
 		std::cout << "input file not found in directory.\n";
+		return inputSignal;
 	}
-
-
-
+	
 	input = inputSignal;
-
 	return inputSignal;
 }
 
 std::vector<double> ReadCSV::calculateInputSignalHelper(double currentTime) {
 
-
-	for (int i = 0; i < input.size()-1; i++)
+	for (int i = 0; i < input.size() - 1; i++)
 	{
 		if (currentTime >= input[0][i] && currentTime > input[0][i + 1])
 		{
@@ -75,7 +69,4 @@ std::vector<double> ReadCSV::calculateInputSignalHelper(double currentTime) {
 			return std::vector<double> {currentTime, interpolatedThrust, interpolatedAngularVelocity};
 		}
 	}
-
-
-
 }
