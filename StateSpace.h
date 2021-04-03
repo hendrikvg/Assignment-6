@@ -4,6 +4,10 @@
 #include "Matrix.h"
 #include "EntryMatrix.h"
 
+
+/// <summary>
+/// Allows for creation of a (extended/nonlinear) statespace system. Can calculate Xdot and Y of statespace with member functions. 
+/// </summary>
 class StateSpace
 {
 protected:

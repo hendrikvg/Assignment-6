@@ -29,7 +29,7 @@ void ForwardEuler::integrate(Matrix& x, Input u)
             saveState(t, x, y);
         }
     }
-    exportStates();
+    // exportStates();  // done inside main
 }
 
 // Allow for setting initial state x0

@@ -9,10 +9,13 @@
 #include <string>
 #include <sstream>
 
+
+/// <summary>
+/// Handles reading a csv file and putting it inside a 2-d vector. Filename of the csv can be specified. Put csv inside root of project.
+/// </summary>
 class ReadCSV {
 public:
-	ReadCSV() {}
-	~ReadCSV() {}
+	ReadCSV() = default;
 
 
 	//This function takes a filename and returns a vector<vector<double>> of the input commands
@@ -21,12 +24,6 @@ public:
 
 		return importCSVHelper(filename);
 	}
-
-	std::vector<double> calculateInputSignal(double currentTime) {
-		return calculateInputSignalHelper(currentTime);
-	}
-
-
 
 private:
 	std::vector<std::vector<double>> input;
@@ -37,8 +34,6 @@ private:
 	//implementation heavily influenced by blog post: https://www.gormanalysis.com/blog/reading-and-writing-csv-files-with-cpp/ 
 	//@param insert filename of csv file
 	std::vector<std::vector<double>> importCSVHelper(std::string filename);
-
-	std::vector<double> calculateInputSignalHelper(double currentTime);
 
 };
 

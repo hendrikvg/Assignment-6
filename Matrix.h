@@ -5,6 +5,10 @@
 #include <algorithm>
 #include <vector>
 
+
+/// <summary>
+/// Allows creation of Matrices and defines matrix operations for linear algebra needed for statespace dynamics and control.
+/// </summary>
 class Matrix
 {
 private:
