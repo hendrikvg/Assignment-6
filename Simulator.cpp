@@ -15,8 +15,8 @@ void Simulator::saveState(double t, Matrix x, Matrix y)
 	this->states.push_back(state);
 }
 
-void Simulator::exportStates()
+void Simulator::exportStates(std::string nameCSV = "StatesExport.csv")
 {
 	OutputCSV output;
-	output.writeCSV(this->states, "TEST.csv");
+	output.writeCSV(this->states, nameCSV);
 }

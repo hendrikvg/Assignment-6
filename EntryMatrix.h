@@ -7,6 +7,10 @@
 #include "Entry.h"
 #include "Matrix.h"
 
+
+/// <summary>
+/// Matrix class that can take variables and constants. Defines matrix operations for use in integration and dynamics calculations.
+/// </summary>
 class EntryMatrix
 {
 private:
@@ -16,17 +20,26 @@ private:
 
 public:
 	EntryMatrix() = default;
+
+	/// <summary>
+	/// Constructor for Entry matrix, needs number of rows and columns and the initialization values.
+	/// </summary>
+	/// <param name="rows">number of desired rows</param>
+	/// <param name="columns">number of desired columns</param>
+	/// <param name="initialValue">initial value for all values in matrix</param>
 	EntryMatrix(unsigned int rows, unsigned int columns, double initialValue);
+
+
 	EntryMatrix(const EntryMatrix&);
 	~EntryMatrix();
 
 	// Matrix operations
-	Matrix operator+(EntryMatrix);
-	Matrix operator+(Matrix);
-	Matrix operator-(EntryMatrix);
-	Matrix operator-(Matrix);
-	Matrix operator*(EntryMatrix);
-	Matrix operator*(Matrix);
+	Matrix operator+(EntryMatrix);	//addition
+	Matrix operator+(Matrix);		//addition
+	Matrix operator-(EntryMatrix);	//substraction
+	Matrix operator-(Matrix);		//substraction
+	Matrix operator*(EntryMatrix);	//multiplicaiton
+	Matrix operator*(Matrix);		//multiplication
 	//Matrix transpose(); // Not yet implemented
 
 	//// Scalar Operations
