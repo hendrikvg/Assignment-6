@@ -23,15 +23,18 @@ int main(int /*argc*/, char** /*argv*/) {
     // ***** INITIALISE ALL GLOBAL VARIABLES: *****
 
     double t0 = 0;
-    double dt = 0.01;
-    double tEnd = 20;
+    double dt = 0.0005;
+    double tEnd = 8;
 
-    double C_dd = 0.1;
-    //double C_dc = 1;
     double m_d = 3;
-    //double m_c = 1;
-    //double Fx = 1;
-    //double Fy = 1;
+    double m_c = 2;
+    double C_dd = 0.1;
+    double C_dc = 0.1;
+    double L_rope0 = 1.5;
+    double K_rope = 40000;
+    double D_rope = 50;
+    //double Fx{0};
+    //double Fy{0};
     double g = 9.81;
 
 
@@ -39,35 +42,34 @@ int main(int /*argc*/, char** /*argv*/) {
 
     Matrix x(5, 1, 0.0);
 
-    Matrix u(2, 1, 0.0);
-    //u(1, 1) = 1;
-
-    EntryMatrix A(5, 5, 0.0);
+    EntryMatrix A(9, 9, 0.0);
     A(1, 4) = 1.0;
     A(2, 5) = 1.0;
     A(4, 4) = Entry([&x, m_d, C_dd]() {return (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2))); });
     //A(5, 1) = Entry([&x, g]() {return (x(1, 1) == 0.0) ? -g : -g / x(1, 1); }); // bool ? this : that (conditional ternary operator)
     A(5, 5) = Entry([&x, m_d, C_dd]() {return (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2))); });
-    ////A(6, 8) = 1;
-    ////A(7, 9) = 1;
-    ////A(8, 8) = (1 / m_c) * (-C_dc * sqrt(pow(x(8, 1), 2) + pow(x(9, 1), 2)));
-    ////A(9, 9) = (1 / m_c) * (-C_dc * sqrt(pow(x(8, 1), 2) + pow(x(9, 1), 2)));
+    A(6, 8) = 1;
+    A(7, 9) = 1;
+    A(8, 8) = Entry([&x, m_c, C_dc]() {return (1 / m_c) * (-C_dc * sqrt(pow(x(8, 1), 2) + pow(x(9, 1), 2))); });
+    A(9, 9) = Entry([&x, m_c, C_dc]() {return (1 / m_c) * (-C_dc * sqrt(pow(x(8, 1), 2) + pow(x(9, 1), 2))); });
 
-    EntryMatrix B(5, 2, 0.0);
+    EntryMatrix B(9, 2, 0.0);
     B(3, 2) = 1.0;
     B(4, 1) = Entry([&x, m_d]() {return (1 / m_d) * (-sin(x(3, 1))); });
     B(5, 1) = Entry([&x, m_d]() {return (1 / m_d) * (cos(x(3, 1))); });
 
-    EntryMatrix C(5, 5, 0.0);
+    EntryMatrix C(9, 9, 0.0);
     C.diag(1);
 
-    EntryMatrix D(5, 2, 0.0);
+    EntryMatrix D(9, 2, 0.0);
 
-    Matrix E(5, 1, 0.0);
-    E(5, 1) = -g;
+    Matrix E(9, 1, 0.0);
+    E(4, 1) = Entry([]() {}); -Fx
+    E(5, 1) = -g - Fy;
+    E(8, 1) = Fx;
+    E(9, 1) = Fy - g;
 
-
-    // ***** INITIALISE STATESPACE WITH PREVIOUSLY MADE MATRICES: *****
+     //***** INITIALISE STATESPACE WITH PREVIOUSLY MADE MATRICES: *****
 
     StateSpace drone(A, B, C, D, E);
 
@@ -86,7 +88,7 @@ int main(int /*argc*/, char** /*argv*/) {
     droneSimulation.integrate(x, input); // integrate system 
     x.print(); //print current (last) states to terminal
 
-    droneSimulation.exportStates(); 
+    droneSimulation.exportStates("TEST.csv"); 
 
 
 
