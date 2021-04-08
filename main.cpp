@@ -39,7 +39,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
     Matrix x(5, 1, 0.0);
 
-    Matrix u(2, 1, 0.0);
+    //Matrix u(2, 1, 0.0);
     //u(1, 1) = 1;
 
     EntryMatrix A(5, 5, 0.0);
@@ -66,7 +66,7 @@ int main(int /*argc*/, char** /*argv*/) {
     Matrix E(5, 1, 0.0);
     E(5, 1) = -g;
 
-
+    
     // ***** INITIALISE STATESPACE WITH PREVIOUSLY MADE MATRICES: *****
 
     StateSpace drone(A, B, C, D, E);
@@ -76,8 +76,9 @@ int main(int /*argc*/, char** /*argv*/) {
 
 
     ReadCSV inCSV; //create object to prepare for csv import
-    Input input(inCSV.importCSV("NietOnnodigIngewikkeld.csv"), true); // import csv with input commands for drone and put it in an Input class object.
+    Input input(inCSV.importCSV("InputMatrix.csv"), false); // import csv with input commands for drone and put it in an Input class object.
 
+        
 
     // ***** INTEGRATE CURRENT STATESPACE FROM t0 TO tEnd AND SAVE TO A CSV FILE: *****
 
@@ -86,13 +87,13 @@ int main(int /*argc*/, char** /*argv*/) {
     droneSimulation.integrate(x, input); // integrate system 
     x.print(); //print current (last) states to terminal
 
-    droneSimulation.exportStates(); 
+    droneSimulation.exportStates("ExportFiel.csv"); 
 
 
 
     //OutputCSV output;
     //output.writeCSV(input.getInputVector(), "spaghettiCodeMuch.csv");
-
+    
 
     return 0;
 }
