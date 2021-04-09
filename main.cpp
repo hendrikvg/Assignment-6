@@ -40,13 +40,14 @@ int main(int /*argc*/, char** /*argv*/) {
 
     // ***** INITIALISE MATRICES X, U, A, B, C, D, E FOR STATESPACE: *****
 
-    Matrix x(5, 1, 0.0);
+    Matrix x(9, 1, 0.0);
+    x(7, 1) = -1.5;
+    Matrix u(2, 1, 0.0);
 
     EntryMatrix A(9, 9, 0.0);
     A(1, 4) = 1.0;
     A(2, 5) = 1.0;
     A(4, 4) = Entry([&x, m_d, C_dd]() {return (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2))); });
-    //A(5, 1) = Entry([&x, g]() {return (x(1, 1) == 0.0) ? -g : -g / x(1, 1); }); // bool ? this : that (conditional ternary operator)
     A(5, 5) = Entry([&x, m_d, C_dd]() {return (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2))); });
     A(6, 8) = 1;
     A(7, 9) = 1;
@@ -59,20 +60,28 @@ int main(int /*argc*/, char** /*argv*/) {
     B(5, 1) = Entry([&x, m_d]() {return (1 / m_d) * (cos(x(3, 1))); });
 
     EntryMatrix C(9, 9, 0.0);
-    C.diag(1);
+    C.diag(1.0);
 
     EntryMatrix D(9, 2, 0.0);
 
-    Matrix E(9, 1, 0.0);
-    E(4, 1) = Entry([]() {}); -Fx
-    E(5, 1) = -g - Fy;
-    E(8, 1) = Fx;
-    E(9, 1) = Fy - g;
+    EntryMatrix E(9, 1, 0.0);
+    E(4, 1) = Entry([&x, m_d, L_rope0, K_rope, D_rope]() {return (K_rope * (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2)) - L_rope0) + D_rope * (((x(1, 1) - x(6, 1)) * (x(4, 1) - x(8, 1)) + (x(2, 1) - x(7, 1)) * (x(5, 1) - x(9, 1))) / (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2)))) > 0) ?
+        (-1 / m_d) * ((K_rope * (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2)) - L_rope0) + D_rope * (((x(1, 1) - x(6, 1)) * (x(4, 1) - x(8, 1)) + (x(2, 1) - x(7, 1)) * (x(5, 1) - x(9, 1))) / (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2))))) *
+            ((x(1, 1) - x(6, 1)) / (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2))))) : (0); }); // bool ? this : that (conditional ternary operator)
+    E(5, 1) = Entry([&x, g, m_d, L_rope0, K_rope, D_rope]() {return (K_rope * (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2)) - L_rope0) + D_rope * (((x(1, 1) - x(6, 1)) * (x(4, 1) - x(8, 1)) + (x(2, 1) - x(7, 1)) * (x(5, 1) - x(9, 1))) / (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2)))) > 0) ?
+        -g - (1 / m_d) * ((K_rope * (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2)) - L_rope0) + D_rope * (((x(1, 1) - x(6, 1)) * (x(4, 1) - x(8, 1)) + (x(2, 1) - x(7, 1)) * (x(5, 1) - x(9, 1))) / (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2))))) *
+            ((x(2, 1) - x(7, 1)) / (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2))))) : (-g); }); // bool ? this : that (conditional ternary operator)
+    E(8, 1) = Entry([&x, m_c, L_rope0, K_rope, D_rope]() {return (K_rope * (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2)) - L_rope0) + D_rope * (((x(1, 1) - x(6, 1)) * (x(4, 1) - x(8, 1)) + (x(2, 1) - x(7, 1)) * (x(5, 1) - x(9, 1))) / (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2)))) > 0) ?
+        (1 / m_c) * ((K_rope * (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2)) - L_rope0) + D_rope * (((x(1, 1) - x(6, 1)) * (x(4, 1) - x(8, 1)) + (x(2, 1) - x(7, 1)) * (x(5, 1) - x(9, 1))) / (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2))))) *
+            ((x(1, 1) - x(6, 1)) / (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2))))) : (0); }); // bool ? this : that (conditional ternary operator)
+    E(9, 1) = Entry([&x, g, m_c, L_rope0, K_rope, D_rope]() {return (K_rope * (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2)) - L_rope0) + D_rope * (((x(1, 1) - x(6, 1)) * (x(4, 1) - x(8, 1)) + (x(2, 1) - x(7, 1)) * (x(5, 1) - x(9, 1))) / (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2)))) > 0) ?
+        -g + (1 / m_c) * ((K_rope * (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2)) - L_rope0) + D_rope * (((x(1, 1) - x(6, 1)) * (x(4, 1) - x(8, 1)) + (x(2, 1) - x(7, 1)) * (x(5, 1) - x(9, 1))) / (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2))))) *
+            ((x(2, 1) - x(7, 1)) / (sqrt(pow((x(1, 1) - x(6, 1)), 2) + pow(x(2, 1) - x(7, 1), 2))))) : (-g); }); // bool ? this : that (conditional ternary operator)
+
 
      //***** INITIALISE STATESPACE WITH PREVIOUSLY MADE MATRICES: *****
 
     StateSpace drone(A, B, C, D, E);
-
 
     // ***** PREPARE INPUT SIGNAL BY IMPORTING A CSV DOCUMENT TO AN INPUT OBJECT: *****
 

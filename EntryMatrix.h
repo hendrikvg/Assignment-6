@@ -1,12 +1,14 @@
 #ifndef SRC_ENTRYMATRIX_H
+#pragma once
 #define SRC_ENTRYMATRIX_H
 
 #include <iostream>
-#include <algorithm>
+//#include <algorithm>
 #include <vector>
 #include "Entry.h"
 #include "Matrix.h"
 
+class Matrix; // Forward declare Matrix
 
 /// <summary>
 /// Matrix class that can take variables and constants. Defines matrix operations for use in integration and dynamics calculations.

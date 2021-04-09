@@ -4,11 +4,11 @@
 StateSpace::StateSpace(EntryMatrix A, EntryMatrix B, EntryMatrix C, EntryMatrix D) : 
 	A(A), B(B), C(C), D(D)
 {
-	Matrix E(A.getRows(), 1, 0.0);
+	EntryMatrix E(A.getRows(), 1, 0.0);
 	this->E = E;
 }
 
-StateSpace::StateSpace(EntryMatrix A, EntryMatrix B, EntryMatrix C, EntryMatrix D, Matrix E) :
+StateSpace::StateSpace(EntryMatrix A, EntryMatrix B, EntryMatrix C, EntryMatrix D, EntryMatrix E) :
 	A(A), B(B), C(C), D(D), E(E)
 {
 }
@@ -47,7 +47,7 @@ EntryMatrix StateSpace::getD() const
 	return this->D;
 }
 
-Matrix StateSpace::getE() const
+EntryMatrix StateSpace::getE() const
 {
 	return this->E;
 }
@@ -72,7 +72,7 @@ void StateSpace::setD(EntryMatrix D)
 	this->D = D;
 }
 
-void StateSpace::setE(Matrix E)
+void StateSpace::setE(EntryMatrix E)
 {
 	this->E = E;
 }

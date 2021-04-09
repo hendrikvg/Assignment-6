@@ -34,7 +34,7 @@ Matrix EntryMatrix::operator+(EntryMatrix B) {
 	{
 		for (unsigned column = 0; column < colSize; column++)
 		{
-			sum(row + 1, column + 1) = this->matrix[row][column] + B(row + 1, column + 1);
+			sum(row + 1, column + 1) = this->matrix[row][column] + B(row + 1, column + 1).calculate();
 		}
 	}
 	return sum;

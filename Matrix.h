@@ -1,10 +1,13 @@
 #ifndef SRC_MATRIX_H
+#pragma once
 #define SRC_MATRIX_H
 
 #include <iostream>
-#include <algorithm>
+//#include <algorithm>
 #include <vector>
+#include "EntryMatrix.h"
 
+class EntryMatrix; // Forward declare EntryMatrix
 
 /// <summary>
 /// Allows creation of Matrices and defines matrix operations for linear algebra needed for statespace dynamics and control.
@@ -24,6 +27,7 @@ public:
 
 	// Matrix operations
 	Matrix operator+(Matrix);
+	Matrix operator+(EntryMatrix B);
 	Matrix operator-(Matrix);
 	Matrix operator*(Matrix);
 	//Matrix transpose(); // Not yet implemented

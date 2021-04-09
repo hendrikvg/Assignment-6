@@ -1,4 +1,5 @@
 #ifndef SRC_ENTRY_H
+#pragma once
 #define SRC_ENTRY_H
 
 #include <functional>
