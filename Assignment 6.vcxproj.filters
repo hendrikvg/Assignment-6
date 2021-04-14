@@ -68,9 +68,6 @@
     <ClInclude Include="EntryMatrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Test.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ForwardEuler.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -2,8 +2,8 @@
 
 
 Input::Input(std::vector<std::vector<double>> inputVectorIn, bool switchSearch = 1) {
-	rowSizeInput = inputVectorIn[0].size();
-	colSizeInput = inputVectorIn.size();
+	rowSizeInput = (unsigned) inputVectorIn[0].size();
+	colSizeInput = (unsigned) inputVectorIn.size();
 	inputVector = inputVectorIn;
 
 	smartSearchMemory = (colSizeInput - 1 * switchSearch) * 0; // if swich is false, the smart search is turned off. Might be useful for debugging for future assignments.

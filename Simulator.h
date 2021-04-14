@@ -5,6 +5,7 @@
 #include <string>
 #include "StateSpace.h"
 #include "OutputCSV.h"
+#include "Input.h"
 
 /// <summary>
 /// Defines basic functionality needed for all types of future simulations and integrations. Can save current states to a member variable. Can export that member variable making use of writeCSV class.
@@ -14,6 +15,8 @@ class Simulator
 protected:
 	StateSpace* system;
 	Matrix x0;
+	Matrix x;
+	Matrix u;
 	double dt;
 	double t0;
 	double tEnd;
@@ -25,6 +28,9 @@ public:
 	/// Constructor. Does not need to be called explicitly.
 	/// </summary>
 	Simulator() = default;
+
+	virtual void integrate(Matrix& x, Input u) = 0;
+	virtual void integrate(Matrix& x, Input u, Matrix x0) = 0;
 
 	/// <summary>
 	/// Saves current state of statespace to simulator object. 

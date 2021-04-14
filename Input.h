@@ -18,6 +18,7 @@ private:
 	Matrix u; 
 
 public:
+	Input() = default;
 
 	/// <summary>
 	///  constructor for input class object. This class can be used to load in 2-d vectors from the ReadCSV class.
