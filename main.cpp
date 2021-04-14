@@ -9,10 +9,12 @@
 #include "Entry.h"
 #include "EntryMatrix.h"
 #include "ForwardEuler.h"
+#include "RungeKutta.h"
 #include "Functions.h"
 #include "Input.h"
 #include "ReadCSV.h"
 #include "Test.h"
+
 
 int main(int /*argc*/, char** /*argv*/) {
     std::cout << "HELLO WORLD\n";
@@ -87,23 +89,27 @@ int main(int /*argc*/, char** /*argv*/) {
 
 
     ReadCSV inCSV; //create object to prepare for csv import
-    Input input(inCSV.importCSV("NietOnnodigIngewikkeld.csv"), true); // import csv with input commands for drone and put it in an Input class object.
+    Input input(inCSV.importCSV("InputMatrix.csv"), false); // import csv with input commands for drone and put it in an Input class object.
 
+        
 
     // ***** INTEGRATE CURRENT STATESPACE FROM t0 TO tEnd AND SAVE TO A CSV FILE: *****
 
     x.print(); //print current state vector to terminal
-    ForwardEuler droneSimulation(&drone, t0, dt, tEnd); // create ForwardEuler object in preperation for integration
+    //ForwardEuler droneSimulation(&drone, t0, dt, tEnd); // create ForwardEuler object in preperation for integration
+    RungeKutta droneSimulation(&drone, t0, dt, tEnd); // create ForwardEuler object in preperation for integration
     droneSimulation.integrate(x, input); // integrate system 
     x.print(); //print current (last) states to terminal
 
     droneSimulation.exportStates("TEST.csv"); 
 
 
+    
+    
 
     //OutputCSV output;
     //output.writeCSV(input.getInputVector(), "spaghettiCodeMuch.csv");
-
+    
 
     return 0;
 }

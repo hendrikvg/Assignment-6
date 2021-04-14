@@ -27,7 +27,7 @@ void ForwardEuler::integrate(Matrix& x, Input u)
             x = x + system->calculateXdot(x, u.getU(t)) * dt;
             Matrix y = system->calculateY(x, u.getU(t));
             saveState(t, x, y);
-        }
+        }   
     }
     // exportStates();  // done inside main
 }
