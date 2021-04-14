@@ -36,8 +36,6 @@ Matrix Input::getU(double time)
 }
 
 
-
-
 std::vector<std::vector<double>> Input::getInputVector()
 {
 	return inputVector;

@@ -22,10 +22,11 @@ if (size(A,1) == 11)
 else
     
     figure
+    subplot(211)
     plot(t,A([2:3 7:8],:));
-    grid on
-    figure
+    grid on, title('pos'), legend('x_d','y_d','x_c','y_c','location','best')
+    subplot(212)
     plot(t,A([5:6 9:10],:));
-    grid on
+    grid on, title('acc'), legend('x_d','y_d','x_c','y_c','location','best')
     
 end

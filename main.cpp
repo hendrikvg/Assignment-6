@@ -21,7 +21,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
     // ***** INITIALISE ALL GLOBAL VARIABLES: *****
     double t0 = 0;
-    double dt = 0.005;
+    double dt = 0.01;
     double tEnd = 8;
 
     double m_d = 3;
