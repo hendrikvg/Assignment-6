@@ -39,7 +39,7 @@ public:
 	/// </summary>
 	/// <param name="x">states matrix</param>
 	/// <param name="u">object of type Input with inputs for the system</param>
-	void integrate(Matrix& x, Input u);
+	void integrate(Matrix& x, Input u, double tEnd);
 
 	/// <summary>
 	/// Integrate system inside current object, with specifying initial states.
@@ -47,7 +47,12 @@ public:
 	/// <param name="x">states matrix</param>
 	/// <param name="u">object of type Input with inputs for the system</param>
 	/// <param name="x0"> initial states matrix</param>
-	void integrate(Matrix& x, Input u, Matrix x0);
+	void integrate(Matrix& x, Input u, double tEnd, Matrix x0);
+
+	void integrateThis(Matrix& x, Input u, SDL_Event& event, double &time);
+
+
+
 };
 
 #endif /*SRC_FORWARDEULER_H*/

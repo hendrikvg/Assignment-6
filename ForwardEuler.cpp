@@ -9,7 +9,7 @@ ForwardEuler::ForwardEuler(StateSpace *system, double t0, double dt, double tEnd
     this->t = 0;
 }
 
-void ForwardEuler::integrate(Matrix& x, Input u)
+void ForwardEuler::integrate(Matrix& x, Input u, double tEnd)
 {
     if (t == 0)
     {
@@ -33,11 +33,22 @@ void ForwardEuler::integrate(Matrix& x, Input u)
 }
 
 // Allow for setting initial state x0
-void ForwardEuler::integrate(Matrix& x, Input u, Matrix x0)
+void ForwardEuler::integrate(Matrix& x, Input u, double tEnd, Matrix x0)
 {
     if (x.getRows() == x0.getRows() && x.getColumns() == x0.getColumns())
     {
         x = x0;
-        integrate(x, u);
+        integrate(x, u , tEnd);
     }
+}
+
+void ForwardEuler::integrateThis(Matrix& x, Input u, SDL_Event &event, double& time) {
+
+    x = x + system->calculateXdot(x, u.getKey(event)) * dt;
+    Matrix y = system->calculateY(x, u.getKey(event)) * dt;
+
+    
+
+    saveState(time, x, y);
+    time += dt;
 }

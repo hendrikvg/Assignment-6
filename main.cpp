@@ -27,6 +27,7 @@ int main(int /*argc*/, char** /*argv*/) {
     double t0 = 0;
     double dt = 0.0005;
     double tEnd = 8;
+    double time = t0;
 
     double m_d = 3;
     double m_c = 2;
@@ -38,6 +39,7 @@ int main(int /*argc*/, char** /*argv*/) {
     //double Fx{0};
     //double Fy{0};
     double g = 9.81;
+
 
 
     // ***** INITIALISE MATRICES X, U, A, B, C, D, E FOR STATESPACE: *****
@@ -96,20 +98,103 @@ int main(int /*argc*/, char** /*argv*/) {
     // ***** INTEGRATE CURRENT STATESPACE FROM t0 TO tEnd AND SAVE TO A CSV FILE: *****
 
     x.print(); //print current state vector to terminal
-    //ForwardEuler droneSimulation(&drone, t0, dt, tEnd); // create ForwardEuler object in preperation for integration
-    RungeKutta droneSimulation(&drone, t0, dt, tEnd); // create ForwardEuler object in preperation for integration
-    droneSimulation.integrate(x, input); // integrate system 
-    x.print(); //print current (last) states to terminal
+    ForwardEuler droneSimulation(&drone, t0, dt, tEnd); // create ForwardEuler object in preperation for integration
+    //RungeKutta droneSimulation(&drone, t0, dt, tEnd); // create ForwardEuler object in preperation for integration
+    //droneSimulation.integrate(x, input); // integrate system 
+    //x.print(); //print current (last) states to terminal
 
-    droneSimulation.exportStates("TEST.csv"); 
+    //droneSimulation.exportStates("TEST.csv"); 
 
 
     
+    // ***** SDL WINDOW AND MACHINE: *****
+
+    const double FPS = 0.1; //20 // It is set low now since integration time is longer than 1 fps
+    Uint32 timeout_ms = SDL_GetTicks() + 1000 / FPS;
+
+    bool quit = false;
+    SDL_Event event;
+
+    SDL_Init(SDL_INIT_VIDEO);
+
+    const int windowSizeX = 1200;
+    const int windowSizeY = 900; 
+
+    SDL_Window* window = SDL_CreateWindow("SDL2 Displaying Image",
+        SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowSizeX, windowSizeY, 0);
+
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
+
+    SDL_Surface* surfaceDrone = SDL_LoadBMP("drone.bmp");
+    SDL_Surface* surfaceCargo = SDL_LoadBMP("cargo.bmp");
+
+    SDL_Texture* textureDrone = SDL_CreateTextureFromSurface(renderer, surfaceDrone);
+    SDL_Texture* textureCargo = SDL_CreateTextureFromSurface(renderer, surfaceCargo);
+
+    SDL_Rect droneDestinationRect = { windowSizeX / 2 - 140, windowSizeY / 2 - 37, 280, 73 };
+    SDL_Rect cargoDestinationRect = { windowSizeX / 2 - 54,  windowSizeY / 2 + 280 - 46, 108, 91 };
+
+    SDL_RenderCopy(renderer, textureDrone, NULL, &droneDestinationRect);
+    SDL_RenderCopy(renderer, textureCargo, NULL, &cargoDestinationRect);
+
+    while (!quit) {
+
+        std::cout << SDL_GetTicks() << std::endl;
+        droneSimulation.integrate(x, input, (double)timeout_ms/1000);
+        //integrate for next time step
+        std::cout << SDL_GetTicks() << std::endl; // takes way too long
+        system("pause");
+
+
+        while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) { // runs when the next Frame is reached. So every 1000/FPS milliseconds
+
+
+            droneDestinationRect.x = x(1, 1) + windowSizeX / 2 - 140;
+            droneDestinationRect.y = x(2, 1) + windowSizeY / 2 - 37;
+            cargoDestinationRect.x = x(6, 1) + windowSizeX / 2 - 54;
+            cargoDestinationRect.y = x(7, 1) + windowSizeY / 2 + 280 - 46;
+            SDL_RenderPresent(renderer);
+
+            while (SDL_PollEvent(&event)) {
+                switch (event.type) {
+
+                case SDL_QUIT:
+                    quit = true;
+                    break;
+                
+                }
+            }
+            timeout_ms += 1000 / FPS;
+        }
+
+
+
+    }
     
 
-    //OutputCSV output;
-    //output.writeCSV(input.getInputVector(), "spaghettiCodeMuch.csv");
-    
+
+    droneSimulation.exportStates("savedStates1.csv");
+
+
+
+    // ***** CLEAN UP: *****
+
+
+    // clean up surface and texture of drone
+    SDL_DestroyTexture(textureDrone);
+    SDL_FreeSurface(surfaceDrone);
+
+
+    // clean up surface and texture of cargo
+    SDL_DestroyTexture(textureCargo);
+    SDL_FreeSurface(surfaceCargo);
+
+    // clean up renderer and window
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+
+    // quit SDL
+    SDL_Quit;
 
     return 0;
 }

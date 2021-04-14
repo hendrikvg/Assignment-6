@@ -42,3 +42,14 @@ std::vector<std::vector<double>> Input::getInputVector()
 {
 	return inputVector;
 }
+
+
+
+Matrix Input::getKey(SDL_Event& event) {
+	Matrix u(2, 1, 0.0); // Initiate u
+
+	u(1, 1) = 50;//29.4286638;
+	u(2, 1) = 0;
+
+	return u;
+}

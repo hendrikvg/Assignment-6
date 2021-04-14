@@ -2,6 +2,7 @@
 #define SRC_INPUT_H
 
 #include "Matrix.h"
+#include "SDL.h"
 #include <vector>
 
 /// <summary>
@@ -39,6 +40,9 @@ public:
 	/// </summary>
 	/// <returns>2-d vector with all input values</returns>
 	std::vector<std::vector<double>> getInputVector();
+
+
+	Matrix getKey(SDL_Event &event);
 };
 
 #endif
