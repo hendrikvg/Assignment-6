@@ -15,7 +15,7 @@ protected:
 	EntryMatrix B;
 	EntryMatrix C;
 	EntryMatrix D;
-	Matrix E;
+	EntryMatrix E;
 	//Matrix x;
 	//Matrix u;
 	//Matrix x0;
@@ -25,7 +25,7 @@ protected:
 public:
 	StateSpace() = default;
 	StateSpace(EntryMatrix A, EntryMatrix B, EntryMatrix C, EntryMatrix D);
-	StateSpace(EntryMatrix A, EntryMatrix B, EntryMatrix C, EntryMatrix D, Matrix E);
+	StateSpace(EntryMatrix A, EntryMatrix B, EntryMatrix C, EntryMatrix D, EntryMatrix E);
 	StateSpace(const StateSpace&); // copy
 	~StateSpace(); // destructor
 
@@ -34,7 +34,7 @@ public:
 	EntryMatrix getB() const;
 	EntryMatrix getC() const;
 	EntryMatrix getD() const;
-	Matrix getE() const;
+	EntryMatrix getE() const;
 	//Matrix getX() const;
 	//Matrix getU() const;
 	//Matrix getX0() const;
@@ -44,7 +44,7 @@ public:
 	void setB(EntryMatrix);
 	void setC(EntryMatrix);
 	void setD(EntryMatrix);
-	void setE(Matrix E);
+	void setE(EntryMatrix E);
 	//void setX(Matrix);
 	//void setU(Matrix);
 	//void setX0(Matrix);

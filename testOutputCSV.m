@@ -1,4 +1,4 @@
-clc, clear, close all;
+clc, clear, close all
 
 A = readmatrix("ExportFiel.csv");
 t = A(1,:);

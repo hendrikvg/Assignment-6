@@ -41,6 +41,20 @@ Matrix Matrix::operator+(Matrix B) {
 	return sum;
 }
 
+Matrix Matrix::operator+(EntryMatrix B)
+{
+	Matrix sum(rowSize, colSize, 0.0);
+
+	for (unsigned row = 0; row < rowSize; row++)
+	{
+		for (unsigned column = 0; column < colSize; column++)
+		{
+			sum(row + 1, column + 1) = this->matrix[row][column] + B(row + 1, column + 1).calculate();
+		}
+	}
+	return sum;
+}
+
 // Subtraction of two matrices
 Matrix Matrix::operator-(Matrix B) {
 	Matrix difference(rowSize, colSize, 0.0);

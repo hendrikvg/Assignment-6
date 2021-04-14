@@ -153,6 +153,7 @@
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="OutputCSV.cpp" />
     <ClCompile Include="ReadCSV.cpp" />
+    <ClCompile Include="RungeKutta.cpp" />
     <ClCompile Include="Simulator.cpp" />
     <ClCompile Include="StateSpace.cpp" />
     <ClCompile Include="Test.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="OutputCSV.h" />
     <ClInclude Include="ReadCSV.h" />
+    <ClInclude Include="RungeKutta.h" />
     <ClInclude Include="Simulator.h" />
     <ClInclude Include="StateSpace.h" />
     <ClInclude Include="Test.h" />
