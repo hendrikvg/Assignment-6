@@ -5,10 +5,6 @@
 
 class RungeKutta : public Simulator
 {
-private:
-	Matrix xdot;
-	Matrix y;
-
 public:
 	RungeKutta() = default;
 

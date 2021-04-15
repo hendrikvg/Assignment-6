@@ -6,31 +6,18 @@ ForwardEuler::ForwardEuler(StateSpace *system, double t0, double dt, double tEnd
     this->t0 = t0;
     this->dt = dt;
     this->tEnd = tEnd;
-    this->t = 0;
+    this->t = t0;
 }
 
 void ForwardEuler::integrate(Matrix& x, Input u)
 {
     saveState(t, x, system->calculateY(x, u.getU(t)));
-    if (t == 0)
+    for (t = t0; t < tEnd; t += dt)
     {
-        for (t = t0; t < tEnd; t += dt)
-        {
-            x = x + system->calculateXdot(x, u.getU(t)) * dt;
-            Matrix y = system->calculateY(x, u.getU(t));
-            saveState(t + dt, x, y);
-        }
+        x = x + system->calculateXdot(x, u.getU(t)) * dt;
+        Matrix y = system->calculateY(x, u.getU(t));
+        saveState(t + dt, x, y);
     }
-    else
-    {
-        for (t; t < tEnd; t += dt)
-        {
-            x = x + system->calculateXdot(x, u.getU(t)) * dt;
-            Matrix y = system->calculateY(x, u.getU(t));
-            saveState(t + dt, x, y);
-        }   
-    }
-    // exportStates();  // done inside main
 }
 
 // Allow for setting initial state x0

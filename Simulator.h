@@ -17,6 +17,8 @@ protected:
 	Matrix x0;
 	Matrix x;
 	Matrix u;
+	Matrix xdot;
+	Matrix y;
 	double dt;
 	double t0;
 	double tEnd;

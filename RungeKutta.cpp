@@ -6,7 +6,7 @@ RungeKutta::RungeKutta(StateSpace* system, double t0, double dt, double tEnd = 0
     this->t0 = t0;
     this->dt = dt;
     this->tEnd = tEnd;
-    this->t = 0;
+    this->t = t0;
 }
 
 void RungeKutta::integrate(Matrix& x, Input u)  
@@ -33,7 +33,6 @@ void RungeKutta::integrate(Matrix& x, Input u)
 
 void RungeKutta::integrate(Matrix& x, Input u, Matrix x0)  
 {
-
     if (x.getRows() == x0.getRows() && x.getColumns() == x0.getColumns())
     {
         x = x0;

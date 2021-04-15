@@ -12,12 +12,6 @@
 class ForwardEuler :
 	public Simulator
 {
-private:
-	Matrix xdot;
-	Matrix x;
-	Matrix u;
-	Matrix y;
-
 public:
 
 	/// <summary>

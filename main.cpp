@@ -51,6 +51,7 @@ int main(int /*argc*/, char** /*argv*/) {
     std::cout << "Enter 0 to quit the program\n";
     std::cout << "Enter 1 for the system of a drone\n";
     std::cout << "Enter 2 for the system of a drone with cargo\n";
+
     switch (getInteger(0, 2))
     {
     case 1:
@@ -171,6 +172,7 @@ int main(int /*argc*/, char** /*argv*/) {
     std::cout << "Enter 0 to quit the program\n";
     std::cout << "Enter 1 for Euler forward\n";
     std::cout << "Enter 2 for Runge-Kutta 4\n";
+
     switch (getInteger(0, 2))
     {
     case 1:
