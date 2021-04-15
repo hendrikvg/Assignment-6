@@ -17,6 +17,8 @@ protected:
 	Matrix x0;
 	Matrix x;
 	Matrix u;
+	Matrix xdot;
+	Matrix y;
 	double dt;
 	double t0;
 	double tEnd;
@@ -35,8 +37,8 @@ public:
 
 	//virtual void integrateThis(Matrix& x, Input u, SDL_Event& event, double& time) = 0;
 
+	virtual void integrate(Matrix& x, Input u, double t, double dt, double tEnd) = 0;
 	virtual void integrate(Matrix& x, Input u) = 0;
-	virtual void integrate(Matrix& x, Input u, double dt) = 0;
 	virtual void integrate(Matrix& x, Input u, Matrix x0) = 0;
 
 	/// <summary>

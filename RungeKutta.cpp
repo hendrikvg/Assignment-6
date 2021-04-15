@@ -6,21 +6,25 @@ RungeKutta::RungeKutta(StateSpace* system, double t0, double dt, double tEnd = 0
     this->t0 = t0;
     this->dt = dt;
     this->tEnd = tEnd;
-    this->t = 0;
+    this->t = t0;
 }
 
-void RungeKutta::integrate(Matrix& x, Input u) 
+void RungeKutta::integrate(Matrix& x, Input u, double t, double dt, double tEnd)
 {
     saveState(t, x, system->calculateY(x, u.getU(t)));
+
     for (t; t < tEnd; t += dt) {
         Matrix xOld(x);
 
         Matrix k1 = system->calculateXdot(x, u.getU(t));
         x = x + k1 * 0.5 * dt;
+
         Matrix k2 = system->calculateXdot(x, u.getU(t));
         x = x + k2 * 0.5 * dt;
+
         Matrix k3 = system->calculateXdot(x, u.getU(t));
         x = x + k3 * dt;
+
         Matrix k4 = system->calculateXdot(x, u.getU(t));
 
         x = xOld + (k1 + k2 * 2.0 + k3 * 2.0 + k4) * (dt / 6.0);
@@ -29,10 +33,12 @@ void RungeKutta::integrate(Matrix& x, Input u)
 
         saveState(t + dt, x, y);
     }
+    this->t = t;
 }
 
-void RungeKutta::integrate(Matrix& x, Input u, double dt)
+void RungeKutta::integrate(Matrix& x, Input u)
 {
+    integrate(x, u, this->t, this->dt, this->tEnd);
 }
 
 void RungeKutta::integrate(Matrix& x, Input u, Matrix x0)
