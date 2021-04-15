@@ -79,6 +79,7 @@ int main(int /*argc*/, char** /*argv*/) {
         break;
 
     case 2:
+        dt /= 20; // Note: dt becomes 20 times as small to avoid instability.
         x = Matrix(9, 1, 0.0);
         x(2, 1) = 1.5;
 
@@ -147,7 +148,8 @@ int main(int /*argc*/, char** /*argv*/) {
         exit(EXIT_SUCCESS); // exits the program with cleaning up.
     }
 
-    std::cout << "System initialized with:\nx =";
+    std::cout << "\nSystem equations: xDot = Ax + Bu + E and y = Cx + Du\n";
+    std::cout << "System initialized with:\nx0 =";
     x.print();
     std::cout << "A =";
     A.print();
@@ -162,8 +164,8 @@ int main(int /*argc*/, char** /*argv*/) {
     std::cout << "Note that the matrix entries may be state dependent, and thus change during the simulation.";
 
     StateSpace dynamicSystem(A, B, C, D, E); // Initiate state space system
-    ForwardEuler forwardEulerIntegrator(&dynamicSystem, t0, dt/20, tEnd); // Note: dt becomes 20 times as small to avoid instability.
-    RungeKutta rungeKuttaIntegrator(&dynamicSystem, t0, dt, tEnd);
+    ForwardEuler forwardEulerIntegrator(&dynamicSystem, t0, dt, tEnd); // Note: dt becomes 20 times as small to avoid instability.
+    RungeKutta rungeKuttaIntegrator(&dynamicSystem, t0, dt*20, tEnd);
 
     std::cout << "\nChoose which integrator you would like to simulate with:\n";
     std::cout << "Enter 0 to quit the program\n";
@@ -178,6 +180,7 @@ int main(int /*argc*/, char** /*argv*/) {
     }
     case 2:
     {
+        dt *= 20;
         systemSimulation = &rungeKuttaIntegrator;
         break;
     }
@@ -251,8 +254,19 @@ int main(int /*argc*/, char** /*argv*/) {
 
     //}
 
+    std::cout << "Starting simulation with:\n";
+    std::cout << "t0\t=\t" << t0;
+    std::cout << "\ndt\t=\t" << dt;
+    std::cout << "\ntEnd\t=\t" << tEnd;
+    std::cout << "\nIntegrating... please be patient";
+
     systemSimulation->integrate(x, input); // integrate system
+
+    std::cout << "\nExporting states as CSV file... ";
+
     systemSimulation->exportStates("TEST.csv");
+
+    std::cout << "Succes! \nExiting program...";
 
     //// ***** CLEAN UP: *****
 

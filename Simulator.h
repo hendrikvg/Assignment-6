@@ -54,4 +54,4 @@ public:
 	void exportStates(std::string);
 };
 
-#endif // !SRC_SIMULATOR_H
+#endif /*SRC_SIMULATOR_H*/

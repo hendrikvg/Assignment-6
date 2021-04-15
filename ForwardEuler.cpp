@@ -11,6 +11,13 @@ ForwardEuler::ForwardEuler(StateSpace *system, double t0, double dt, double tEnd
 
 void ForwardEuler::integrate(Matrix& x, Input u)
 {
+    saveState(t, x, system->calculateY(x, u.getU(t)));
+    for (t; t < tEnd; t += dt)
+    {
+        x = x + system->calculateXdot(x, u.getU(t)) * dt;
+        Matrix y = system->calculateY(x, u.getU(t));
+        saveState(t + dt, x, y);
+    }
 }
 
 void ForwardEuler::integrate(Matrix& x, Input u, Matrix x0)
