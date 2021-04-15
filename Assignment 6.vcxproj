@@ -156,7 +156,6 @@
     <ClCompile Include="RungeKutta.cpp" />
     <ClCompile Include="Simulator.cpp" />
     <ClCompile Include="StateSpace.cpp" />
-    <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entry.h" />
@@ -170,7 +169,6 @@
     <ClInclude Include="RungeKutta.h" />
     <ClInclude Include="Simulator.h" />
     <ClInclude Include="StateSpace.h" />
-    <ClInclude Include="Test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

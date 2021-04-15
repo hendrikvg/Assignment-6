@@ -14,8 +14,6 @@ class ForwardEuler :
 {
 private:
 	Matrix xdot;
-	Matrix x;
-	Matrix u;
 	Matrix y;
 
 public:
@@ -32,14 +30,16 @@ public:
 	/// <param name="t0">initial time</param>
 	/// <param name="td">time step</param>
 	/// <param name="tEnd">final time</param>
-	ForwardEuler(StateSpace *system, double t0, double td, double tEnd);
+	ForwardEuler(StateSpace *system, double t0, double dt, double tEnd);
 
+	void integrate(Matrix& x, Input u) override;
 	/// <summary>
-	/// Integrate system inside current object, without specifying initial states.
-	/// </summary>
-	/// <param name="x">states matrix</param>
-	/// <param name="u">object of type Input with inputs for the system</param>
-	void integrate(Matrix& x, Input u, double tEnd);
+/// Integrate system inside current object, without specifying initial states.
+/// </summary>
+/// <param name="x">states matrix</param>
+/// <param name="u">object of type Input with inputs for the system</param>
+	void integrate(Matrix& x, Input u, double tEnd) override;
+	void integrate(Matrix& x, Input u, Matrix x0) override;
 
 	/// <summary>
 	/// Integrate system inside current object, with specifying initial states.
@@ -47,9 +47,9 @@ public:
 	/// <param name="x">states matrix</param>
 	/// <param name="u">object of type Input with inputs for the system</param>
 	/// <param name="x0"> initial states matrix</param>
-	void integrate(Matrix& x, Input u, double tEnd, Matrix x0);
+	void integrate(Matrix& x, Input u, double tEnd, Matrix x0) /*override*/;
 
-	void integrateThis(Matrix& x, Input u, SDL_Event& event, double &time);
+	void integrateThis(Matrix& x, Input u, SDL_Event& event, double &time) /*override*/;
 
 
 

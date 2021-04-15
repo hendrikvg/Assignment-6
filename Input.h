@@ -14,11 +14,11 @@ class Input
 private:
 	unsigned rowSizeInput;
 	unsigned colSizeInput;
-	unsigned smartSearchMemory=0;  // needed for search optimization
 	std::vector<std::vector<double>> inputVector;
 	Matrix u; 
 
 public:
+	Input() = default;
 
 	/// <summary>
 	///  constructor for input class object. This class can be used to load in 2-d vectors from the ReadCSV class.
@@ -45,4 +45,4 @@ public:
 	Matrix getKey(SDL_Event &event);
 };
 
-#endif
+#endif /*SRC_INPUT_H*/

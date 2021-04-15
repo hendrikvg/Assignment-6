@@ -2,35 +2,37 @@
 #define SRC_FUNCTIONS_H
 
 #include <iostream>
-#include <vector>
+#include <string>
+#include <sstream>
 
-// Function below has proudly been stolen from: https://stackoverflow.com/questions/27028226/python-linspace-in-c
-template<typename T>
-std::vector<double> linspace(T start_in, T end_in, int num_in)
+/*
+The function getInteger() makes sure the input string is an integer the minimum and the maximum input.
+If it isn't then the user will be asked to correct their input.
+If it is then the input string will be converted to an integer and returned.
+
+@param minimum The minimum value of the integer that will be recieved
+@param maximum The maximum value of the integer that will be recieved
+@returns An integer from user input between the minimum and maximum
+*/
+int getInteger(int minimum, int maximum)
 {
+    int outputInteger;
+    std::string inputString;
 
-    std::vector<double> linspaced;
-
-    double start = static_cast<double>(start_in);
-    double end = static_cast<double>(end_in);
-    double num = static_cast<double>(num_in);
-
-    if (num == 0) { return linspaced; }
-    if (num == 1)
+    while (1)
     {
-        linspaced.push_back(start);
-        return linspaced;
+        std::getline(std::cin, inputString);                                                                                             // gets user input as a string
+        std::stringstream convert(inputString);                                                                                     // makes string into a stream
+        if (convert >> outputInteger && !(convert >> inputString) && (outputInteger >= minimum) && (outputInteger <= maximum)) // checking for valid conversion and any rejects if any unconverted input left
+        {
+            return outputInteger;
+        }
+        else
+        {
+            std::cin.clear(); // clear the input
+            std::cout << "ERROR!\nwrong input\nPlease enter an INTEGER between " << minimum << " and " << maximum << "\n";
+        }
     }
-
-    double delta = (end - start) / (num - 1);
-
-    for (int i = 0; i < num - 1; ++i)
-    {
-        linspaced.push_back(start + delta * i);
-    }
-    linspaced.push_back(end); // I want to ensure that start and end
-                              // are exactly the same as the input
-    return linspaced;
 }
 
 #endif // !SRC_FUNCTIONS_H
