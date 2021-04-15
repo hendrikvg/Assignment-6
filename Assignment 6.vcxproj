@@ -148,6 +148,7 @@
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="EntryMatrix.cpp" />
     <ClCompile Include="ForwardEuler.cpp" />
+    <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="EntryMatrix.h" />
     <ClInclude Include="ForwardEuler.h" />
     <ClInclude Include="Functions.h" />
+    <ClInclude Include="Graphics.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="OutputCSV.h" />
