@@ -46,7 +46,7 @@ public:
 	/// <param name="u">object of type Input with inputs for the system</param>
 	/// <param name="x0"> initial states matrix</param>
 
-	void integrateThis(Matrix& x, Input u, SDL_Event& event, double &time) /*override*/;
+	//void integrateThis(Matrix& x, Input u, SDL_Event& event, double &time) /*override*/;
 
 };
 

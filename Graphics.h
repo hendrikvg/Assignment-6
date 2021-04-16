@@ -16,6 +16,7 @@ private:
 	const unsigned int windowSizeY;
 	SDL_Window* window;
 	SDL_Surface* screen;
+
 	//SDL_Surface* drone;
 	//SDL_Surface* cargo;
 	SDL_Renderer* renderer;
@@ -23,6 +24,9 @@ private:
 	SDL_Texture* textureCargo;
 	SDL_Rect rectDrone;
 	SDL_Rect rectCargo;
+	SDL_Rect rectKeyHelp;
+	SDL_Color white;
+
 
 public:
 	Graphics(unsigned windowSizeX, unsigned windowSizeY);

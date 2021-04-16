@@ -11,6 +11,8 @@ Graphics::Graphics(unsigned windowSizeX, unsigned windowSizeY) :
     this->textureCargo = NULL;
     this->rectDrone = { (int)(windowSizeX / 2 - 140.0/2.0), (int)(windowSizeY / 2 - 37), (int)(280.0/2.8), (int)(73.0/2.8) };
     this->rectCargo = { (int)windowSizeX / 2 - 54, (int)windowSizeY / 2 + 280 - 46, 108, 91 };
+    //this->rectKeyHelp = { 0 , 0, windowSizeX / 10, windowSizeY / 10 };
+    //this->white = { 255, 255, 255 };
     
 }
 

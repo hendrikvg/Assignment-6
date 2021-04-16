@@ -16,13 +16,13 @@ void ForwardEuler::integrate(Matrix& x, Input u, double t, double dt, double tEn
         dt = tEnd - t;
     }
 
-    saveState(t, x, system->calculateY(x, u.getU(t)));
+    saveState(t, x, system->calculateY(x, u.getKey()));
 
     for (t; t < tEnd; t += dt)
     {
-        x = x + system->calculateXdot(x, u.getU(t)) * dt;
+        x = x + system->calculateXdot(x, u.getKey()) * dt;
 
-        Matrix y = system->calculateY(x, u.getU(t));
+        Matrix y = system->calculateY(x, u.getKey());
 
         saveState(t + dt, x, y);
     }
@@ -42,7 +42,7 @@ void ForwardEuler::integrate(Matrix& x, Input u, Matrix x0)
         integrate(x, u);
     }
 }
-
+/*
 void ForwardEuler::integrateThis(Matrix& x, Input u, SDL_Event &event, double& time) {
 
     x = x + system->calculateXdot(x, u.getKey(event)) * dt;
@@ -52,4 +52,4 @@ void ForwardEuler::integrateThis(Matrix& x, Input u, SDL_Event &event, double& t
 
     saveState(time, x, y);
     time += dt;
-}
+}*/

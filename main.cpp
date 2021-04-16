@@ -24,7 +24,7 @@ int main(int /*argc*/, char** /*argv*/) {
     double t0 = 0;
     double t = t0;
     double dt = 0.01;
-    double tEnd = 8;
+    double tEnd = 999;
 
     double m_d = 3;
     double m_c = 2;
@@ -35,16 +35,22 @@ int main(int /*argc*/, char** /*argv*/) {
     double D_rope = 50;
     double g = 9.81;
 
+    double inputAngularVelocity = 0.8;
+    double inputThrust;
+
     // ***** TEST: *****
 
     bool test = true;
     Matrix x;
+    Matrix x0;
     Input input;
     EntryMatrix A;
     EntryMatrix B;
     EntryMatrix C;
     EntryMatrix D;
     EntryMatrix E;
+
+
 
     Simulator *systemSimulation;
     ReadCSV inCSV; //create object to prepare for csv import
@@ -58,7 +64,7 @@ int main(int /*argc*/, char** /*argv*/) {
     {
     case 1:
         x = Matrix(5, 1, 0.0);
-
+        x0 = x;
         A = EntryMatrix(5, 5, 0.0);
         A(1, 4) = 1.0;
         A(2, 5) = 1.0;
@@ -78,14 +84,17 @@ int main(int /*argc*/, char** /*argv*/) {
         E = EntryMatrix(5, 1, 0.0);
         E(5, 1) = -g;
 
+        inputThrust = 50.0;
+
         input = Input(inCSV.importCSV("DroneInput.csv"), false); // import csv with input commands for drone and put it in an Input class object.
         break;
 
     case 2:
         dt /= 20; // Note: dt becomes 20 times as small to avoid instability.
         x = Matrix(9, 1, 0.0);
-        x(2, 1) = 1.5;
 
+        x(2, 1) = 1.5;
+        x0 = x;
         A = EntryMatrix(9, 9, 0.0);
         A(1, 4) = 1.0;
         A(2, 5) = 1.0;
@@ -142,6 +151,8 @@ int main(int /*argc*/, char** /*argv*/) {
         return (F_rope > 0)
             ? ((F_rope * ((x(2, 1) - x(7, 1)) / L_rope) / m_c) - g)
             : (-g); }); // bool ? this : that (conditional ternary operator)
+
+        inputThrust = 100.0;
 
         input = Input(inCSV.importCSV("CargoDroneInput.csv"), false); // import csv with input commands for drone and put it in an Input class object.
         break;
@@ -200,13 +211,12 @@ int main(int /*argc*/, char** /*argv*/) {
 
     // ***** SDL WINDOW AND MACHINE: *****
 
-    const int windowSizeX = 500;
-    const int windowSizeY = 500;
+    const int windowSizeX = 1900;
+    const int windowSizeY = 1000;
 
     bool quit = false;
     SDL_Event event;
-    const Uint8* keystates = SDL_GetKeyboardState(NULL); // Argument is the number of keys available, since we don't care it's set to NULL.
-
+    
     Graphics graphics(windowSizeX, windowSizeY);
 
     if (graphics.initialize())
@@ -244,30 +254,12 @@ int main(int /*argc*/, char** /*argv*/) {
 
             while (SDL_PollEvent(&event) != 0)
             {
+                input.keyboardInput(t, tEnd, quit, inputAngularVelocity, inputThrust, x0, x, event, input);
+
                 if (event.type == SDL_QUIT)
                 {
                     quit = true;
                 }
-            }
-
-            if (keystates[SDL_SCANCODE_ESCAPE] || t > tEnd)
-            {
-                quit = true;
-            }
-
-            if (keystates[SDL_SCANCODE_LEFT])
-            {
-
-            }
-
-            if (keystates[SDL_SCANCODE_RIGHT])
-            {
-
-            }
-
-            if (keystates[SDL_SCANCODE_UP])
-            {
-
             }
         }
 

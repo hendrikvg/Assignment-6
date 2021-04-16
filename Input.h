@@ -15,7 +15,8 @@ private:
 	unsigned rowSizeInput;
 	unsigned colSizeInput;
 	std::vector<std::vector<double>> inputVector;
-	Matrix u; 
+	Matrix u;
+	const Uint8* keystates;
 
 public:
 	Input() = default;
@@ -42,7 +43,12 @@ public:
 	std::vector<std::vector<double>> getInputVector();
 
 
-	Matrix getKey(SDL_Event &event);
+	Matrix getKey();
+	void setThrust(double thrust);
+	void setAngularVelocity(double angularVelocity);
+
+	void keyboardInput(double t, double tEnd, bool& quit, double inputAngularVelocity, double inputThrust, Matrix x0, Matrix& x, SDL_Event event, Input input);
+
 };
 
 #endif /*SRC_INPUT_H*/
