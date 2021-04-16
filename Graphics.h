@@ -16,8 +16,6 @@ private:
 	const unsigned int windowSizeY;
 	SDL_Window* window;
 	SDL_Surface* screen;
-	//SDL_Surface* drone;
-	//SDL_Surface* cargo;
 	SDL_Renderer* renderer;
 	SDL_Texture* textureDrone;
 	SDL_Texture* textureCargo;
@@ -27,9 +25,9 @@ private:
 public:
 	Graphics(unsigned windowSizeX, unsigned windowSizeY);
 	bool initialize();
-	bool loadMedia();
+	bool loadMedia(bool);
 	void close();
-	void blitDrone();
+	//void blitDrone(); // Inefficient
 	void updateWindow();
 	void render(Matrix x);
 	void clear();

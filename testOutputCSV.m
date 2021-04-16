@@ -5,12 +5,12 @@ t = A(1,:);
 
 if (size(A,1) == 11)
     
-    figure
-    plot(t,A(2:4,:));
-    
+    figure, hold on
+    plot(t,A([2 3],:));
+    plot(t,100.*A(4,:));
     
     title("pos");
-    legend('x','y','theta','location', 'best');
+    legend('x','y','100*theta','location', 'best');
     grid on
     figure
     plot(t,A(5:6,:));
