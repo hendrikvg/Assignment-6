@@ -98,7 +98,7 @@ int main(int /*argc*/, char** /*argv*/) {
         t = t0;
         tEnd = 14;
         x = Matrix(5, 1, 0.0);
-        x = x0;
+        x0 = x;
 
         A = EntryMatrix(5, 5, 0.0);
         A(1, 4) = 1.0;
@@ -132,7 +132,7 @@ int main(int /*argc*/, char** /*argv*/) {
         dt /= 20; // Note: dt becomes 20 times as small to avoid instability.
         x = Matrix(9, 1, 0.0);
         x(2, 1) = 1.5;
-        x = x0;
+        x0 = x;
 
         A = EntryMatrix(9, 9, 0.0);
         A(1, 4) = 1.0;
