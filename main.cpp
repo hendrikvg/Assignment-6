@@ -234,11 +234,6 @@ int main(int /*argc*/, char** /*argv*/) {
         exit(EXIT_SUCCESS); // exits the program with cleaning up.
     }
 
-    std::cout << "Starting simulation with:\n";
-    std::cout << "t0\t=\t" << t0;
-    std::cout << "\ndt\t=\t" << dt;
-    std::cout << "\ntEnd\t=\t" << tEnd;
-
     // ***** SDL WINDOW AND MACHINE: *****
 
     if (visualization)
