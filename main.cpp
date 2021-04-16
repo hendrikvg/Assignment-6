@@ -21,26 +21,31 @@ int main(int /*argc*/, char** /*argv*/) {
     std::cout << "HELLO WORLD\n";
 
     // ***** INITIALISE ALL GLOBAL VARIABLES: *****
-    double t0 = 0;
-    double t = t0;
     double dt = 0.01;
-    double tEnd = 999;
-
-    double m_d = 3;
-    double m_c = 2;
-    double C_dd = 0.1;
-    double C_dc = 0.1;
-    double L_rope0 = 1.5;
-    double K_rope = 40000;
-    double D_rope = 50;
-    double g = 9.81;
+    const double m_d = 3;
+    const double m_c = 2;
+    const double C_dd = 0.1;
+    const double C_dc = 0.1;
+    const double L_rope0 = 1.5;
+    const double K_rope = 40000;
+    const double D_rope = 50;
+    const double g = 9.81;
+    const int windowSizeX = 1000;
+    const int windowSizeY = 800;
+    const int FPS = 60;
+    const Uint8* keystates = SDL_GetKeyboardState(NULL); // Argument is the number of keys available, since we don't care it's set to NULL.
+    Uint32 t1{ 0 };
+    Uint32 t2{ 0 };
+    Graphics graphics(windowSizeX, windowSizeY);
 
     double inputAngularVelocity = 0.8;
     double inputThrust;
 
-    // ***** TEST: *****
+    // ***** DECLARE REMAINING GLOBAL VARIABLES: *****
 
-    bool test = true;
+    double t0;
+    double t;
+    double tEnd;
     Matrix x;
     Matrix x0;
     Input input;
@@ -50,10 +55,35 @@ int main(int /*argc*/, char** /*argv*/) {
     EntryMatrix D;
     EntryMatrix E;
 
-
-
-    Simulator *systemSimulation;
+    Simulator* systemSimulation;
     ReadCSV inCSV; //create object to prepare for csv import
+    SDL_Event event;
+
+    bool quit = false;
+    bool visualization;
+    bool drawCargo;
+
+    std::cout << "\nWelcome to Assignment 6, do you want a visual simulation?:\n";
+    std::cout << "Enter 0 to quit the program\n";
+    std::cout << "Enter 1 for visual simulation\n";
+    std::cout << "Enter 2 for only CSV output\n";
+
+    switch (getInteger(0, 2))
+    {
+    case 1:
+    {
+        visualization = true;
+        break;
+    }
+    case 2:
+    {
+        visualization = false;
+        break;
+    }
+    default:
+        std::cout << "Quitting program...";
+        exit(EXIT_SUCCESS); // exits the program with cleaning up.
+    }
 
     std::cout << "\nWelcome to Assignment 6, choose which system you want to model:\n";
     std::cout << "Enter 0 to quit the program\n";
@@ -63,8 +93,13 @@ int main(int /*argc*/, char** /*argv*/) {
     switch (getInteger(0, 2))
     {
     case 1:
+        drawCargo = false;
+        t0 = 0;
+        t = t0;
+        tEnd = 14;
         x = Matrix(5, 1, 0.0);
-        x0 = x;
+        x = x0;
+
         A = EntryMatrix(5, 5, 0.0);
         A(1, 4) = 1.0;
         A(2, 5) = 1.0;
@@ -90,11 +125,15 @@ int main(int /*argc*/, char** /*argv*/) {
         break;
 
     case 2:
+        drawCargo = true;
+        t0 = 0;
+        t = t0;
+        tEnd = 16;
         dt /= 20; // Note: dt becomes 20 times as small to avoid instability.
         x = Matrix(9, 1, 0.0);
-
         x(2, 1) = 1.5;
-        x0 = x;
+        x = x0;
+
         A = EntryMatrix(9, 9, 0.0);
         A(1, 4) = 1.0;
         A(2, 5) = 1.0;
@@ -204,138 +243,63 @@ int main(int /*argc*/, char** /*argv*/) {
         exit(EXIT_SUCCESS); // exits the program with cleaning up.
     }
 
-    std::cout << "Starting simulation with:\n";
-    std::cout << "t0\t=\t" << t0;
-    std::cout << "\ndt\t=\t" << dt;
-    std::cout << "\ntEnd\t=\t" << tEnd;
-
     // ***** SDL WINDOW AND MACHINE: *****
 
-    const int windowSizeX = 1900;
-    const int windowSizeY = 1000;
-
-    bool quit = false;
-    SDL_Event event;
-    
-    Graphics graphics(windowSizeX, windowSizeY);
-
-    if (graphics.initialize())
+    if (visualization)
     {
-        std::cout << "\nGraphics initialized.";
-    }
-    if (graphics.loadMedia())
-    {
-        std::cout << "\nMedia has been loaded.";
-    }
-
-    const int FPS = 60;
-    Uint32 timeout_ms = SDL_GetTicks() + 1000 / FPS;
-
-    Uint32 t1{ 0 };
-    Uint32 t2{ 0 };
-
-    while (!quit)
-    {
-        //graphics.blitDrone();
-        graphics.render(x);
-        graphics.updateWindow();
-
-        t1 = SDL_GetTicks();
-
-        // integrate for next time step
-        systemSimulation->integrate(x, input, t, dt, t + 1.0/FPS); // integrate system
-        t += 1.0 / FPS;
-
-        t2 = SDL_GetTicks();
-
-        std::cout << "\n" << t2 - t1 << " ms";
-
-        while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) {
-
-            while (SDL_PollEvent(&event) != 0)
-            {
-                input.keyboardInput(t, tEnd, quit, inputAngularVelocity, inputThrust, x0, x, event, input);
-
-                if (event.type == SDL_QUIT)
-                {
-                    quit = true;
-                }
-            }
+        if (graphics.initialize())
+        {
+            std::cout << "\nGraphics initialized.";
+        }
+        if (graphics.loadMedia(drawCargo))
+        {
+            std::cout << "\nMedia has been loaded.";
         }
 
-        graphics.clear();
-        timeout_ms += 1000 / FPS;
+        Uint32 timeout_ms = SDL_GetTicks() + 1000 / FPS;
+
+        while (!quit)
+        {
+            //graphics.blitDrone();
+            graphics.render(x);
+            graphics.updateWindow();
+
+            t1 = SDL_GetTicks();
+
+            // integrate for next time step
+            systemSimulation->integrate(x, input, t, dt, t + 1.0/FPS); // integrate system
+            t += 1.0 / FPS;
+
+            t2 = SDL_GetTicks();
+
+            std::cout << "\n" << t2 - t1 << " ms";
+
+            while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) {
+
+                while (SDL_PollEvent(&event) != 0)
+                {
+                    input.keyboardInput(t, tEnd, quit, inputAngularVelocity, inputThrust, x0, x, event, input);
+
+                    if (event.type == SDL_QUIT)
+                    {
+                        quit = true;
+                    }
+                }
+            }
+
+            graphics.clear();
+            timeout_ms += 1000 / FPS;
+        }
     }
-
-
-    //const double FPS = 0.1; //20 // It is set low now since integration time is longer than 1 fps
-    //Uint32 timeout_ms = SDL_GetTicks() + 1000 / FPS;
-
-    //bool quit = false;
-    //SDL_Event event;
-
-    //SDL_Init(SDL_INIT_VIDEO);
-
-    //SDL_Window* window = SDL_CreateWindow("Programming 2 Assignment 6.3",
-    //    SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowSizeX, windowSizeY, 0);
-
-    //SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
-
-    //SDL_Surface* surfaceDrone = SDL_LoadBMP("drone.bmp");
-    //SDL_Surface* surfaceCargo = SDL_LoadBMP("cargo.bmp");
-
-    //SDL_Texture* textureDrone = SDL_CreateTextureFromSurface(renderer, surfaceDrone);
-    //SDL_Texture* textureCargo = SDL_CreateTextureFromSurface(renderer, surfaceCargo);
-
-    //SDL_Rect droneDestinationRect = { windowSizeX / 2 - 140, windowSizeY / 2 - 37, 280, 73 };
-    //SDL_Rect cargoDestinationRect = { windowSizeX / 2 - 54,  windowSizeY / 2 + 280 - 46, 108, 91 };
-
-    //SDL_RenderCopy(renderer, textureDrone, NULL, &droneDestinationRect);
-    //SDL_RenderCopy(renderer, textureCargo, NULL, &cargoDestinationRect);
-
-    //while (!quit) {
-
-    //    std::cout << SDL_GetTicks() << std::endl;
-
-    //    //integrate for next time step
-    //    std::cout << SDL_GetTicks() << std::endl; // takes way too long
-    //    //system("pause");
-
-
-    //    while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) { // runs when the next Frame is reached. So every 1000/FPS milliseconds
-
-
-    //        droneDestinationRect.x = /*x(1, 1)*/0.0 + windowSizeX / 2 - 140;
-    //        droneDestinationRect.y = /*x(2, 1)*/1.5 + windowSizeY / 2 - 37;
-    //        cargoDestinationRect.x = /*x(6, 1)*/0.0 + windowSizeX / 2 - 54;
-    //        cargoDestinationRect.y = /*x(7, 1)*/0.0 + windowSizeY / 2 + 280 - 46;
-    //        SDL_RenderPresent(renderer);
-
-    //        while (SDL_PollEvent(&event)) {
-    //            switch (event.type) {
-
-    //            case SDL_QUIT:
-    //                quit = true;
-    //                break;
-
-    //            }
-    //        }
-    //        timeout_ms += 1000 / FPS;
-    //    }
-
-
-
-    //}
-
-    /// END OF SDL STUFF
-
-    //std::cout << "Starting simulation with:\n";
-    //std::cout << "t0\t=\t" << t0;
-    //std::cout << "\ndt\t=\t" << dt;
-    //std::cout << "\ntEnd\t=\t" << tEnd;
-    //std::cout << "\nIntegrating... please be patient";
-
-    //systemSimulation->integrate(x, input, t0, dt, tEnd); // integrate system
+    else
+    {
+        std::cout << "Starting simulation with:\n";
+        std::cout << "t0\t=\t" << t0;
+        std::cout << "\ndt\t=\t" << dt;
+        std::cout << "\ntEnd\t=\t" << tEnd;
+        std::cout << "\nIntegrating... please be patient";
+        systemSimulation->integrate(x, input, t0, dt, tEnd); // integrate system
+    }
 
     std::cout << "\nExporting states as CSV file... ";
 
@@ -344,19 +308,6 @@ int main(int /*argc*/, char** /*argv*/) {
     std::cout << "Succes! \nExiting program...";
 
     // ***** CLEAN UP: *****
-
-
-    //// clean up surface and texture of drone
-    //SDL_DestroyTexture(textureDrone);
-    //SDL_FreeSurface(surfaceDrone);
-
-
-    //// clean up surface and texture of cargo
-    //SDL_DestroyTexture(textureCargo);
-    //SDL_FreeSurface(surfaceCargo);
-
-    //// clean up renderer and window
-    //SDL_DestroyRenderer(renderer);
 
     graphics.close();
 
