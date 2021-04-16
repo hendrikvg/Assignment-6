@@ -15,4 +15,4 @@ public:
 	void integrate (Matrix& x, Input u, Matrix x0) override;
 };
 
-#endif
+#endif /*SRC_RUNGEKUTTA_H*/

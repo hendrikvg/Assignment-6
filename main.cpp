@@ -37,6 +37,7 @@ int main(int /*argc*/, char** /*argv*/) {
     const Uint8* keystates = SDL_GetKeyboardState(NULL); // Argument is the number of keys available, since we don't care it's set to NULL.
     Uint32 t1{ 0 };
     Uint32 t2{ 0 };
+    Graphics graphics(windowSizeX, windowSizeY);
 
     // ***** DECLARE REMAINING GLOBAL VARIABLES: *****
 
@@ -54,7 +55,6 @@ int main(int /*argc*/, char** /*argv*/) {
     Simulator* systemSimulation;
     ReadCSV inCSV; //create object to prepare for csv import
     SDL_Event event;
-    Graphics graphics(windowSizeX, windowSizeY);
 
     bool quit = false;
     bool visualization;
@@ -122,7 +122,7 @@ int main(int /*argc*/, char** /*argv*/) {
         drawCargo = true;
         t0 = 0;
         t = t0;
-        tEnd = 14;
+        tEnd = 16;
         dt /= 20; // Note: dt becomes 20 times as small to avoid instability.
         x = Matrix(9, 1, 0.0);
         x(2, 1) = 1.5;
@@ -257,7 +257,6 @@ int main(int /*argc*/, char** /*argv*/) {
 
         while (visualization)
         {
-            //graphics.blitDrone();
             graphics.render(x);
             graphics.updateWindow();
 

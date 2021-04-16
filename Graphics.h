@@ -27,7 +27,6 @@ public:
 	bool initialize();
 	bool loadMedia(bool);
 	void close();
-	//void blitDrone(); // Inefficient
 	void updateWindow();
 	void render(Matrix x);
 	void clear();
