@@ -4,12 +4,14 @@
 
 #include <iostream>
 #include <SDL.h>
+#include <SDL_image.h>
 #include <string>
 #include "Matrix.h"
 
 class Graphics
 {
 private:
+	const double pi = 3.1415926535897932384626433;
 	const unsigned int windowSizeX;
 	const unsigned int windowSizeY;
 	SDL_Window* window;

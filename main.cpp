@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <SDL.h>
+#include <SDL_image.h>
 #include <string>
 #include "Matrix.h"
 #include "StateSpace.h"
@@ -16,12 +17,12 @@
 #include "Functions.h"
 #include "Graphics.h"
 
-
 int main(int /*argc*/, char** /*argv*/) {
     std::cout << "HELLO WORLD\n";
 
     // ***** INITIALISE ALL GLOBAL VARIABLES: *****
     double t0 = 0;
+    double t = t0;
     double dt = 0.01;
     double tEnd = 8;
 
@@ -196,12 +197,11 @@ int main(int /*argc*/, char** /*argv*/) {
     std::cout << "t0\t=\t" << t0;
     std::cout << "\ndt\t=\t" << dt;
     std::cout << "\ntEnd\t=\t" << tEnd;
-    std::cout << "\nIntegrating... please be patient";
 
     // ***** SDL WINDOW AND MACHINE: *****
 
-    const int windowSizeX = 1920;
-    const int windowSizeY = 1080;
+    const int windowSizeX = 500;
+    const int windowSizeY = 500;
 
     bool quit = false;
     SDL_Event event;
@@ -233,8 +233,8 @@ int main(int /*argc*/, char** /*argv*/) {
         t1 = SDL_GetTicks();
 
         // integrate for next time step
-        systemSimulation->integrate(x, input, t0, dt, t0 + 1.0/FPS); // integrate system
-        t0 += 1.0 / FPS;
+        systemSimulation->integrate(x, input, t, dt, t + 1.0/FPS); // integrate system
+        t += 1.0 / FPS;
 
         t2 = SDL_GetTicks();
 
@@ -250,7 +250,7 @@ int main(int /*argc*/, char** /*argv*/) {
                 }
             }
 
-            if (keystates[SDL_SCANCODE_ESCAPE])
+            if (keystates[SDL_SCANCODE_ESCAPE] || t > tEnd)
             {
                 quit = true;
             }
@@ -345,11 +345,11 @@ int main(int /*argc*/, char** /*argv*/) {
 
     //systemSimulation->integrate(x, input, t0, dt, tEnd); // integrate system
 
-    //std::cout << "\nExporting states as CSV file... ";
+    std::cout << "\nExporting states as CSV file... ";
 
-    //systemSimulation->exportStates("TEST.csv");
+    systemSimulation->exportStates("TEST.csv");
 
-    //std::cout << "Succes! \nExiting program...";
+    std::cout << "Succes! \nExiting program...";
 
     // ***** CLEAN UP: *****
 

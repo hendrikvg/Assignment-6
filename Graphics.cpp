@@ -9,7 +9,7 @@ Graphics::Graphics(unsigned windowSizeX, unsigned windowSizeY) :
     //this->cargo = NULL;
     this->textureDrone = NULL;
     this->textureCargo = NULL;
-    this->rectDrone = { (int)windowSizeX / 2 - 140, (int)windowSizeY / 2 - 37, 280, 73 };
+    this->rectDrone = { (int)(windowSizeX / 2 - 140.0/2.0), (int)(windowSizeY / 2 - 37), (int)(280.0/2.8), (int)(73.0/2.8) };
     this->rectCargo = { (int)windowSizeX / 2 - 54, (int)windowSizeY / 2 + 280 - 46, 108, 91 };
     
 }
@@ -29,7 +29,7 @@ bool Graphics::initialize()
     {
         //Create window
         window = SDL_CreateWindow("Programming 2 Assignment 6.3", SDL_WINDOWPOS_UNDEFINED, 
-            SDL_WINDOWPOS_UNDEFINED, windowSizeX, windowSizeY, SDL_WINDOW_SHOWN);
+            SDL_WINDOWPOS_UNDEFINED, windowSizeX, windowSizeY, 0/*SDL_WINDOW_SHOWN*/);
         if (window == NULL)
         {
             printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -119,12 +119,13 @@ void Graphics::updateWindow()
 
 void Graphics::render(Matrix x)
 {
-    rectDrone.x = int(x(1, 1) + (double)windowSizeX / 2.0 - 140.0);
-    rectDrone.y = int(-x(2, 1) + (double)windowSizeY / 2.0 - 37.0);
+    rectDrone.x = int(100*x(1, 1) + (double)windowSizeX / 2.0 - 140.0/2.0);
+    rectDrone.y = int(-100*x(2, 1) + (double)windowSizeY / 2.0 - 37.0);
     //  cargoDestinationRect.x = /*x(6, 1)*/0.0 + (int)windowSizeX / 2 - 54;
     //  cargoDestinationRect.y = /*x(7, 1)*/0.0 + (int)windowSizeY / 2 + 280 - 46;
-    SDL_RenderCopy(renderer, textureDrone, NULL, &rectDrone);
+    //SDL_RenderCopy(renderer, textureDrone, NULL, &rectDrone);
     //SDL_RenderCopy(renderer, textureCargo, NULL, &rectCargo);
+    SDL_RenderCopyEx(renderer, textureDrone, NULL, &rectDrone, -x(3, 1)*180/pi, NULL, SDL_FLIP_NONE);
 }
 
 void Graphics::clear()

@@ -11,6 +11,11 @@ RungeKutta::RungeKutta(StateSpace* system, double t0, double dt, double tEnd = 0
 
 void RungeKutta::integrate(Matrix& x, Input u, double t, double dt, double tEnd)
 {
+    if (tEnd - t < dt)
+    {
+        dt = tEnd - t;
+    }
+
     saveState(t, x, system->calculateY(x, u.getU(t)));
 
     for (t; t < tEnd; t += dt) {
