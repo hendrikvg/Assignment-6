@@ -10,9 +10,9 @@ public:
 
 	RungeKutta(StateSpace* system, double t0, double dt, double tEnd);
 
-	void integrate(Matrix& x, Input u, double t, double dt, double tEnd) override;
-	void integrate (Matrix& x, Input u) override;
-	void integrate (Matrix& x, Input u, Matrix x0) override;
+	void integrate(Matrix& x, CommonInput& u, double t, double dt, double tEnd) override;
+	void integrate (Matrix& x, CommonInput& u) override;
+	void integrate (Matrix& x, CommonInput& u, Matrix x0) override;
 };
 
 #endif

@@ -3,6 +3,7 @@
 
 #include "Simulator.h"
 #include "Input.h"		// Input class
+#include "KeyboardInput.h"
 
 
 /// <summary>
@@ -28,26 +29,18 @@ public:
 	/// <param name="tEnd">final time</param>
 	ForwardEuler(StateSpace *system, double t0, double dt, double tEnd);
 
-	void integrate(Matrix& x, Input u, double t, double dt, double tEnd) override;
+	void integrate(Matrix& x, CommonInput& u, double t, double dt, double tEnd) override;
 
-	void integrate(Matrix& x, Input u) override;
+	void integrate(Matrix& x, CommonInput& u) override;
 	/// <summary>
 /// Integrate system inside current object, without specifying initial states.
 /// </summary>
 /// <param name="x">states matrix</param>
 /// <param name="u">object of type Input with inputs for the system</param>
 /// 
-	void integrate(Matrix& x, Input u, Matrix x0) override;
+	void integrate(Matrix& x, CommonInput& u, Matrix x0) override;
 
-	/// <summary>
-	/// Integrate system inside current object, with specifying initial states.
-	/// </summary>
-	/// <param name="x">states matrix</param>
-	/// <param name="u">object of type Input with inputs for the system</param>
-	/// <param name="x0"> initial states matrix</param>
-
-	//void integrateThis(Matrix& x, Input u, SDL_Event& event, double &time) /*override*/;
 
 };
 
-#endif /*SRC_FORWARDEULER_H*/
+#endif

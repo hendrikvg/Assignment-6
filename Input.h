@@ -4,18 +4,18 @@
 #include "Matrix.h"
 #include "SDL.h"
 #include <vector>
+#include "CommonInput.h"
 
 /// <summary>
 /// Handles inputs from 2-d vector and can return current input given the current time. Stores input data inside member variable inputVector.
 /// Has search optimisation in case 2-d vector is very large to reduce latency.
 /// </summary>
-class Input
+class Input : public CommonInput
 {
 private:
 	unsigned rowSizeInput;
 	unsigned colSizeInput;
 	std::vector<std::vector<double>> inputVector;
-	Matrix u;
 	const Uint8* keystates;
 
 public:
@@ -33,7 +33,7 @@ public:
 	/// </summary>
 	/// <param name="time">current time for which the input needs to be found.</param>
 	/// <returns>returns data of type Matrix with input values. 2 rows, 1 column. Thrust and angular velocity</returns>
-	Matrix getU(double);
+	Matrix getU(double time) override;
 
 
 	/// <summary>
@@ -42,12 +42,6 @@ public:
 	/// <returns>2-d vector with all input values</returns>
 	std::vector<std::vector<double>> getInputVector();
 
-
-	Matrix getKey();
-	void setThrust(double thrust);
-	void setAngularVelocity(double angularVelocity);
-
-	void keyboardInput(double t, double tEnd, bool& quit, double inputAngularVelocity, double inputThrust, Matrix x0, Matrix& x, SDL_Event event, Input input);
 
 };
 

@@ -6,6 +6,7 @@
 #include "StateSpace.h"
 #include "OutputCSV.h"
 #include "Input.h"
+#include "KeyboardInput.h"
 
 /// <summary>
 /// Defines basic functionality needed for all types of future simulations and integrations. Can save current states to a member variable. Can export that member variable making use of writeCSV class.
@@ -37,9 +38,9 @@ public:
 
 	//virtual void integrateThis(Matrix& x, Input u, SDL_Event& event, double& time) = 0;
 
-	virtual void integrate(Matrix& x, Input u, double t, double dt, double tEnd) = 0;
-	virtual void integrate(Matrix& x, Input u) = 0;
-	virtual void integrate(Matrix& x, Input u, Matrix x0) = 0;
+	virtual void integrate(Matrix& x, CommonInput& u, double t, double dt, double tEnd) = 0;
+	virtual void integrate(Matrix& x, CommonInput& u) = 0;
+	virtual void integrate(Matrix& x, CommonInput& u, Matrix x0) = 0;
 
 	/// <summary>
 	/// Saves current state of statespace to simulator object. 
