@@ -45,6 +45,7 @@ int main(int /*argc*/, char** /*argv*/) {
     bool manualControl;
 
 =======
+>>>>>>> parent of 52cbdca (x wont initialize properly)
 =======
 >>>>>>> parent of 52cbdca (x wont initialize properly)
     // ***** TEST: *****
