@@ -15,6 +15,8 @@ private:
 public:
 	KeyboardInput();
 
+	~KeyboardInput();
+
 	/// <summary>
 	/// Returns the current input vector U. Is called by the integrator.
 	/// </summary>

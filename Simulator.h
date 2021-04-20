@@ -32,6 +32,8 @@ public:
 	/// </summary>
 	Simulator() = default;
 
+	~Simulator();
+
 
 	//virtual void integrate(Matrix& x, Input u, double tEnd, Matrix x0) = 0;
 

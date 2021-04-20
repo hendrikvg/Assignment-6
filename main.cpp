@@ -361,8 +361,6 @@ int main(int /*argc*/, char** /*argv*/) {
 
     // ***** CLEAN UP: *****
 
-    graphics.close();
-
     std::cout << "\n";
 
     return 0;

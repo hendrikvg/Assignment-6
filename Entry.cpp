@@ -7,6 +7,12 @@ Entry::Entry(std::function<double()> entryFunc) : entryFunction(entryFunc) {
 Entry::Entry(double constant) : constant(constant) {
     isConstant = true;
 }
+/// <summary>
+/// Destructor
+/// </summary>
+Entry::~Entry()
+{
+}
 
 double Entry::calculate() {
     return isConstant ? constant : entryFunction();

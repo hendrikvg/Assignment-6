@@ -1,5 +1,10 @@
 #include "Simulator.h"
 
+Simulator::~Simulator()
+{
+	std::cout << "Destorying Simulator object.\n";
+}
+
 void Simulator::saveState(double t, Matrix x, Matrix y)
 {
 	std::vector<double> state;

@@ -29,6 +29,8 @@ public:
 	/// <param name="tEnd">final time</param>
 	ForwardEuler(StateSpace *system, double t0, double dt, double tEnd);
 
+	~ForwardEuler();
+
 	void integrate(Matrix& x, CommonInput& u, double t, double dt, double tEnd) override;
 
 	void integrate(Matrix& x, CommonInput& u) override;

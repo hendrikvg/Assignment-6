@@ -24,7 +24,7 @@ StateSpace::StateSpace(const StateSpace& stateSpace)
 
 StateSpace::~StateSpace()
 {
-
+	std::cout << "Destorying StateSpace object.\n";
 }
 
 EntryMatrix StateSpace::getA() const

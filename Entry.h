@@ -27,6 +27,9 @@ public:
     /// <param name="constant">constants</param>
     Entry(double constant);
 
+    /// Destructor
+    ~Entry();
+
     /// <summary>
     /// returns the values inside object, by first checking wether it is constant or variable
     /// </summary>

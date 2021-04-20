@@ -22,6 +22,15 @@ Graphics::Graphics(unsigned windowSizeX, unsigned windowSizeY) :
 
 }
 
+Graphics::~Graphics()
+{
+    std::cout << "Destroying Graphics object...";
+    close();
+    std::cout << "\nGraphics object destroyed.";
+}
+
+
+
 bool Graphics::initialize()
 {
     //Initialization flag

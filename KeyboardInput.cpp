@@ -6,6 +6,11 @@ KeyboardInput::KeyboardInput() {
     keystates = SDL_GetKeyboardState(NULL); // Argument is the number of keys available, since we don't care it's set to NULL.
 }
 
+KeyboardInput::~KeyboardInput()
+{
+    std::cout << "Destorying KeyboardInput object. Also destorying parent object: ";
+}
+
 
 
 Matrix KeyboardInput::getU(double time) {

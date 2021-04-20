@@ -10,6 +10,11 @@ Input::Input(std::vector<std::vector<double>> inputVectorIn, bool switchSearch =
 	u = Matrix(2, 1, 0.0);
 }
 
+Input::~Input()
+{
+	std::cout << "Destorying Input object. Also destroying parent object: ";
+}
+
 
 
 Matrix Input::getU(double time)

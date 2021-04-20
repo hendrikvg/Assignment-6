@@ -26,7 +26,9 @@ public:
 	/// </summary>
 	/// <param name="inputVectorIn"> 2-d vector with input values (thrust and angular velocity) over time</param>
 	/// <param name="switchSearch"> search optimisation switch. Default state is on.</param>
-	Input(std::vector<std::vector<double>>, bool);     
+	Input(std::vector<std::vector<double>>, bool);   
+
+	~Input();
 
 	/// <summary>
 	/// getU finds the input values for the current time step. It uses zeroth-order interpolation to fill the descretization gaps.
