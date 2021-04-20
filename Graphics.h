@@ -7,6 +7,7 @@
 #include <SDL_image.h>
 #include <string>
 #include <thread>
+#include <mutex>
 #include "Matrix.h"
 
 class Graphics
@@ -32,7 +33,7 @@ public:
 	void render(Matrix x);
 	void clear();
 	void clearRenderUpdate(Matrix x);
-	std::thread clearRenderUpdateThread(Matrix x);
+	std::thread clearRenderUpdateThread(Matrix& x, std::mutex& mtx, bool& quit);
 };
 
 #endif // SRC_GRAPHICS_H

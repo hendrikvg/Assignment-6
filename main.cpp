@@ -72,6 +72,8 @@ int main(int /*argc*/, char** /*argv*/) {
     bool visualization;
     bool drawCargo;
 
+    std::mutex mtx;
+
     std::cout << "\nWelcome to Assignment 6, do you want a visual simulation?:\n";
     std::cout << "Enter 0 to quit the program\n";
     std::cout << "Enter 1 for visual simulation\n";
@@ -305,43 +307,27 @@ int main(int /*argc*/, char** /*argv*/) {
         }
         if (graphics.loadMedia(drawCargo))
         {
-            std::cout << "\nMedia has been loaded.";
+            std::cout << "\nMedia has been loaded.\n";
         }
 
+        std::thread thread1 = systemSimulation->integrateThread(x, *inputMethod, t, dt, FPS, mtx, quit);
+        std::thread thread2 = graphics.clearRenderUpdateThread(x, mtx, quit);
         Uint32 timeout_ms = SDL_GetTicks() + 1000 / FPS;
 
         while (!quit)
         {
-            graphics.clearRenderUpdate(x);
-            //std::thread thread2 = graphics.clearRenderUpdateThread(x); 
-            //thread2.join();
-
-            //t1 = SDL_GetTicks();
-
-            auto t1 = std::chrono::high_resolution_clock::now();
-
-            // integrate for next time step
-            std::thread thread1 = systemSimulation->integrateThread(x, *inputMethod, t, dt, t + 1.0 / FPS);
-            thread1.join();
-
             t += 1.0 / FPS;
-
-            auto t2 = std::chrono::high_resolution_clock::now();
-            std::chrono::duration<double> elapsed_seconds = t2 - t1;
-            std::cout << elapsed_seconds.count() << "s\n";
-
-            //t2 = SDL_GetTicks();
-            //std::cout << "\n" << t2 - t1 << " ms";
-
-            while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) {
-
+                     
+            while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) { // replace with chrono and conditional ternary operator...
                 if (t > tEnd && manualControl == false) {
                     quit = true;
                 }
                 while (SDL_PollEvent(&event) != 0)
                 {   
                     if (manualControl == true) {
+                        //mtx.lock();
                         keyboardInput.scanKeys(quit, inputAngularVelocity, inputThrust, x0, x, event);
+                        //mtx.unlock();
                     }
                     if (event.type == SDL_QUIT)
                     {
@@ -352,6 +338,9 @@ int main(int /*argc*/, char** /*argv*/) {
 
             timeout_ms += 1000 / FPS;
         }
+        // join threads...
+        thread1.join();
+        thread2.join();
     }
     else
     {

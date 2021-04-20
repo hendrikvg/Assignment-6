@@ -15,8 +15,6 @@ public:
 	void integrate(Matrix& x, CommonInput& u, double t, double dt, double tEnd) override;
 	void integrate(Matrix& x, CommonInput& u) override;
 	void integrate(Matrix& x, CommonInput& u, Matrix x0) override;
-
-	std::thread integrateThread(Matrix& x, CommonInput& u, double t, double dt, double tEnd);
 };
 
 #endif

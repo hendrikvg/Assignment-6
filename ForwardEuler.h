@@ -39,8 +39,6 @@ public:
 /// 
 	void integrate(Matrix& x, CommonInput& u, Matrix x0) override;
 
-	std::thread integrateThread(Matrix& x, CommonInput& u, double t, double dt, double tEnd);
-
 };
 
 #endif /*SRC_FORWARDEULER_H*/

@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <thread>
+#include <mutex>
 #include "StateSpace.h"
 #include "OutputCSV.h"
 #include "CommonInput.h"
@@ -45,7 +46,7 @@ public:
 	virtual void integrate(Matrix& x, CommonInput& u) = 0;
 	virtual void integrate(Matrix& x, CommonInput& u, Matrix x0) = 0;
 
-	virtual std::thread integrateThread(Matrix& x, CommonInput& u, double t, double dt,	double tEnd) = 0;
+	std::thread integrateThread(Matrix& x, CommonInput& u, double& t, double dt, int FPS, std::mutex &mtx, bool& quit);
 
 	/// <summary>
 	/// Saves current state of statespace to simulator object. 
