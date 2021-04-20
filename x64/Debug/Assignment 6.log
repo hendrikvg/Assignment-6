@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(491,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Assignment 6-Hendrik-Laptop2020.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   CommonInput.cpp
   ForwardEuler.cpp
@@ -8,3 +9,20 @@
   Simulator.cpp
   Generating Code...
   Assignment 6.vcxproj -> C:\Users\DGuru_Laptop\Documents\GitHub\Assignment-6\x64\Debug\Assignment 6.exe
+=======
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(519,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Assignment 6-Hendrik-Laptop2020.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Entry.cpp
+  EntryMatrix.cpp
+  ForwardEuler.cpp
+  Graphics.cpp
+  Input.cpp
+  main.cpp
+  Matrix.cpp
+  OutputCSV.cpp
+  ReadCSV.cpp
+  RungeKutta.cpp
+  Simulator.cpp
+  StateSpace.cpp
+  Generating Code...
+  Assignment 6.vcxproj -> E:\OneDrive\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6\x64\Debug\Assignment 6.exe
+>>>>>>> parent of f2c2d78 (IT WORKS!)
