@@ -40,8 +40,11 @@ int main(int /*argc*/, char** /*argv*/) {
     double inputAngularVelocity = 0.8;
     double inputThrust;
 
+<<<<<<< HEAD
     bool manualControl;
 
+=======
+>>>>>>> parent of 52cbdca (x wont initialize properly)
     // ***** TEST: *****
 
     bool test = true;
@@ -55,8 +58,13 @@ int main(int /*argc*/, char** /*argv*/) {
     EntryMatrix D;
     EntryMatrix E;
 
+<<<<<<< HEAD
 
     CommonInput* inputMethod;
+=======
+
+
+>>>>>>> parent of 52cbdca (x wont initialize properly)
     Simulator *systemSimulation;
     ReadCSV inCSV; //create object to prepare for csv import
 
@@ -209,6 +217,7 @@ int main(int /*argc*/, char** /*argv*/) {
         exit(EXIT_SUCCESS); // exits the program with cleaning up.
     }
 
+<<<<<<< HEAD
 
     std::cout << "\nChoose control input method:\n";
     std::cout << "Enter 0 to quit the program\n";
@@ -246,6 +255,8 @@ int main(int /*argc*/, char** /*argv*/) {
     }
 
 
+=======
+>>>>>>> parent of 52cbdca (x wont initialize properly)
     std::cout << "Starting simulation with:\n";
     std::cout << "t0\t=\t" << t0;
     std::cout << "\ndt\t=\t" << dt;
@@ -285,7 +296,11 @@ int main(int /*argc*/, char** /*argv*/) {
         t1 = SDL_GetTicks();
 
         // integrate for next time step
+<<<<<<< HEAD
         systemSimulation->integrate(x, *inputMethod, t, dt, t + 1.0/FPS); // integrate system
+=======
+        systemSimulation->integrate(x, input, t, dt, t + 1.0/FPS); // integrate system
+>>>>>>> parent of 52cbdca (x wont initialize properly)
         t += 1.0 / FPS;
 
         t2 = SDL_GetTicks();
@@ -296,6 +311,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
             while (SDL_PollEvent(&event) != 0)
             {
+<<<<<<< HEAD
                 
                 if (manualControl == true) {
                     keyboardInput.scanKeys(t, tEnd, quit, inputAngularVelocity, inputThrust, x0, x, event);
@@ -305,6 +321,14 @@ int main(int /*argc*/, char** /*argv*/) {
                 {
                     quit = true;
                 }
+=======
+                input.keyboardInput(t, tEnd, quit, inputAngularVelocity, inputThrust, x0, x, event, input);
+
+                if (event.type == SDL_QUIT)
+                {
+                    quit = true;
+                }
+>>>>>>> parent of 52cbdca (x wont initialize properly)
             }
         }
 
