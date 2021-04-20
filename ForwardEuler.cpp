@@ -47,3 +47,8 @@ void ForwardEuler::integrate(Matrix& x, CommonInput& u, Matrix x0)
         integrate(x, u);
     }
 }
+
+std::thread ForwardEuler::integrateThread(Matrix& x, CommonInput& u, double t, double dt, double tEnd)
+{
+    return std::thread([&] {integrate(x, u, t, dt, tEnd); });
+}

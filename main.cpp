@@ -4,6 +4,9 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
+#include <chrono>
+#include <thread>
+#include <mutex>
 #include "Matrix.h"
 #include "StateSpace.h"
 #include "Simulator.h"
@@ -306,21 +309,29 @@ int main(int /*argc*/, char** /*argv*/) {
         }
 
         Uint32 timeout_ms = SDL_GetTicks() + 1000 / FPS;
+
         while (!quit)
         {
-            //graphics.blitDrone();
-            graphics.render(x);
-            graphics.updateWindow();
+            graphics.clearRenderUpdate(x);
+            //std::thread thread2 = graphics.clearRenderUpdateThread(x); 
+            //thread2.join();
 
-            t1 = SDL_GetTicks();
+            //t1 = SDL_GetTicks();
+
+            auto t1 = std::chrono::high_resolution_clock::now();
 
             // integrate for next time step
-            systemSimulation->integrate(x, *inputMethod, t, dt, t + 1.0/FPS); // integrate system
+            std::thread thread1 = systemSimulation->integrateThread(x, *inputMethod, t, dt, t + 1.0 / FPS);
+            thread1.join();
+
             t += 1.0 / FPS;
 
-            t2 = SDL_GetTicks();
+            auto t2 = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> elapsed_seconds = t2 - t1;
+            std::cout << elapsed_seconds.count() << "s\n";
 
-            std::cout << "\n" << t2 - t1 << " ms";
+            //t2 = SDL_GetTicks();
+            //std::cout << "\n" << t2 - t1 << " ms";
 
             while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) {
 
@@ -339,7 +350,6 @@ int main(int /*argc*/, char** /*argv*/) {
                 }
             }
 
-            graphics.clear();
             timeout_ms += 1000 / FPS;
         }
     }

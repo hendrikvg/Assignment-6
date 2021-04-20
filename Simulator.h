@@ -1,11 +1,13 @@
 #ifndef SRC_SIMULATOR_H
 #define SRC_SIMULATOR_H
 
+#include <iostream>
 #include <vector>
 #include <string>
+#include <thread>
 #include "StateSpace.h"
 #include "OutputCSV.h"
-#include "Input.h"
+#include "CommonInput.h"
 
 /// <summary>
 /// Defines basic functionality needed for all types of future simulations and integrations. Can save current states to a member variable. Can export that member variable making use of writeCSV class.
@@ -43,6 +45,8 @@ public:
 	virtual void integrate(Matrix& x, CommonInput& u) = 0;
 	virtual void integrate(Matrix& x, CommonInput& u, Matrix x0) = 0;
 
+	virtual std::thread integrateThread(Matrix& x, CommonInput& u, double t, double dt,	double tEnd) = 0;
+
 	/// <summary>
 	/// Saves current state of statespace to simulator object. 
 	/// </summary>
@@ -56,6 +60,7 @@ public:
 	/// </summary>
 	/// <param name="">Desired name of csv file to be exported.</param>
 	void exportStates(std::string);
+
 };
 
 #endif /*SRC_SIMULATOR_H*/

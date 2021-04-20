@@ -2,9 +2,6 @@
 #define SRC_FORWARDEULER_H
 
 #include "Simulator.h"
-#include "Input.h"		// Input class
-#include "KeyboardInput.h"
-
 
 /// <summary>
 /// Forward Euler integrator class. Handles all integration tasks, inherits from simulator (public). Uses member functions from Input class to retrieve inputs for current time.
@@ -42,14 +39,7 @@ public:
 /// 
 	void integrate(Matrix& x, CommonInput& u, Matrix x0) override;
 
-	/// <summary>
-	/// Integrate system inside current object, with specifying initial states.
-	/// </summary>
-	/// <param name="x">states matrix</param>
-	/// <param name="u">object of type Input with inputs for the system</param>
-	/// <param name="x0"> initial states matrix</param>
-
-	
+	std::thread integrateThread(Matrix& x, CommonInput& u, double t, double dt, double tEnd);
 
 };
 

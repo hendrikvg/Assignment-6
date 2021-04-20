@@ -153,3 +153,15 @@ void Graphics::clear()
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderClear(renderer);
 }
+
+void Graphics::clearRenderUpdate(Matrix x)
+{
+    clear();
+    render(x);
+    updateWindow();
+}
+
+std::thread Graphics::clearRenderUpdateThread(Matrix x)
+{
+    return std::thread([&] {clearRenderUpdate(x); });
+}
