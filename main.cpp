@@ -37,7 +37,7 @@ int main(int /*argc*/, char** /*argv*/) {
     const double g = 9.81;
     const int windowSizeX = 1000;
     const int windowSizeY = 800;
-    const int FPS = 60;
+    const int FPS = 60; // 60 FPS, as running less on a PC should be a crime.
     const Uint8* keystates = SDL_GetKeyboardState(NULL); // Argument is the number of keys available, since we don't care it's set to NULL.
     Uint32 t1{ 0 };
     Uint32 t2{ 0 };
@@ -325,9 +325,7 @@ int main(int /*argc*/, char** /*argv*/) {
                 while (SDL_PollEvent(&event) != 0)
                 {   
                     if (manualControl == true) {
-                        //mtx.lock();
                         keyboardInput.scanKeys(quit, inputAngularVelocity, inputThrust, x0, x, event);
-                        //mtx.unlock();
                     }
                     if (event.type == SDL_QUIT)
                     {
@@ -356,9 +354,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
     systemSimulation->exportStates("TEST.csv");
 
-    std::cout << "Succes! \nExiting program...";
-
-    // ***** CLEAN UP: *****
+    std::cout << "Exporting done! \nExiting program...";
 
     std::cout << "\n";
 
