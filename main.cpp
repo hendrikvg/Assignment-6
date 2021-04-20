@@ -85,7 +85,12 @@ int main(int /*argc*/, char** /*argv*/) {
     {
     case 1:
         x = Matrix(5, 1, 0.0);
+<<<<<<< HEAD
         x0 = x;
+=======
+        x = x0;
+
+>>>>>>> parent of f2c2d78 (IT WORKS!)
         A = EntryMatrix(5, 5, 0.0);
         A(1, 4) = 1.0;
         A(2, 5) = 1.0;
@@ -115,7 +120,12 @@ int main(int /*argc*/, char** /*argv*/) {
         x = Matrix(9, 1, 0.0);
 
         x(2, 1) = 1.5;
+<<<<<<< HEAD
         x0 = x;
+=======
+        x = x0;
+
+>>>>>>> parent of f2c2d78 (IT WORKS!)
         A = EntryMatrix(9, 9, 0.0);
         A(1, 4) = 1.0;
         A(2, 5) = 1.0;
