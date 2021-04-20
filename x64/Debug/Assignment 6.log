@@ -1,12 +1,28 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(519,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Assignment 6-Hendrik-Laptop2020.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+<<<<<<< HEAD
+=======
+  CommonInput.cpp
+  Entry.cpp
+>>>>>>> main
   EntryMatrix.cpp
   ForwardEuler.cpp
   Graphics.cpp
   Input.cpp
+<<<<<<< HEAD
   Matrix.cpp
   RungeKutta.cpp
   Simulator.cpp
   StateSpace.cpp
   main.cpp
+=======
+  KeyboardInput.cpp
+  main.cpp
+  Matrix.cpp
+  OutputCSV.cpp
+  ReadCSV.cpp
+  RungeKutta.cpp
+  Simulator.cpp
+  StateSpace.cpp
+>>>>>>> main
   Generating Code...
   Assignment 6.vcxproj -> C:\Users\Hentu\OneDrive - Universiteit Twente\BME\Programming 2\Assignment 6 Laptop\Assignment-6\x64\Debug\Assignment 6.exe

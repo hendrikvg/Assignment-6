@@ -37,9 +37,9 @@ public:
 
 	//virtual void integrateThis(Matrix& x, Input u, SDL_Event& event, double& time) = 0;
 
-	virtual void integrate(Matrix& x, Input u, double t, double dt, double tEnd) = 0;
-	virtual void integrate(Matrix& x, Input u) = 0;
-	virtual void integrate(Matrix& x, Input u, Matrix x0) = 0;
+	virtual void integrate(Matrix& x, CommonInput& u, double t, double dt, double tEnd) = 0;
+	virtual void integrate(Matrix& x, CommonInput& u) = 0;
+	virtual void integrate(Matrix& x, CommonInput& u, Matrix x0) = 0;
 
 	/// <summary>
 	/// Saves current state of statespace to simulator object. 
