@@ -47,7 +47,7 @@ public:
 	/// <param name="x0">initial states of drone, used for resetting the drone location </param>
 	/// <param name="x">current states</param>
 	/// <param name="event">SDL_Event event name</param>
-	void scanKeys(double t, double tEnd, bool& quit, double inputAngularVelocity, double inputThrust, Matrix x0, Matrix& x, SDL_Event event);
+	void scanKeys(bool& quit, double inputAngularVelocity, double inputThrust, Matrix x0, Matrix& x, SDL_Event event);
 };
 
 #endif

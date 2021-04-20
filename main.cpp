@@ -306,7 +306,6 @@ int main(int /*argc*/, char** /*argv*/) {
         }
 
         Uint32 timeout_ms = SDL_GetTicks() + 1000 / FPS;
-
         while (!quit)
         {
             //graphics.blitDrone();
@@ -325,10 +324,13 @@ int main(int /*argc*/, char** /*argv*/) {
 
             while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) {
 
+                if (t > tEnd && manualControl == false) {
+                    quit = true;
+                }
                 while (SDL_PollEvent(&event) != 0)
                 {   
                     if (manualControl == true) {
-                        keyboardInput.scanKeys(t, tEnd, quit, inputAngularVelocity, inputThrust, x0, x, event);
+                        keyboardInput.scanKeys(quit, inputAngularVelocity, inputThrust, x0, x, event);
                     }
                     if (event.type == SDL_QUIT)
                     {
