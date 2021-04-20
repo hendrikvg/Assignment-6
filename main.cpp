@@ -41,8 +41,10 @@ int main(int /*argc*/, char** /*argv*/) {
     double inputThrust;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     bool manualControl;
 
+=======
 =======
 >>>>>>> parent of 52cbdca (x wont initialize properly)
     // ***** TEST: *****
@@ -59,8 +61,13 @@ int main(int /*argc*/, char** /*argv*/) {
     EntryMatrix E;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     CommonInput* inputMethod;
+=======
+
+
+>>>>>>> parent of 52cbdca (x wont initialize properly)
 =======
 
 
@@ -218,6 +225,7 @@ int main(int /*argc*/, char** /*argv*/) {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     std::cout << "\nChoose control input method:\n";
     std::cout << "Enter 0 to quit the program\n";
@@ -257,6 +265,8 @@ int main(int /*argc*/, char** /*argv*/) {
 
 =======
 >>>>>>> parent of 52cbdca (x wont initialize properly)
+=======
+>>>>>>> parent of 52cbdca (x wont initialize properly)
     std::cout << "Starting simulation with:\n";
     std::cout << "t0\t=\t" << t0;
     std::cout << "\ndt\t=\t" << dt;
@@ -286,6 +296,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
     Uint32 t1{ 0 };
     Uint32 t2{ 0 };
+<<<<<<< HEAD
 
     while (!quit)
     {
@@ -324,6 +335,31 @@ int main(int /*argc*/, char** /*argv*/) {
 =======
                 input.keyboardInput(t, tEnd, quit, inputAngularVelocity, inputThrust, x0, x, event, input);
 
+=======
+
+    while (!quit)
+    {
+        //graphics.blitDrone();
+        graphics.render(x);
+        graphics.updateWindow();
+
+        t1 = SDL_GetTicks();
+
+        // integrate for next time step
+        systemSimulation->integrate(x, input, t, dt, t + 1.0/FPS); // integrate system
+        t += 1.0 / FPS;
+
+        t2 = SDL_GetTicks();
+
+        std::cout << "\n" << t2 - t1 << " ms";
+
+        while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) {
+
+            while (SDL_PollEvent(&event) != 0)
+            {
+                input.keyboardInput(t, tEnd, quit, inputAngularVelocity, inputThrust, x0, x, event, input);
+
+>>>>>>> parent of 52cbdca (x wont initialize properly)
                 if (event.type == SDL_QUIT)
                 {
                     quit = true;

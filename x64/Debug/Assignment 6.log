@@ -1,5 +1,6 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(491,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Assignment 6-Hendrik-Laptop2020.vcxproj).  This can lead to incorrect clean and rebuild behavior.
 <<<<<<< HEAD
+<<<<<<< HEAD
   CommonInput.cpp
   ForwardEuler.cpp
   Input.cpp
@@ -7,6 +8,10 @@
   main.cpp
   RungeKutta.cpp
   Simulator.cpp
+=======
+  RungeKutta.cpp
+  main.cpp
+>>>>>>> parent of 52cbdca (x wont initialize properly)
 =======
   RungeKutta.cpp
   main.cpp
