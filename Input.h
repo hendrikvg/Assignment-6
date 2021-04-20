@@ -2,6 +2,7 @@
 #define SRC_INPUT_H
 
 #include "Matrix.h"
+#include "SDL.h"
 #include <vector>
 
 /// <summary>
@@ -13,11 +14,12 @@ class Input
 private:
 	unsigned rowSizeInput;
 	unsigned colSizeInput;
-	unsigned smartSearchMemory=0;  // needed for search optimization
 	std::vector<std::vector<double>> inputVector;
-	Matrix u; 
+	Matrix u;
+	const Uint8* keystates;
 
 public:
+	Input() = default;
 
 	/// <summary>
 	///  constructor for input class object. This class can be used to load in 2-d vectors from the ReadCSV class.
@@ -39,6 +41,14 @@ public:
 	/// </summary>
 	/// <returns>2-d vector with all input values</returns>
 	std::vector<std::vector<double>> getInputVector();
+
+
+	Matrix getKey();
+	void setThrust(double thrust);
+	void setAngularVelocity(double angularVelocity);
+
+	void keyboardInput(double t, double tEnd, bool& quit, double inputAngularVelocity, double inputThrust, Matrix x0, Matrix& x, SDL_Event event, Input input);
+
 };
 
-#endif
+#endif /*SRC_INPUT_H*/

@@ -6,33 +6,34 @@ ForwardEuler::ForwardEuler(StateSpace *system, double t0, double dt, double tEnd
     this->t0 = t0;
     this->dt = dt;
     this->tEnd = tEnd;
-    this->t = 0;
+    this->t = t0;
+}
+
+void ForwardEuler::integrate(Matrix& x, Input u, double t, double dt, double tEnd)
+{
+    if (tEnd - t < dt)
+    {
+        dt = tEnd - t;
+    }
+
+    saveState(t, x, system->calculateY(x, u.getKey()));
+
+    for (t; t < tEnd; t += dt)
+    {
+        x = x + system->calculateXdot(x, u.getKey()) * dt;
+
+        Matrix y = system->calculateY(x, u.getKey());
+
+        saveState(t + dt, x, y);
+    }
+    this->t = t;
 }
 
 void ForwardEuler::integrate(Matrix& x, Input u)
 {
-    if (t == 0)
-    {
-        for (t = t0; t < tEnd; t += dt)
-        {
-            x = x + system->calculateXdot(x, u.getU(t)) * dt;
-            Matrix y = system->calculateY(x, u.getU(t));
-            saveState(t, x, y);
-        }
-    }
-    else
-    {
-        for (t; t < tEnd; t += dt)
-        {
-            x = x + system->calculateXdot(x, u.getU(t)) * dt;
-            Matrix y = system->calculateY(x, u.getU(t));
-            saveState(t, x, y);
-        }   
-    }
-    // exportStates();  // done inside main
+    integrate(x, u, this->t, this->dt, this->tEnd);
 }
 
-// Allow for setting initial state x0
 void ForwardEuler::integrate(Matrix& x, Input u, Matrix x0)
 {
     if (x.getRows() == x0.getRows() && x.getColumns() == x0.getColumns())
@@ -41,3 +42,14 @@ void ForwardEuler::integrate(Matrix& x, Input u, Matrix x0)
         integrate(x, u);
     }
 }
+/*
+void ForwardEuler::integrateThis(Matrix& x, Input u, SDL_Event &event, double& time) {
+
+    x = x + system->calculateXdot(x, u.getKey(event)) * dt;
+    Matrix y = system->calculateY(x, u.getKey(event)) * dt;
+
+    
+
+    saveState(time, x, y);
+    time += dt;
+}*/
