@@ -13,6 +13,8 @@
 #include "RungeKutta.h"
 #include "Functions.h"
 #include "Input.h"
+#include "CommonInput.h"
+#include "KeyboardInput.h"
 #include "ReadCSV.h"
 #include "Functions.h"
 #include "Graphics.h"
@@ -41,6 +43,8 @@ int main(int /*argc*/, char** /*argv*/) {
     double inputAngularVelocity = 0.8;
     double inputThrust;
 
+    bool manualControl;
+
     // ***** DECLARE REMAINING GLOBAL VARIABLES: *****
 
     double t0;
@@ -49,12 +53,14 @@ int main(int /*argc*/, char** /*argv*/) {
     Matrix x;
     Matrix x0;
     Input input;
+    KeyboardInput keyboardInput;
     EntryMatrix A;
     EntryMatrix B;
     EntryMatrix C;
     EntryMatrix D;
     EntryMatrix E;
 
+    CommonInput* inputMethod;
     Simulator* systemSimulation;
     ReadCSV inCSV; //create object to prepare for csv import
     SDL_Event event;
@@ -191,7 +197,7 @@ int main(int /*argc*/, char** /*argv*/) {
             ? ((F_rope * ((x(2, 1) - x(7, 1)) / L_rope) / m_c) - g)
             : (-g); }); // bool ? this : that (conditional ternary operator)
 
-        inputThrust = 100.0;
+        inputThrust = 80.0;
 
         input = Input(inCSV.importCSV("CargoDroneInput.csv"), false); // import csv with input commands for drone and put it in an Input class object.
         break;
@@ -243,7 +249,50 @@ int main(int /*argc*/, char** /*argv*/) {
         exit(EXIT_SUCCESS); // exits the program with cleaning up.
     }
 
-    // ***** SDL WINDOW AND MACHINE: *****
+    std::cout << "\n\nCONTROL SCHEME:\n";
+    std::cout << "ESCAPE: \t Quit simulation\n";
+    std::cout << "ARROW UP: \t Thrusters On \n";
+    std::cout << "ARROW RIGHT: \t Rotate right\n";
+    std::cout << "ARROW LEFT: \t Rotate left\n";
+    std::cout << "SPACE: \t\t Reset drone\n\n";
+
+    std::cout << "\nChoose control input method:\n";
+    std::cout << "Enter 0 to quit the program\n";
+    std::cout << "Enter 1 for Prescribed Input (demo)\n";
+    std::cout << "Enter 2 for Manual Input Control (visual mode only)\n";
+
+
+    switch (getInteger(0, 2))
+    {
+    case 1:
+    {
+        inputMethod = &input;
+        manualControl = false;
+        std::cout << "\nDemo mode. Loading prescribed control input.\n";
+        break;
+    }
+    case 2:
+    {
+        inputMethod = &keyboardInput;
+        manualControl = true;
+
+        std::cout << "\nManual control selected.\n\n";
+        std::cout << "Control scheme:\n";
+        std::cout << "ESCAPE: \t Quit simulation\n";
+        std::cout << "ARROW UP: \t Thrusters On \n";
+        std::cout << "ARROW RIGHT: \t Rotate right\n";
+        std::cout << "ARROW LEFT: \t Rotate left\n";
+        std::cout << "SPACE: \t\t Reset drone\n\n";
+        break;
+    }
+    default:
+    {
+        std::cout << "Quitting program...";
+        exit(EXIT_SUCCESS); // exits the program with cleaning up.
+    }
+    }
+
+        // ***** SDL WINDOW AND MACHINE: *****
 
     if (visualization)
     {
@@ -267,7 +316,7 @@ int main(int /*argc*/, char** /*argv*/) {
             t1 = SDL_GetTicks();
 
             // integrate for next time step
-            systemSimulation->integrate(x, input, t, dt, t + 1.0/FPS); // integrate system
+            systemSimulation->integrate(x, *inputMethod, t, dt, t + 1.0/FPS); // integrate system
             t += 1.0 / FPS;
 
             t2 = SDL_GetTicks();
@@ -277,9 +326,10 @@ int main(int /*argc*/, char** /*argv*/) {
             while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) {
 
                 while (SDL_PollEvent(&event) != 0)
-                {
-                    input.keyboardInput(t, tEnd, quit, inputAngularVelocity, inputThrust, x0, x, event, input);
-
+                {   
+                    if (manualControl == true) {
+                        keyboardInput.scanKeys(t, tEnd, quit, inputAngularVelocity, inputThrust, x0, x, event);
+                    }
                     if (event.type == SDL_QUIT)
                     {
                         quit = true;
