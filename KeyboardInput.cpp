@@ -6,6 +6,11 @@ KeyboardInput::KeyboardInput() {
     keystates = SDL_GetKeyboardState(NULL); // Argument is the number of keys available, since we don't care it's set to NULL.
 }
 
+KeyboardInput::~KeyboardInput()
+{
+    std::cout << "Destorying KeyboardInput object. Also destorying parent object: ";
+}
+
 
 
 Matrix KeyboardInput::getU(double time) {
@@ -23,12 +28,12 @@ void KeyboardInput::setAngularVelocity(double angularVelocity) {
 }
 
 
-void KeyboardInput::scanKeys(double t, double tEnd, bool& quit, double inputAngularVelocity, double inputThrust, Matrix x0, Matrix& x, SDL_Event event) {
+void KeyboardInput::scanKeys(bool& quit, double inputAngularVelocity, double inputThrust, Matrix x0, Matrix& x, SDL_Event event) {
     setThrust(0);
     setAngularVelocity(0);
 
 
-    if (keystates[SDL_SCANCODE_ESCAPE] || t > tEnd)
+    if (keystates[SDL_SCANCODE_ESCAPE])
     {
         quit = true;
     }

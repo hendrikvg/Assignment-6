@@ -11,6 +11,7 @@ protected:
 
 public:
 	CommonInput() = default;
+	~CommonInput();
 
 	virtual Matrix getU(double time) = 0;
 

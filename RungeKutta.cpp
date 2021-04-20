@@ -9,6 +9,11 @@ RungeKutta::RungeKutta(StateSpace* system, double t0, double dt, double tEnd = 0
     this->t = t0;
 }
 
+RungeKutta::~RungeKutta()
+{
+    std::cout << "Destorying RungeKutta object. Also destorying parent object: ";
+}
+
 void RungeKutta::integrate(Matrix& x, CommonInput& u, double t, double dt, double tEnd)
 {
     if (tEnd - t < dt)

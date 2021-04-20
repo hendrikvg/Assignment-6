@@ -16,6 +16,7 @@ class OutputCSV
 public:
 	OutputCSV() = default;
 
+	~OutputCSV();
 
 	/// Output 2-d vector to a CSV file
 	/// @param Name of 2-d vector

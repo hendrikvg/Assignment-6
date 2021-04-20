@@ -1,6 +1,11 @@
 #include "ReadCSV.h"
 
-std::vector<std::vector<double>> ReadCSV::importCSVHelper(std::string filename) {		
+ReadCSV::~ReadCSV()
+{
+	std::cout << "Destorying ReadCSV object.\n";
+}
+
+std::vector<std::vector<double>> ReadCSV::importCSVHelper(std::string filename) {
 	std::ifstream inputFile(filename);	// create input filestream object from the filename document
 	double currentDouble;				// helper variable 
 	std::string currentRow;				// helper variable 

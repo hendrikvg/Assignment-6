@@ -1,5 +1,10 @@
 #include "OutputCSV.h"
 
+OutputCSV::~OutputCSV()
+{
+	std::cout << "\nDestorying OutputCSV object.\n";
+}
+
 void OutputCSV::writeCSVHelper(std::vector<std::vector<double>> outputSignal, std::string filename) {
 
 	std::ofstream outputFile(filename);

@@ -17,6 +17,7 @@ class ReadCSV {
 public:
 	ReadCSV() = default;
 
+	~ReadCSV();
 
 	//This function takes a filename and returns a vector<vector<double>> of the input commands
 	//@param insert filename of csv file.

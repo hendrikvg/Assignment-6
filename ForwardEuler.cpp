@@ -9,6 +9,11 @@ ForwardEuler::ForwardEuler(StateSpace *system, double t0, double dt, double tEnd
     this->t = t0;
 }
 
+ForwardEuler::~ForwardEuler()
+{
+    std::cout << "Destorying ForwardEuler object. Also destorying parent object: ";
+}
+
 void ForwardEuler::integrate(Matrix& x, CommonInput& u, double t, double dt, double tEnd)
 {
     if (tEnd - t < dt)

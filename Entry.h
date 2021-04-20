@@ -42,6 +42,9 @@ public:
     /// <param name="constant">Constants of type double.</param>
     Entry(double constant);
 
+    /// Destructor
+    ~Entry();
+
     /// <summary>
     /// Returns the values inside object, by first checking wether it is constant or 
     /// variable.

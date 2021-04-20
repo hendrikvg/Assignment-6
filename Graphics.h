@@ -21,9 +21,9 @@ private:
 	SDL_Texture* textureCargo;
 	SDL_Rect rectDrone;
 	SDL_Rect rectCargo;
-
 public:
 	Graphics(unsigned windowSizeX, unsigned windowSizeY);
+	~Graphics();
 	bool initialize();
 	bool loadMedia(bool);
 	void close();

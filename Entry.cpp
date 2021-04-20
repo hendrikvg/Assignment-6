@@ -27,6 +27,12 @@ Entry::Entry(std::function<double()> entryFunc) : entryFunction(entryFunc) {
 Entry::Entry(double constant) : constant(constant) {
     isConstant = true;
 }
+/// <summary>
+/// Destructor
+/// </summary>
+Entry::~Entry()
+{
+}
 
 /// <summary>
 /// Returns either a constant or the result of a lambda function.
