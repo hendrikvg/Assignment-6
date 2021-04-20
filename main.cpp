@@ -4,6 +4,9 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
+#include <chrono>
+#include <thread>
+#include <mutex>
 #include "Matrix.h"
 #include "StateSpace.h"
 #include "Simulator.h"
@@ -68,6 +71,8 @@ int main(int /*argc*/, char** /*argv*/) {
     bool quit = false;
     bool visualization;
     bool drawCargo;
+
+    std::mutex mtx;
 
     std::cout << "\nWelcome to Assignment 6, do you want a visual simulation?:\n";
     std::cout << "Enter 0 to quit the program\n";
@@ -302,35 +307,27 @@ int main(int /*argc*/, char** /*argv*/) {
         }
         if (graphics.loadMedia(drawCargo))
         {
-            std::cout << "\nMedia has been loaded.";
+            std::cout << "\nMedia has been loaded.\n";
         }
 
+        std::thread thread1 = systemSimulation->integrateThread(x, *inputMethod, t, dt, FPS, mtx, quit);
+        std::thread thread2 = graphics.clearRenderUpdateThread(x, mtx, quit);
         Uint32 timeout_ms = SDL_GetTicks() + 1000 / FPS;
+
         while (!quit)
         {
-            //graphics.blitDrone();
-            graphics.render(x);
-            graphics.updateWindow();
-
-            t1 = SDL_GetTicks();
-
-            // integrate for next time step
-            systemSimulation->integrate(x, *inputMethod, t, dt, t + 1.0/FPS); // integrate system
             t += 1.0 / FPS;
-
-            t2 = SDL_GetTicks();
-
-            std::cout << "\n" << t2 - t1 << " ms";
-
-            while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) {
-
+                     
+            while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) { // replace with chrono and conditional ternary operator...
                 if (t > tEnd && manualControl == false) {
                     quit = true;
                 }
                 while (SDL_PollEvent(&event) != 0)
                 {   
                     if (manualControl == true) {
+                        //mtx.lock();
                         keyboardInput.scanKeys(quit, inputAngularVelocity, inputThrust, x0, x, event);
+                        //mtx.unlock();
                     }
                     if (event.type == SDL_QUIT)
                     {
@@ -339,9 +336,11 @@ int main(int /*argc*/, char** /*argv*/) {
                 }
             }
 
-            graphics.clear();
             timeout_ms += 1000 / FPS;
         }
+        // join threads...
+        thread1.join();
+        thread2.join();
     }
     else
     {

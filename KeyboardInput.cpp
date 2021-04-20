@@ -14,7 +14,7 @@ KeyboardInput::~KeyboardInput()
 
 
 Matrix KeyboardInput::getU(double time) {
-    time = NULL;
+    //time = NULL;
     return this->u;
 }
 
@@ -31,7 +31,6 @@ void KeyboardInput::setAngularVelocity(double angularVelocity) {
 void KeyboardInput::scanKeys(bool& quit, double inputAngularVelocity, double inputThrust, Matrix x0, Matrix& x, SDL_Event event) {
     setThrust(0);
     setAngularVelocity(0);
-
 
     if (keystates[SDL_SCANCODE_ESCAPE])
     {

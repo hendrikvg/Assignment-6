@@ -45,7 +45,7 @@ bool Graphics::initialize()
     else
     {
         //Create window
-        window = SDL_CreateWindow("Programming 2 Assignment 6.3", SDL_WINDOWPOS_UNDEFINED,
+        window = SDL_CreateWindow("Programming 2 Assignment 6.5", SDL_WINDOWPOS_UNDEFINED,
             SDL_WINDOWPOS_UNDEFINED, windowSizeX, windowSizeY, 0/*SDL_WINDOW_SHOWN*/);
         if (window == NULL)
         {
@@ -152,4 +152,28 @@ void Graphics::clear()
 {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderClear(renderer);
+}
+
+void Graphics::clearRenderUpdate(Matrix x)
+{
+    clear();
+    render(x);
+    updateWindow();
+}
+
+std::thread Graphics::clearRenderUpdateThread(Matrix& x, std::mutex& mtx, bool& quit)
+{
+    return std::thread([&] {
+        while (!quit)
+        {
+            auto t1 = std::chrono::high_resolution_clock::now();
+            mtx.lock();
+            clearRenderUpdate(x);
+            mtx.unlock();
+            auto t2 = std::chrono::high_resolution_clock::now();
+            std::chrono::nanoseconds remaining(16666667 - std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count()); // 60Hz --> 1/60*1e9 = 16666667
+            if (remaining.count() <= 0) continue;
+            std::this_thread::sleep_for(remaining);
+        }
+    });
 }
