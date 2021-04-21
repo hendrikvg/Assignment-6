@@ -1,5 +1,24 @@
+/*
+==============================================================
+ Filename    :  Graphics.cpp
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+                Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.5
+ License     :  none.
+ Description :  This file handles the implementation of the Graphics memeber methods.
+                Graphics.h handles all rendering a drawing tasks of the program.
+                It can be considered a wrapper class of the SDL library.
+==============================================================
+*/
+
 #include "Graphics.h"
 
+/// <summary>
+/// Constructor which initializes all SDL windows, surfaces, textures and renderers to NULL. It also sets the locations of the drone and
+/// cargo to the middle of the screen by iniitializion of rectCargo and rectDrone.
+/// </summary>
+/// <param name="windowSizeX">Desired window size in x-dimension</param>
+/// <param name="windowSizeY">Desired window size in y-dimension</param>
 Graphics::Graphics(unsigned windowSizeX, unsigned windowSizeY) :
     windowSizeX(windowSizeX), windowSizeY(windowSizeY)
 {
@@ -22,6 +41,7 @@ Graphics::Graphics(unsigned windowSizeX, unsigned windowSizeY) :
 
 }
 
+/// Destructor
 Graphics::~Graphics()
 {
     std::cout << "Destroying Graphics object...";
@@ -30,7 +50,10 @@ Graphics::~Graphics()
 }
 
 
-
+/// <summary>
+/// initializes window, renderer, and screen. Also sets the draw color to black.
+/// </summary>
+/// <returns>bool, true for success, false for error/fail</returns>
 bool Graphics::initialize()
 {
     //Initialization flag
@@ -75,6 +98,12 @@ bool Graphics::initialize()
     return success;
 }
 
+
+/// <summary>
+/// loads bitmaps into the textures. Drone.bmp and Cargo.bmp must be placed inside the root directory. 
+/// </summary>
+/// <param name="">drawCargo bool. Set to true if you want to draw cargo.</param>
+/// <returns>success state</returns>
 bool Graphics::loadMedia(bool drawCargo)
 {
     // Loading success flag
@@ -86,13 +115,13 @@ bool Graphics::loadMedia(bool drawCargo)
     {
         textureCargo = SDL_CreateTextureFromSurface(renderer, SDL_LoadBMP("cargo.bmp"));
 
-        if (textureDrone == NULL)
+        if (textureDrone == NULL) //print error to console in case bitmaps are missing from directory
         {
             printf("Unable to load all images %s! SDL Error: %s\n", "drone.bmp", SDL_GetError());
             success = false;
         }
 
-        if (textureCargo == NULL)
+        if (textureCargo == NULL) //print error and return false if bitmaps are missing
         {
             printf("Unable to load all images %s! SDL Error: %s\n", "cargo.bmp", SDL_GetError());
             success = false;
@@ -102,6 +131,10 @@ bool Graphics::loadMedia(bool drawCargo)
     return success;
 }
 
+/// <summary>
+/// Does the cleanup needed before quitting. Deallocating surfaces and textures
+/// destroys windows and quits SDL subsystem.
+/// </summary>
 void Graphics::close()
 {
     // Deallocate surfaces
@@ -122,22 +155,32 @@ void Graphics::close()
     SDL_Quit();
 }
 
+/// <summary>
+/// updates the renderer so show the new positions of the drone.
+/// </summary>
 void Graphics::updateWindow()
 {
-    SDL_RenderPresent(renderer);
+    SDL_RenderPresent(renderer); //Update renderer to newest states of drone
     return;
 }
 
+
+/// <summary>
+/// Takes care of all the code needed to place the drone and cargo in the desired
+/// position. Also sets the desired colors and creates a line to represent the rope
+/// inbeween the drone and cargo.
+/// </summary>
+/// <param name="x">State vector</param>
 void Graphics::render(Matrix x)
 {
-    if (textureCargo != NULL)
+    if (textureCargo != NULL) // If cargo texture is loaded, also draw a line inbetween drone and cargo to represent rope
     {
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE); //set line color to white
         SDL_RenderDrawLine(renderer,
             (int)(100.0 * x(1, 1) + (double)windowSizeX / 2.0),
             (int)(-100.0 * x(2, 1) + (double)windowSizeY / 2.0),
             (int)(100.0 * x(6, 1) + (double)windowSizeX / 2.0),
-            (int)(-100.0 * x(7, 1) + (double)windowSizeY / 2.0));
+            (int)(-100.0 * x(7, 1) + (double)windowSizeY / 2.0));       // Vectors representing the line
         rectCargo.x = int(100.0 * x(6, 1) + (double)windowSizeX / 2.0 - 102.0 / 2.0 / 2.8);
         rectCargo.y = int(-100.0 * x(7, 1) + (double)windowSizeY / 2.0 - 91.0 / 2.0 / 2.8);
         SDL_RenderCopy(renderer, textureCargo, NULL, &rectCargo);
@@ -148,12 +191,19 @@ void Graphics::render(Matrix x)
     SDL_RenderCopyEx(renderer, textureDrone, NULL, &rectDrone, -x(3, 1) * 180 / pi, NULL, SDL_FLIP_NONE);
 }
 
+/// <summary>
+/// clears renderer of current drawings. Can be used inbetween frames to clear the canvas.
+/// </summary>
 void Graphics::clear()
 {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderClear(renderer);
 }
 
+/// <summary>
+/// Combines clear(), render(x) and updateWindow() to one callable function.
+/// </summary>
+/// <param name="x">Matrix x to be put in render(x)</param>
 void Graphics::clearRenderUpdate(Matrix x)
 {
     clear();
@@ -161,6 +211,14 @@ void Graphics::clearRenderUpdate(Matrix x)
     updateWindow();
 }
 
+/// <summary>
+/// A version of clearRenderUpdate which also creates a separate thread to run 
+/// all of those functions on seperately.
+/// </summary>
+/// <param name="x">State vector</param>
+/// <param name="mtx">Mutual exclusivity to ensure safe data transfer</param>
+/// <param name="quit">Quit parameter, can be used to tell the thread to quit</param>
+/// <returns>Thread that can be joined inside main</returns>
 std::thread Graphics::clearRenderUpdateThread(Matrix& x, std::mutex& mtx, bool& quit)
 {
     return std::thread([&] {

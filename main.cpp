@@ -1,10 +1,21 @@
+/*
+==============================================================
+ Filename    :  Main.cpp
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+                Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.5
+ License     :  none.
+ Description :  This is the main file from which all code is initiated. This version has code satisfying the requirements of assignments 6.1 to 6.5. 
+==============================================================
+*/
+
 #include <vector>
 #include <cmath>
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
-#include <chrono>
+//#include <chrono>
 #include <thread>
 #include <mutex>
 #include "Matrix.h"
@@ -26,27 +37,23 @@ int main(int /*argc*/, char** /*argv*/) {
     std::cout << "HELLO WORLD\n";
 
     // ***** INITIALISE ALL GLOBAL VARIABLES: *****
-    double dt = 0.01;
-    const double m_d = 3;
-    const double m_c = 2;
-    const double C_dd = 0.1;
-    const double C_dc = 0.1;
-    const double L_rope0 = 1.5;
-    const double K_rope = 40000;
-    const double D_rope = 50;
-    const double g = 9.81;
-    const int windowSizeX = 1000;
-    const int windowSizeY = 800;
+    double dt = 0.01; /// Time step for integration [s], note that this gets modified for...
+    /// different integration methods and dynamical systems.
+    const double m_d = 3; // Mass of drone [kg]
+    const double m_c = 2; // Mass of cargo [kg]
+    const double C_dd = 0.1; // Drag constant of drone [Ns^2/m^2]
+    const double C_dc = 0.1; // Drag constant of cargo [Ns^2/m^2]
+    const double L_rope0 = 1.5; // Length of the rope [m]
+    const double K_rope = 40000; // Stiffness of the rope [N/m]
+    const double D_rope = 50; // Damping of the rope [Ns/m]
+    const double g = 9.81; // Gravitational acceleration
+    const int windowSizeX = 1000; // Horizontal resolution
+    const int windowSizeY = 800; // Vertical resolution
     const int FPS = 60; // 60 FPS, as running less on a PC should be a crime.
     const Uint8* keystates = SDL_GetKeyboardState(NULL); // Argument is the number of keys available, since we don't care it's set to NULL.
-    Uint32 t1{ 0 };
-    Uint32 t2{ 0 };
     Graphics graphics(windowSizeX, windowSizeY);
-
     double inputAngularVelocity = 0.8;
-    double inputThrust;
 
-    bool manualControl;
 
     // ***** DECLARE REMAINING GLOBAL VARIABLES: *****
 
@@ -71,6 +78,8 @@ int main(int /*argc*/, char** /*argv*/) {
     bool quit = false;
     bool visualization;
     bool drawCargo;
+    double inputThrust;
+    bool manualControl;
 
     std::mutex mtx;
 
@@ -227,7 +236,7 @@ int main(int /*argc*/, char** /*argv*/) {
     E.print();
     std::cout << "Note that the matrix entries may be state dependent, and thus change during the simulation.";
 
-    StateSpace dynamicSystem(A, B, C, D, E); // Initiate state space system
+    StateSpace dynamicSystem(A, B, C, D, E); // Initialize state-space system
     ForwardEuler forwardEulerIntegrator(&dynamicSystem, t0, dt, tEnd); 
     RungeKutta rungeKuttaIntegrator(&dynamicSystem, t0, dt*20, tEnd); // Note: dt becomes 20 times larger, as RungeKutta-4 is more stable.
 
@@ -282,12 +291,7 @@ int main(int /*argc*/, char** /*argv*/) {
         manualControl = true;
 
         std::cout << "\nManual control selected.\n\n";
-        std::cout << "Control scheme:\n";
-        std::cout << "ESCAPE: \t Quit simulation\n";
-        std::cout << "ARROW UP: \t Thrusters On \n";
-        std::cout << "ARROW RIGHT: \t Rotate right\n";
-        std::cout << "ARROW LEFT: \t Rotate left\n";
-        std::cout << "SPACE: \t\t Reset drone\n\n";
+
         break;
     }
     default:
@@ -310,22 +314,22 @@ int main(int /*argc*/, char** /*argv*/) {
             std::cout << "\nMedia has been loaded.\n";
         }
 
-        std::thread thread1 = systemSimulation->integrateThread(x, *inputMethod, t, dt, FPS, mtx, quit);
-        std::thread thread2 = graphics.clearRenderUpdateThread(x, mtx, quit);
+        std::thread thread1 = systemSimulation->integrateThread(x, *inputMethod, t, dt, FPS, mtx, quit); // Create integration thread that runs at 100Hz.
+        std::thread thread2 = graphics.clearRenderUpdateThread(x, mtx, quit); // Create graphics thread that runs at 60Hz.
         Uint32 timeout_ms = SDL_GetTicks() + 1000 / FPS;
 
         while (!quit)
         {
             t += 1.0 / FPS;
                      
-            while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) { // replace with chrono and conditional ternary operator...
+            while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) {
                 if (t > tEnd && manualControl == false) {
                     quit = true;
                 }
                 while (SDL_PollEvent(&event) != 0)
                 {   
                     if (manualControl == true) {
-                        keyboardInput.scanKeys(quit, inputAngularVelocity, inputThrust, x0, x, event);
+                        keyboardInput.scanKeys(quit, inputAngularVelocity, inputThrust, x0, x, event); // Register keyboard inputs.
                     }
                     if (event.type == SDL_QUIT)
                     {
