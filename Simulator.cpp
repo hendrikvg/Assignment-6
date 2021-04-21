@@ -10,8 +10,8 @@ std::thread Simulator::integrateThread(Matrix& x, CommonInput& u, double& t, dou
 	
 	return std::thread([&, dt, FPS] {
 		while (!quit) {
-			double end = t + 1.0 / FPS;
 			auto t1 = std::chrono::high_resolution_clock::now();
+			double end = t + 1.0 / FPS;
 			mtx.lock();
 			integrate(x, u, t, dt, end);
 			mtx.unlock();
