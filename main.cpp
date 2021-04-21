@@ -328,9 +328,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
             while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) {
 
-                if (t > tEnd && manualControl == false) {
-                    quit = true;
-                }
+                
                 while (SDL_PollEvent(&event) != 0)
                 {   
                     if (manualControl == true) {
@@ -341,6 +339,9 @@ int main(int /*argc*/, char** /*argv*/) {
                         quit = true;
                     }
                 }
+            }
+            if (t > tEnd && manualControl == false) {
+                quit = true;
             }
 
             graphics.clear();

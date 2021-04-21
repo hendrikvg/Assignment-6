@@ -68,7 +68,7 @@ bool Graphics::initialize()
     else
     {
         //Create window
-        window = SDL_CreateWindow("Programming 2 Assignment 6.3", SDL_WINDOWPOS_UNDEFINED,
+        window = SDL_CreateWindow("Programming 2 Assignment 6.4", SDL_WINDOWPOS_UNDEFINED,
             SDL_WINDOWPOS_UNDEFINED, windowSizeX, windowSizeY, 0/*SDL_WINDOW_SHOWN*/);
         if (window == NULL)
         {
