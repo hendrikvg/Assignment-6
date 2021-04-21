@@ -1,3 +1,14 @@
+/*
+==============================================================
+ Filename    :  Main.cpp
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+                Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.2
+ License     :  none.
+ Description :  This is the main file from which all code is initiated. This version has code satisfying the requirements of assignments 6.1 to 6.5.
+==============================================================
+*/
+
 #include <vector>
 #include <cmath>
 #include <iostream>
@@ -20,22 +31,22 @@ int main(int /*argc*/, char** /*argv*/) {
     std::cout << "HELLO WORLD\n";
 
     // ***** INITIALISE ALL GLOBAL VARIABLES: *****
-    double t0 = 0;
-    double dt = 0.01;
-    double tEnd = 8;
+    double t0 = 0; // Start time [s]
+    double dt = 0.01; /// Time step for integration [s], note that this gets modified for...
+    ///  different integration methods and dynamical systems.
+    double tEnd = 8; /// End time [s]
 
-    double m_d = 3;
-    double m_c = 2;
-    double C_dd = 0.1;
-    double C_dc = 0.1;
-    double L_rope0 = 1.5;
-    double K_rope = 40000;
-    double D_rope = 50;
-    double g = 9.81;
+    const double m_d = 3; // Mass of drone [kg]
+    const double m_c = 2; // Mass of cargo [kg]
+    const double C_dd = 0.1; // Drag constant of drone [Ns^2/m^2]
+    const double C_dc = 0.1; // Drag constant of cargo [Ns^2/m^2]
+    const double L_rope0 = 1.5; // Length of the rope [m]
+    const double K_rope = 40000; // Stiffness of the rope [N/m]
+    const double D_rope = 50; // Damping of the rope [Ns/m]
+    const double g = 9.81; // Gravitational acceleration
 
-    // ***** TEST: *****
+    // ***** DECLARE REMAINING GLOBAL VARIABLES: *****
 
-    bool test = true;
     Matrix x;
     Input input;
     EntryMatrix A;
@@ -182,7 +193,7 @@ int main(int /*argc*/, char** /*argv*/) {
     }
     case 2:
     {
-        dt *= 20;
+        dt *= 20; // Note: dt becomes 20 as large.
         systemSimulation = &rungeKuttaIntegrator;
         break;
     }
@@ -195,7 +206,7 @@ int main(int /*argc*/, char** /*argv*/) {
     std::cout << "t0\t=\t" << t0;
     std::cout << "\ndt\t=\t" << dt;
     std::cout << "\ntEnd\t=\t" << tEnd;
-    std::cout << "\nIntegrating... please be patient";
+    std::cout << "\nIntegrating... please be patient\n";
 
     systemSimulation->integrate(x, input); // integrate system
 
@@ -203,7 +214,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
     systemSimulation->exportStates("TEST.csv");
 
-    std::cout << "Succes! Exiting program...";
+    std::cout << "Succes! \nExiting program...\n";
 
     return 0;
 }

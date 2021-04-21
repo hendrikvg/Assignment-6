@@ -1,9 +1,22 @@
+/*
+==============================================================
+ Filename    :  ForwardEuler.h
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+				Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.2
+ License     :  none.
+ Description :  Forwad Euler integration scheme is handled by this class. It takes the state space,
+				and other parameters and returns the state vector of the next time step. Inherits from
+				Simulator class.
+==============================================================
+*/
+
 #ifndef SRC_FORWARDEULER_H
+#pragma once
 #define SRC_FORWARDEULER_H
 
 #include "Simulator.h"
 #include "Input.h"		// Input class
-
 
 /// <summary>
 /// Forward Euler integrator class. Handles all integration tasks, inherits from simulator (public). Uses member functions from Input class to retrieve inputs for current time.
@@ -18,6 +31,9 @@ public:
 	/// Default constructor
 	/// </summary>
 	ForwardEuler() = default;
+
+	/// Destructor
+	~ForwardEuler();
 
 	/// <summary>
 	/// Constructor with all required parameters to integrate.

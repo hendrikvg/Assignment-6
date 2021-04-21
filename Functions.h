@@ -1,4 +1,17 @@
+/*
+==============================================================
+ Filename    :  Functions.h
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+                Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.2
+ License     :  none.
+ Description :  getInteger() implementation. Comes from assignment 1 of week 1.
+                It is used for retrieving integers from the user in the system menus.
+==============================================================
+*/
+
 #ifndef SRC_FUNCTIONS_H
+#pragma once
 #define SRC_FUNCTIONS_H
 
 #include <iostream>

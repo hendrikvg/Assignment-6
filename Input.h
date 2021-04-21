@@ -1,4 +1,20 @@
+/*
+==============================================================
+ Filename    :  Input.h
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+				Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.2
+ License     :  none.
+ Description :  Input.h handles the interpolation of the provided inputs for the drone.
+				The frequency of the inputs does not match the integration frequency,
+				for this reason, this interpolation is needed to figure out the inputs
+				for the time steps inbetween new inputs. This file implements zeroth
+				order interpolation.
+==============================================================
+*/
+
 #ifndef SRC_INPUT_H
+#pragma once
 #define SRC_INPUT_H
 
 #include "Matrix.h"
@@ -26,6 +42,8 @@ public:
 	/// <param name="inputVectorIn"> 2-d vector with input values (thrust and angular velocity) over time</param>
 	/// <param name="switchSearch"> search optimisation switch. Default state is on.</param>
 	Input(std::vector<std::vector<double>>, bool);     
+
+	~Input();
 
 	/// <summary>
 	/// getU finds the input values for the current time step. It uses zeroth-order interpolation to fill the descretization gaps.
