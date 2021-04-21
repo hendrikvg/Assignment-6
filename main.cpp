@@ -321,7 +321,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
     std::cout << "\nExporting states as CSV file... ";
 
-    systemSimulation->exportStates("TEST.csv");
+    systemSimulation->exportStates("ExportStates.csv");
 
     std::cout << "Succes! \nExiting program...";
 
