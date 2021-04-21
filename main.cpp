@@ -254,7 +254,7 @@ int main(int /*argc*/, char** /*argv*/) {
     }
     case 2:
     {
-        dt *= 20;
+        dt *= 20; // Note: dt becomes 20 times larger.
         systemSimulation = &rungeKuttaIntegrator;
         break;
     }
@@ -323,9 +323,6 @@ int main(int /*argc*/, char** /*argv*/) {
             t += 1.0 / FPS;
                      
             while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout_ms)) {
-                if (t > tEnd && manualControl == false) {
-                    quit = true;
-                }
                 while (SDL_PollEvent(&event) != 0)
                 {   
                     if (manualControl == true) {
@@ -337,7 +334,9 @@ int main(int /*argc*/, char** /*argv*/) {
                     }
                 }
             }
-
+            if (t > tEnd && manualControl == false) {
+                quit = true;
+            }
             timeout_ms += 1000 / FPS;
         }
         // join threads...
