@@ -1,9 +1,20 @@
+/*
+==============================================================
+ Filename    :  EntryMatrix.h
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+				Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.4
+ License     :  none.
+ Description :  This class works identically to Matrix.h, except it will always return
+				a matrix when doing computations
+==============================================================
+*/
+
 #ifndef SRC_ENTRYMATRIX_H
 #pragma once
 #define SRC_ENTRYMATRIX_H
 
 #include <iostream>
-//#include <algorithm>
 #include <vector>
 #include "Entry.h"
 #include "Matrix.h"
@@ -18,9 +29,12 @@ class EntryMatrix
 private:
 	unsigned rowSize;
 	unsigned colSize;
-	std::vector<std::vector<Entry>> matrix;
+	std::vector<std::vector<Entry>> matrix; /// 2D-vector that contains all matrix values.
 
 public:
+	/// <summary>
+	/// Default constructor.
+	/// </summary>
 	EntryMatrix() = default;
 
 	/// <summary>

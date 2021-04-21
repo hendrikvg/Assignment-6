@@ -1,3 +1,16 @@
+/*
+==============================================================
+ Filename    :  Entry.h
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+                Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.4
+ License     :  none.
+ Description :  This is a file with the implementation of the code for Entry.h.
+                The aim of this class is to create a wrapper class that can be either
+                a constant or a lambda function.
+==============================================================
+*/
+
 #ifndef SRC_ENTRY_H
 #pragma once
 #define SRC_ENTRY_H
@@ -27,6 +40,9 @@ public:
     /// <param name="constant">constants</param>
     Entry(double constant);
 
+    /// Destructor
+    ~Entry();
+
     /// <summary>
     /// returns the values inside object, by first checking wether it is constant or variable
     /// </summary>
@@ -40,7 +56,7 @@ private:
     double constant;
     std::function<double()> entryFunction;
 
-    bool isConstant;
+    bool isConstant; // Remembers whether the object should return a function or a constant
 };
 
 

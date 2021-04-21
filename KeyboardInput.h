@@ -1,3 +1,17 @@
+/*
+==============================================================
+ Filename    :  KeyboardInput.h
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+				Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.4
+ License     :  none.
+ Description :  This class handles all processes needed to poll the keyboard for
+				its inputs. These inputs are then set to our matrix u, which is then
+				passed on to the integrator as the input values for the drone. The
+				implementation can handle more than one input at a time.
+==============================================================
+*/
+
 #ifndef SRC_KEYBOARDINPUT_H
 #define SRC_KEYBOARDINPUT_H
 
@@ -6,6 +20,10 @@
 #include "SDL.h"
 #include "CommonInput.h"
 
+
+/// <summary>
+///	KeyboardInput inherits from CommonInput. See class description above for further information.
+/// </summary>
 class KeyboardInput : public CommonInput
 {
 private:
@@ -13,7 +31,9 @@ private:
 	const Uint8* keystates;
 
 public:
-	KeyboardInput();
+	KeyboardInput(); //constructor
+
+	~KeyboardInput(); //destructor
 
 	/// <summary>
 	/// Returns the current input vector U. Is called by the integrator.
