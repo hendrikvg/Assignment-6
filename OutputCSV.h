@@ -1,3 +1,15 @@
+/*
+==============================================================
+ Filename    :  OutputCSV.h
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+				Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.3
+ License     :  none.
+ Description :  Output csv makes use of sstream and fstream to create an output file. This
+				funcitonality is used to export the states of the drone after integration.
+==============================================================
+*/
+
 #ifndef SRC_OUTPUTCSV_H
 #define SRC_OUTPUTCSV_H
 
@@ -9,13 +21,14 @@
 
 
 /// <summary>
-/// Handles writing a 2-d vector to a csv file. Name can be specified. Size of vector is arbitrary. 
+/// Handles writing a 2-d vector to a csv file. Name can be specified. 
+/// Size of vector is arbitrary. 
 /// </summary>
 class OutputCSV
 {
 public:
 	OutputCSV() = default;
-
+	~OutputCSV(); //destructor
 
 	/// Output 2-d vector to a CSV file
 	/// @param Name of 2-d vector

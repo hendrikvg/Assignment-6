@@ -1,3 +1,14 @@
+/*
+==============================================================
+ Filename    :  Simulator.h
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+				Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.3
+ License     :  none.
+ Description :  This class handles the implementation of Simulator member methods.
+				Simulator
+==============================================================
+*/
 #ifndef SRC_SIMULATOR_H
 #define SRC_SIMULATOR_H
 
@@ -33,12 +44,36 @@ public:
 	Simulator() = default;
 
 
-	//virtual void integrate(Matrix& x, Input u, double tEnd, Matrix x0) = 0;
+	~Simulator(); //destructor
 
-	//virtual void integrateThis(Matrix& x, Input u, SDL_Event& event, double& time) = 0;
 
+
+	/// <summary>
+	/// Integrates this objects dynamic system from t to tEnd with stepsize dt.
+	/// </summary>
+	/// <param name="x">The current state of the dynamic system of type Matrix.</param>
+	/// <param name="u">The current input for the dynamic system o ftype Input.</param>
+	/// <param name="t">The current time.</param>
+	/// <param name="dt">The time step.</param>
+	/// <param name="tEnd">The end time for integration.</param>
 	virtual void integrate(Matrix& x, Input u, double t, double dt, double tEnd) = 0;
+
+
+	/// <summary>
+	/// Integrates this objects dynamic system from its predefined start to final time.
+	/// </summary>
+	/// <param name="x">The current state of the dynamic system of type Matrix.</param>
+	/// <param name="u">The current input for the dynamic system o ftype Input.</param>
 	virtual void integrate(Matrix& x, Input u) = 0;
+
+
+	/// This is a bit of a legacy function, should be reworked/removed
+	/// <summary>
+	/// Integrates this objects dynamic system from its predefined start to final time, while resetting the current state to some initial state.
+	/// </summary>
+	/// <param name="x">The current state of the dynamic system of type Matrix.</param>
+	/// <param name="u">The current input for the dynamic system o ftype Input.</param>
+	/// <param name="x0">The initial state that should be integrated from.</param>
 	virtual void integrate(Matrix& x, Input u, Matrix x0) = 0;
 
 	/// <summary>

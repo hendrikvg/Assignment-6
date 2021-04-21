@@ -1,3 +1,17 @@
+/*
+==============================================================
+ Filename    :  Input.h
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+				Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.3
+ License     :  none.
+ Description :  Input.h handles the interpolation of the provided inputs for the drone.
+				The frequency of the inputs does not match the integration frequency,
+				for this reason, this interpolation is needed to figure out the inputs
+				for the time steps inbetween new inputs. This file implements zeroth
+				order interpolation.
+==============================================================
+*/
 #ifndef SRC_INPUT_H
 #define SRC_INPUT_H
 
@@ -20,12 +34,14 @@ private:
 public:
 	Input() = default;
 
+	~Input();
+
 	/// <summary>
 	///  constructor for input class object. This class can be used to load in 2-d vectors from the ReadCSV class.
 	/// </summary>
 	/// <param name="inputVectorIn"> 2-d vector with input values (thrust and angular velocity) over time</param>
 	/// <param name="switchSearch"> search optimisation switch. Default state is on.</param>
-	Input(std::vector<std::vector<double>>, bool);     
+	Input(std::vector<std::vector<double>>);     
 
 	/// <summary>
 	/// getU finds the input values for the current time step. It uses zeroth-order interpolation to fill the descretization gaps.
@@ -40,9 +56,6 @@ public:
 	/// </summary>
 	/// <returns>2-d vector with all input values</returns>
 	std::vector<std::vector<double>> getInputVector();
-
-
-	Matrix getKey(SDL_Event &event);
 };
 
 #endif /*SRC_INPUT_H*/

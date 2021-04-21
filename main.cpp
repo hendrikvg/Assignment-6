@@ -1,3 +1,13 @@
+/*
+==============================================================
+ Filename    :  Main.cpp
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+                Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.3
+ License     :  none.
+ Description :  This is the main file from which all code is initiated. This version has code satisfying the requirements of assignments 6.1 to 6.3.
+==============================================================
+*/
 #include <vector>
 #include <cmath>
 #include <iostream>
@@ -22,24 +32,29 @@ int main(int /*argc*/, char** /*argv*/) {
 
     // ***** INITIALISE ALL GLOBAL VARIABLES: *****
 
-    double dt = 0.01;
-    const double m_d = 3;
-    const double m_c = 2;
-    const double C_dd = 0.1;
-    const double C_dc = 0.1;
-    const double L_rope0 = 1.5;
-    const double K_rope = 40000;
-    const double D_rope = 50;
-    const double g = 9.81;
-    const int windowSizeX = 1000;
-    const int windowSizeY = 800;
-    const int FPS = 60;
+    double dt = 0.01; /// Time step for integration [s], note that this gets modified for...
+    /// different integration methods and dynamical systems.
+    const double m_d = 3; // Mass of drone [kg]
+    const double m_c = 2; // Mass of cargo [kg]
+    const double C_dd = 0.1; // Drag constant of drone [Ns^2/m^2]
+    const double C_dc = 0.1; // Drag constant of cargo [Ns^2/m^2]
+    const double L_rope0 = 1.5; // Length of the rope [m]
+    const double K_rope = 40000; // Stiffness of the rope [N/m]
+    const double D_rope = 50; // Damping of the rope [Ns/m]
+    const double g = 9.81; // Gravitational acceleration
+    const int windowSizeX = 1000; // Horizontal resolution
+    const int windowSizeY = 800; // Vertical resolution
+    const int FPS = 60; // 60 FPS, as running less on a PC should be a crime.
     const Uint8* keystates = SDL_GetKeyboardState(NULL); // Argument is the number of keys available, since we don't care it's set to NULL.
     Uint32 t1{ 0 };
     Uint32 t2{ 0 };
     Graphics graphics(windowSizeX, windowSizeY);
 
+
+
     // ***** DECLARE REMAINING GLOBAL VARIABLES: *****
+
+
 
     double t0;
     double t;
@@ -115,7 +130,7 @@ int main(int /*argc*/, char** /*argv*/) {
         E = EntryMatrix(5, 1, 0.0);
         E(5, 1) = -g;
 
-        input = Input(inCSV.importCSV("DroneInput.csv"), false); // import csv with input commands for drone and put it in an Input class object.
+        input = Input(inCSV.importCSV("DroneInput.csv")); // import csv with input commands for drone and put it in an Input class object.
         break;
 
     case 2:
@@ -184,7 +199,7 @@ int main(int /*argc*/, char** /*argv*/) {
             ? ((F_rope * ((x(2, 1) - x(7, 1)) / L_rope) / m_c) - g)
             : (-g); }); // bool ? this : that (conditional ternary operator)
 
-        input = Input(inCSV.importCSV("CargoDroneInput.csv"), false); // import csv with input commands for drone and put it in an Input class object.
+        input = Input(inCSV.importCSV("CargoDroneInput.csv")); // import csv with input commands for drone and put it in an Input class object.
         break;
 
     default:
@@ -234,7 +249,11 @@ int main(int /*argc*/, char** /*argv*/) {
         exit(EXIT_SUCCESS); // exits the program with cleaning up.
     }
 
+
+
     // ***** SDL WINDOW AND MACHINE: *****
+
+
 
     if (visualization)
     {
@@ -275,25 +294,15 @@ int main(int /*argc*/, char** /*argv*/) {
                     }
                 }
 
-                if (keystates[SDL_SCANCODE_ESCAPE] || t > tEnd)
+                if (keystates[SDL_SCANCODE_ESCAPE])
                 {
                     visualization = false;
                 }
 
-                if (keystates[SDL_SCANCODE_LEFT])
-                {
-
-                }
-
-                if (keystates[SDL_SCANCODE_RIGHT])
-                {
-
-                }
-
-                if (keystates[SDL_SCANCODE_UP])
-                {
-
-                }
+            }
+            if (t > tEnd) 
+            {
+                visualization = false;
             }
 
             graphics.clear();
@@ -316,7 +325,11 @@ int main(int /*argc*/, char** /*argv*/) {
 
     std::cout << "Succes! \nExiting program...";
 
+
+
     // ***** CLEAN UP: *****
+
+
 
     graphics.close();
 

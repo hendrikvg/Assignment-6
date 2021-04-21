@@ -1,8 +1,24 @@
-/// Matrix.cpp
+/*
+==============================================================
+ Filename    :  Matrix.cpp
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+				Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.3
+ License     :  none.
+ Description :  The aim of this file is to create a Matrix class that has operator
+			   overrides such that it behaves like a matrix.
+==============================================================
+*/
 
 #include "Matrix.h"
 
-// Constructor
+/// <summary>
+/// Matrix constructor that initializes a Matrix with rows and colums and
+/// an initial value for all entries.
+/// </summary>
+/// <param name="rows">The number of rows that the Matrix should have.</param>
+/// <param name="columns">The number of columns the Matrix should have.</param>
+/// <param name="initialValue">The value ever entry should have.</param>
 Matrix::Matrix(unsigned rows, unsigned columns, double initialValue) : rowSize(rows), colSize(columns)
 {
 	matrix.resize(rowSize);
@@ -12,7 +28,10 @@ Matrix::Matrix(unsigned rows, unsigned columns, double initialValue) : rowSize(r
 	}
 }
 
-// Copy Constructor
+/// <summary>
+/// Copy constructor that initializes a Matrix with the properties of another Matrix.
+/// </summary>
+/// <param name="B">The other matrix that gets copied.</param>
 Matrix::Matrix(const Matrix& B)
 {
 	this->colSize = B.getColumns();
@@ -26,8 +45,14 @@ Matrix::~Matrix() {
 }
 
 
-// Matrix operations
-// Addition of two matrices
+
+/// Matrix operations:
+
+/// <summary>
+/// Matrix + operator override that enables adding up two Matrices.
+/// </summary>
+/// <param name="B">The other Matrix that gets added.</param>
+/// <returns>The current Matrix object + B.</returns>
 Matrix Matrix::operator+(Matrix B) {
 	Matrix sum(rowSize, colSize, 0.0);
 
@@ -41,6 +66,11 @@ Matrix Matrix::operator+(Matrix B) {
 	return sum;
 }
 
+/// <summary>
+/// Matrix + operator override that enables adding up a Matrix and an EntryMatrix.
+/// </summary>
+/// <param name="B">The EntryMatrix that gets added.</param>
+/// <returns>The current Matrix object + B.</returns>
 Matrix Matrix::operator+(EntryMatrix B)
 {
 	Matrix sum(rowSize, colSize, 0.0);
@@ -55,7 +85,12 @@ Matrix Matrix::operator+(EntryMatrix B)
 	return sum;
 }
 
-// Subtraction of two matrices
+
+/// <summary>
+/// Matrix - operator override that enables subtracting two Matrices.
+/// </summary>
+/// <param name="B">The Matrix that gets subtracted.</param>
+/// <returns>The current Matrix object - B.</returns>
 Matrix Matrix::operator-(Matrix B) {
 	Matrix difference(rowSize, colSize, 0.0);
 
@@ -69,7 +104,11 @@ Matrix Matrix::operator-(Matrix B) {
 	return difference;
 }
 
-// Multiplication of two matrices
+/// <summary>
+/// Matrix * operator override that enables doing Matrix multiplications.
+/// </summary>
+/// <param name="B">The other Matrix that gets multiplied with.</param>
+/// <returns>The current Matrix object * B.</returns>
 Matrix Matrix::operator*(Matrix B) {
 	Matrix product(rowSize, B.getColumns(), 0.0);
 	if (colSize == B.getRows())
@@ -93,8 +132,13 @@ Matrix Matrix::operator*(Matrix B) {
 	}
 }
 
-// Scalar operations
-// Scalar Multiplication
+/// Scalar operations:
+
+/// <summary>
+/// Matrix * operator override that enables scalar multiplication.
+/// </summary>
+/// <param name="B">Scalar of type double.</param>
+/// <returns>The current Matrix object * B.</returns>
 Matrix Matrix::operator*(double B) {
 	Matrix result(rowSize, colSize, 0.0);
 	for (unsigned row = 0; row < rowSize; row++)
@@ -108,21 +152,42 @@ Matrix Matrix::operator*(double B) {
 }
 
 // Other member functions
+
+/// <summary>
+/// Matrix () operator override that enables Matrix indexing like in MATLAB.
+/// </summary>
+/// <param name="rowNr">Row you want to retrieve/manipulate (starts on 1).</param>
+/// <param name="colNr">Column you want to retrieve/manipulate (starts on 1).</param>
+/// <returns>Matrix(rowNumber, colNumber)</returns>
 double& Matrix::operator()(const unsigned& rowNr, const unsigned& colNr)
 {
 	return this->matrix[rowNr - 1][colNr - 1];
 }
 
+
+/// <summary>
+/// getRows() returns the number of rows of this Matrix object.
+/// </summary>
+/// <returns>Number of rows of this Matrix object.</returns>
 unsigned Matrix::getRows() const
 {
 	return this->rowSize;
 }
 
+/// <summary>
+/// getColumns() returns the number of columns of this Matrix object.
+/// </summary>
+/// <returns>Number of columns of this Matrix object.</returns>
 unsigned Matrix::getColumns() const
 {
 	return this->colSize;
 }
 
+
+/// <summary>
+/// getVector() Returns the contents of the matrix as a vector.
+/// </summary>
+/// <returns>All contents of this Matrix object on one row.</returns>
 std::vector<double> Matrix::getVector() const
 {
 	std::vector<double> vector;
@@ -136,6 +201,10 @@ std::vector<double> Matrix::getVector() const
 	return vector;
 }
 
+
+/// <summary>
+/// Prints the Matrix.
+/// </summary>
 void Matrix::print() const
 {
 	std::cout << "\n";
@@ -156,6 +225,11 @@ void Matrix::print() const
 	std::cout << "\n";
 }
 
+
+/// <summary>
+/// Initializes the diagonal of a Matrix.
+/// </summary>
+/// <param name="input">Value to put on the diagonal.</param>
 void Matrix::diag(int input)
 {
 	if (rowSize == colSize)

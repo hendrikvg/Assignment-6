@@ -1,3 +1,15 @@
+/*
+==============================================================
+ Filename    :  EntryMatrix.cpp
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+				Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.3
+ License     :  none.
+ Description :  This file handles the implementation of EntryMatrix.h
+				This class works identically to Matrix.h, except it will always return
+				a matrix when doing computations
+==============================================================
+*/
 #include "EntryMatrix.h"
 
 // Constructor
