@@ -1,6 +1,6 @@
 clc, clear, close all;
 
-A = readmatrix("ExportFiel.csv");
+A = readmatrix("ExportFile.csv");
 t = A(1,:);
 
 figure

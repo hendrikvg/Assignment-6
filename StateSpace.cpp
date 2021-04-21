@@ -1,3 +1,16 @@
+/*
+==============================================================
+ Filename    :  StateSpace.cpp
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+				Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.1
+ License     :  none.
+ Description :  State-space operations are handled by this class. It takes at least four EntryMatrices as input
+				and it can solve and return the results of the state-space equations:
+				1. xdot = Ax + Bu (+ E)
+				2. y = Cx + Du
+==============================================================
+*/
 #include "StateSpace.h"
 
 // Constructor

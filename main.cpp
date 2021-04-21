@@ -1,3 +1,13 @@
+/*
+==============================================================
+ Filename    :  Main.cpp
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+                Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.1
+ License     :  none.
+ Description :  This is the main file from which all code is initiated. This version has code satisfying the requirements of assignment 6.1.
+==============================================================
+*/
 #include <vector>
 #include <cmath>
 #include <iostream>
@@ -9,15 +19,12 @@
 #include "Entry.h"
 #include "EntryMatrix.h"
 #include "ForwardEuler.h"
-#include "Functions.h"
 #include "Input.h"
 #include "ReadCSV.h"
-#include "Test.h"
+
 
 int main(int /*argc*/, char** /*argv*/) {
     std::cout << "HELLO WORLD\n";
-
-    //int nThreads = SDL_GetCPUCount();  //number of threads available on current system for future multithreading implementation
 
 
     // ***** INITIALISE ALL GLOBAL VARIABLES: *****
@@ -27,11 +34,7 @@ int main(int /*argc*/, char** /*argv*/) {
     double tEnd = 20;
 
     double C_dd = 0.1;
-    //double C_dc = 1;
     double m_d = 3;
-    //double m_c = 1;
-    //double Fx = 1;
-    //double Fy = 1;
     double g = 9.81;
 
 
@@ -48,10 +51,6 @@ int main(int /*argc*/, char** /*argv*/) {
     A(4, 4) = Entry([&x, m_d, C_dd]() {return (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2))); });
     //A(5, 1) = Entry([&x, g]() {return (x(1, 1) == 0.0) ? -g : -g / x(1, 1); }); // bool ? this : that (conditional ternary operator)
     A(5, 5) = Entry([&x, m_d, C_dd]() {return (1 / m_d) * (-C_dd * sqrt(pow(x(4, 1), 2) + pow(x(5, 1), 2))); });
-    ////A(6, 8) = 1;
-    ////A(7, 9) = 1;
-    ////A(8, 8) = (1 / m_c) * (-C_dc * sqrt(pow(x(8, 1), 2) + pow(x(9, 1), 2)));
-    ////A(9, 9) = (1 / m_c) * (-C_dc * sqrt(pow(x(8, 1), 2) + pow(x(9, 1), 2)));
 
     EntryMatrix B(5, 2, 0.0);
     B(3, 2) = 1.0;
@@ -76,7 +75,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
 
     ReadCSV inCSV; //create object to prepare for csv import
-    Input input(inCSV.importCSV("InputMatrix.csv"), false); // import csv with input commands for drone and put it in an Input class object.
+    Input input(inCSV.importCSV("InputMatrix.csv")); // import csv with input commands for drone and put it in an Input class object.
 
         
 
@@ -87,12 +86,11 @@ int main(int /*argc*/, char** /*argv*/) {
     droneSimulation.integrate(x, input); // integrate system 
     x.print(); //print current (last) states to terminal
 
-    droneSimulation.exportStates("ExportFiel.csv"); 
+    droneSimulation.exportStates("ExportFile.csv"); 
+
+    std::cout << "\n\nCheck root directory for ExportFile.CSV.\nThis file can be opened in in MATLAB using testOutput.m script.\n\n";
 
 
-
-    //OutputCSV output;
-    //output.writeCSV(input.getInputVector(), "spaghettiCodeMuch.csv");
     
 
     return 0;

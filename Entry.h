@@ -1,3 +1,14 @@
+/*
+==============================================================
+ Filename    :  Entry.h
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+                Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.5
+ License     :  none.
+ Description :  The aim of this class is to create a wrapper class that can be either
+                a constant or a lambda function.
+==============================================================
+*/
 #ifndef SRC_ENTRY_H
 #define SRC_ENTRY_H
 
@@ -25,6 +36,8 @@ public:
     /// </summary>
     /// <param name="constant">constants</param>
     Entry(double constant);
+
+    ~Entry(); //destructor
 
     /// <summary>
     /// returns the values inside object, by first checking wether it is constant or variable

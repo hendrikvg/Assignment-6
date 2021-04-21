@@ -1,6 +1,26 @@
+/*
+==============================================================
+ Filename    :  EntryMatrix.cpp
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+				Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.1
+ License     :  none.
+ Description :  This file handles the implementation of EntryMatrix.h
+				This class works identically to Matrix.h, except it will always return
+				a matrix when doing computations
+==============================================================
+*/
 #include "EntryMatrix.h"
 
-// Constructor
+
+// Constructors:
+
+/// <summary>
+/// Constructor that initializes a matrix of a specified size with the same initial value.
+/// </summary>
+/// <param name="rows">The number of rows the matrix should have.</param>
+/// <param name="columns">The number of columns the matrix should have.</param>
+/// <param name="initialValue">The initial value all entries should have.</param>
 EntryMatrix::EntryMatrix(unsigned int rows, unsigned int columns, double initialValue) : rowSize(rows), colSize(columns)
 {
 	Entry initialEntryValue(initialValue);

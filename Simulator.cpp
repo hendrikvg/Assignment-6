@@ -1,5 +1,27 @@
+/*
+==============================================================
+ Filename    :  Simulator.cpp
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+				Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.1
+ License     :  none.
+ Description :  This class handles the implementation of Simulator member methods.
+				Simulator
+==============================================================
+*/
 #include "Simulator.h"
 
+Simulator::~Simulator() { //Destructor
+
+}
+
+
+/// <summary>
+/// Saves current state of statespace to simulator object as [t; x; y].
+/// </summary>
+/// <param name="t">time</param>
+/// <param name="x">states</param>
+/// <param name="y">output</param>
 void Simulator::saveState(double t, Matrix x, Matrix y)
 {
 	std::vector<double> state;
@@ -15,6 +37,12 @@ void Simulator::saveState(double t, Matrix x, Matrix y)
 	this->states.push_back(state);
 }
 
+
+/// <summary>
+/// Exports states to a csv file with specified name. Makes use of OutputCSV 
+/// class to do this.
+/// </summary>
+/// <param name="">Desired name of csv file to be exported.</param>
 void Simulator::exportStates(std::string nameCSV = "StatesExport.csv")
 {
 	OutputCSV output;

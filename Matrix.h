@@ -1,3 +1,16 @@
+/*
+==============================================================
+ Filename    :  Matrix.h
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+				Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.1
+ License     :  none.
+ Description :  The aim of this file is to create a Matrix class that has operator
+				overrides such that it behaves like a matrix.
+==============================================================
+*/
+
+
 #ifndef SRC_MATRIX_H
 #define SRC_MATRIX_H
 
@@ -5,22 +18,40 @@
 #include <algorithm>
 #include <vector>
 
-
 /// <summary>
-/// Allows creation of Matrices and defines matrix operations for linear algebra needed for statespace dynamics and control.
+/// Allows creation of Matrices and defines matrix operations for linear 
+/// algebra needed for statespace dynamics and control.
 /// </summary>
 class Matrix
 {
 private:
-	unsigned rowSize;
-	unsigned colSize;
-	std::vector<std::vector<double>> matrix;
+	unsigned int rowSize; // Storing rowsize and colsize prevents us from
+	unsigned int colSize; // having to calculate the size again for every operation
+	std::vector<std::vector<double>> matrix; // Stores the actual matrix values
 
 public:
+	// Constructors
 	Matrix() = default;
+
+	/// <summary>
+	/// Matrix constructor that initializes a Matrix with rows and colums and
+	/// an initial value for all entries.
+	/// </summary>
+	/// <param name="rows">The number of rows that the Matrix should have.</param>
+	/// <param name="columns">The number of columns the Matrix should have.</param>
+	/// <param name="initialValue">The value ever entry should have.</param>
 	Matrix(unsigned rows, unsigned columns, double initialValue);
+
+	/// <summary>
+	/// Copy constructor that initializes a Matrix with the properties of another Matrix.
+	/// </summary>
+	/// <param name="B">The other matrix that gets copied.</param>
 	Matrix(const Matrix&);
-	~Matrix();
+
+	/// <summary>
+	/// Destructor, destroys the Matrix object.
+	/// </summary>
+	~Matrix(); //destructor
 
 	// Matrix operations
 	Matrix operator+(Matrix);

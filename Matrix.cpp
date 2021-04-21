@@ -1,8 +1,24 @@
-/// Matrix.cpp
+/*
+==============================================================
+ Filename    :  Matrix.cpp
+ Authors     :  Hendrik van Gils    (s1920677)  h.vangils@student.utwente.nl
+				Deniz Ugurlu        (s1797735)  d.a.ugurlu@student.utwente.nl
+ Version     :  6.1
+ License     :  none.
+ Description :  The aim of this file is to create a Matrix class that has operator
+			   overrides such that it behaves like a matrix.
+==============================================================
+*/
 
 #include "Matrix.h"
 
-// Constructor
+/// <summary>
+/// Matrix constructor that initializes a Matrix with rows and colums and
+/// an initial value for all entries.
+/// </summary>
+/// <param name="rows">The number of rows that the Matrix should have.</param>
+/// <param name="columns">The number of columns the Matrix should have.</param>
+/// <param name="initialValue">The value ever entry should have.</param>
 Matrix::Matrix(unsigned rows, unsigned columns, double initialValue) : rowSize(rows), colSize(columns)
 {
 	matrix.resize(rowSize);
@@ -12,7 +28,10 @@ Matrix::Matrix(unsigned rows, unsigned columns, double initialValue) : rowSize(r
 	}
 }
 
-// Copy Constructor
+/// <summary>
+/// Copy constructor that initializes a Matrix with the properties of another Matrix.
+/// </summary>
+/// <param name="B">The other matrix that gets copied.</param>
 Matrix::Matrix(const Matrix& B)
 {
 	this->colSize = B.getColumns();
@@ -26,8 +45,14 @@ Matrix::~Matrix() {
 }
 
 
-// Matrix operations
-// Addition of two matrices
+// Matrix operations: 
+
+
+/// <summary>
+/// Matrix + operator override that enables adding up two Matrices.
+/// </summary>
+/// <param name="B">The other Matrix that gets added.</param>
+/// <returns>The current Matrix object + B.</returns>
 Matrix Matrix::operator+(Matrix B) {
 	Matrix sum(rowSize, colSize, 0.0);
 
@@ -109,6 +134,10 @@ unsigned Matrix::getColumns() const
 	return this->colSize;
 }
 
+/// <summary>
+/// getVector() Returns the contents of the matrix as a vector.
+/// </summary>
+/// <returns>All contents of this Matrix object on one row.</returns>
 std::vector<double> Matrix::getVector() const
 {
 	std::vector<double> vector;
@@ -122,6 +151,9 @@ std::vector<double> Matrix::getVector() const
 	return vector;
 }
 
+/// <summary>
+/// Prints the Matrix.
+/// </summary>
 void Matrix::print() const
 {
 	std::cout << "\n";
@@ -142,6 +174,11 @@ void Matrix::print() const
 	std::cout << "\n";
 }
 
+
+/// <summary>
+/// Initializes the diagonal of a Matrix.
+/// </summary>
+/// <param name="input">Value to put on the diagonal.</param>
 void Matrix::diag(int input)
 {
 	if (rowSize == colSize)
